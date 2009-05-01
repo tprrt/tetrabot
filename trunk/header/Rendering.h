@@ -14,8 +14,7 @@
 #include <string>
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-#include "Ogre.h"
-#include "OIS/OIS.h"
+#include <Ogre.h>
 #else
 #include <OGRE/Ogre.h>
 #include <OIS/OIS.h>

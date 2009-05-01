@@ -2,7 +2,11 @@
 #define TETRAMOTIONSTATE_H
 
 #include <LinearMath/btMotionState.h>
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 #include <Ogre.h>
+#else
+#include <OGRE/Ogre.h>
+#endif
 
 class TetraMotionState : public btMotionState 
 {
