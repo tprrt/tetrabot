@@ -86,6 +86,6 @@ void PistonRendering::afficherPiston(Ogre::SceneNode *b1, Ogre::SceneNode *b2) {
 		//printf("Piston %d Cylindre %d : \tx = %f ; y = %f ; z = %f\n", this->num, i, temp.x, temp.y, temp.z);
 		scene->getSceneNode(out1.str())->setVisible(true,true);
 	}
-	temp = b2->getPosition();
+	//temp = b2->getPosition();
 	//printf("\t\tb2 :\tx = %f ; y = %f ; z = %f\n", temp.x, temp.y, temp.z);
 }
