@@ -13,7 +13,7 @@ PistonRendering::PistonRendering(Ogre::Real lMin, Ogre::Real lMax, Ogre::SceneMa
 	if ( tmp > this->nbC ) {
 		this->nbC++;
 	}
-	printf("Affichage Piston %d (nbC = %d, lMin = %f, lMax = %f)\n", numPis, this->nbC, this->lMin, this->lMax);
+	printf("Creation Piston %d (nbC = %d, lMin = %f, lMax = %f)\n", numPis, this->nbC, this->lMin, this->lMax);
 	// Calcul de la longueur d'un cylindre
 	this->lC = this->lMin/(0.98+0.02*this->nbC) ;
 	this->scene = scene;
@@ -28,10 +28,10 @@ PistonRendering::PistonRendering(Ogre::Real lMin, Ogre::Real lMax, Ogre::SceneMa
 	scene->getSceneNode(out2.str())->attachObject(scene->getEntity(out1.str()));
 	Ogre::Vector3 longueur = scene->getEntity(out1.str())->getBoundingBox().getSize() ;
 	Ogre::Real facteurScale = (this->lC)/(longueur.z);
-	printf("longueur = %f\n, facteurScale = %f\n", longueur.z, facteurScale);
+	//printf("longueur = %f\n, facteurScale = %f\n", longueur.z, facteurScale);
 	scene->getSceneNode(out2.str())->scale(facteurScale,facteurScale,facteurScale);
-	Ogre::Vector3 truc = scene->getSceneNode(out2.str())->getScale();
-	printf("new longueur = (%f,%f,%f) * (%f,%f,%f) = (%f,%f,%f)\n", longueur.x, longueur.y, longueur.z, truc.x, truc.y, truc.z, longueur.x*truc.x, longueur.y*truc.y, longueur.z*truc.z);
+	//Ogre::Vector3 truc = scene->getSceneNode(out2.str())->getScale();
+	//printf("new longueur = (%f,%f,%f) * (%f,%f,%f) = (%f,%f,%f)\n", longueur.x, longueur.y, longueur.z, truc.x, truc.y, truc.z, longueur.x*truc.x, longueur.y*truc.y, longueur.z*truc.z);
 	//this->c.push_back(scene->getEntity(out1.str())) ;
 	for (int i=1 ; i<this->nbC ; i++) {
 		std::ostringstream out1;
@@ -45,7 +45,7 @@ PistonRendering::PistonRendering(Ogre::Real lMin, Ogre::Real lMax, Ogre::SceneMa
 		scene->getRootSceneNode()->createChild(out3.str());
 		scene->getSceneNode(out3.str())->setVisible(true,true);
 		scene->getSceneNode(out3.str())->attachObject(scene->getEntity(out2.str()));
-		scene->getSceneNode(out3.str())->scale(facteurScale*0.88,facteurScale*0.88,facteurScale);
+		scene->getSceneNode(out3.str())->scale(facteurScale*0.8,facteurScale*0.8,facteurScale);
 	}
 
 }
@@ -57,6 +57,7 @@ void PistonRendering::afficherPiston(Ogre::SceneNode *b1, Ogre::SceneNode *b2) {
 	//printf("Affichage Piston %d (nbC = %d, lC = %f)\n", this->num, this->nbC, this->lC	);
 	v = (b2->getPosition()-b1->getPosition());
 	lP = v.length();
+	printf("lP = %f\n", lP);
 	Ogre::Vector3 temp = b1->getPosition();
 	//printf("\t\tb1 :\tx = %f ; y = %f ; z = %f\n", temp.x, temp.y, temp.z);
 	Ogre::Real lP2 = lP-lC;
