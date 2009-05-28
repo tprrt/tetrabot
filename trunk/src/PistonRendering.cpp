@@ -24,7 +24,7 @@ PistonRendering::PistonRendering(Ogre::Real lMin, Ogre::Real lMax, Ogre::SceneMa
 	std::ostringstream out2;
 	out2 << "NodePiston" << numPis << "Cylindre0";
 	scene->getRootSceneNode()->createChild(out2.str());
-	scene->getSceneNode(out2.str())->setVisible(true,true);
+	scene->getSceneNode(out2.str())->setVisible(false,true);
 	scene->getSceneNode(out2.str())->attachObject(scene->getEntity(out1.str()));
 	Ogre::Vector3 longueur = scene->getEntity(out1.str())->getBoundingBox().getSize() ;
 	Ogre::Real facteurScale = (this->lC)/(longueur.z);
@@ -43,7 +43,7 @@ PistonRendering::PistonRendering(Ogre::Real lMin, Ogre::Real lMax, Ogre::SceneMa
 		scene->getEntity(out1.str())->clone(out2.str());
 		//this->c.push_back(scene->getEntity(out2.str()));
 		scene->getRootSceneNode()->createChild(out3.str());
-		scene->getSceneNode(out3.str())->setVisible(true,true);
+		scene->getSceneNode(out3.str())->setVisible(false,true);
 		scene->getSceneNode(out3.str())->attachObject(scene->getEntity(out2.str()));
 		scene->getSceneNode(out3.str())->scale(facteurScale*0.8,facteurScale*0.8,facteurScale);
 	}
@@ -56,9 +56,9 @@ void PistonRendering::afficherPiston(Ogre::SceneNode *b1, Ogre::SceneNode *b2) {
 	Ogre::Vector3 v; // Le vecteur b1-b2
 	//printf("Affichage Piston %d (nbC = %d, lC = %f)\n", this->num, this->nbC, this->lC	);
 	v = (b2->getPosition()-b1->getPosition());
-	lP = v.length();
+	lP = v.length()-2*BOULE_RAYON;
 	printf("lP = %f\n", lP);
-	Ogre::Vector3 temp = b1->getPosition();
+	//Ogre::Vector3 temp = b1->getPosition();
 	//printf("\t\tb1 :\tx = %f ; y = %f ; z = %f\n", temp.x, temp.y, temp.z);
 	Ogre::Real lP2 = lP-lC;
 	//printf("lP2 = %f\n", lP2);
@@ -72,17 +72,17 @@ void PistonRendering::afficherPiston(Ogre::SceneNode *b1, Ogre::SceneNode *b2) {
 		this->scene->getSceneNode(out1.str())->rotate(rot);
 		Ogre::Real distance;
 		if ( i== 0 ) {
-			distance = this->lC/2;
+			distance = this->lC/2+BOULE_RAYON;
 		} else {
 			std::ostringstream out2;
 			out2 << "NodePiston" << this->num << "Cylindre" << i-1;
 			distance = (this->scene->getSceneNode(out2.str())->getPosition()-b1->getPosition()).length()+lP2/(this->nbC-1);
 		}
-		Ogre::Vector3 temp = b1->getPosition();
+		//Ogre::Vector3 temp = b1->getPosition();
 		v.normalise();
 		//printf("Distance = %f ; pos(b1) = (%f,%f,%f) ; v(normé) = (%f,%f,%f) \n", distance, temp.x, temp.y, temp.z, v.x, v.y, v.z);
 		this->scene->getSceneNode(out1.str())->setPosition(b1->getPosition()+distance*v);
-		temp = this->scene->getSceneNode(out1.str())->getPosition();
+		//temp = this->scene->getSceneNode(out1.str())->getPosition();
 		//printf("Piston %d Cylindre %d : \tx = %f ; y = %f ; z = %f\n", this->num, i, temp.x, temp.y, temp.z);
 		scene->getSceneNode(out1.str())->setVisible(true,true);
 	}

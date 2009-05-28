@@ -2,6 +2,7 @@
 #define PISTON_RENDERING
 
 #include "Ogre.h"
+#include "Caracteristiques.h"
 
 
 class PistonRendering {

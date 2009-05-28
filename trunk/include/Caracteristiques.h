@@ -7,6 +7,7 @@
 //---------------------------- EXTERNES AU PROJET -----------------------------
 #define POIDS_BOULE btScalar(0.7)
 #define RAYON_BOULE btScalar(2.)
+#define BOULE_RAYON 2.
 #define VELOCITE_PISTON btScalar(2.5)
 #define FORCE_PISTON btScalar(0.01)
 #define PISTON_TAILLE_MIN btScalar(3.)
