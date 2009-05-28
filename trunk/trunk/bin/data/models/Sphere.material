@@ -1,0 +1,12 @@
+material Sphere
+{
+	receive_shadows on
+	technique //GLSL
+	{
+		pass
+		{
+
+		}
+	}
+}
+
