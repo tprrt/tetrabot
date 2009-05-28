@@ -6,8 +6,8 @@ PistonRendering::PistonRendering(Ogre::Real lMin, Ogre::Real lMax, Ogre::SceneMa
 
 	// Calcul du nombre de cylindres necessaire pour respecter les
 	// Specifications d'etirement du piston
-	this->lMin = lMin;
-	this->lMax = lMax;
+	this->lMin = lMin+2.;//+2. temporaire en attendant que le piston touche la boule dans bullet
+	this->lMax = lMax+2.;//idem
 	float tmp = (0.98*this->lMax+0.04*this->lMin)/(this->lMin*0.96-0.02*this->lMax) ;
 	this->nbC = tmp ;
 	if ( tmp > this->nbC ) {
@@ -45,7 +45,7 @@ PistonRendering::PistonRendering(Ogre::Real lMin, Ogre::Real lMax, Ogre::SceneMa
 		scene->getRootSceneNode()->createChild(out3.str());
 		scene->getSceneNode(out3.str())->setVisible(false,true);
 		scene->getSceneNode(out3.str())->attachObject(scene->getEntity(out2.str()));
-		scene->getSceneNode(out3.str())->scale(facteurScale*0.8,facteurScale*0.8,facteurScale);
+		scene->getSceneNode(out3.str())->scale(facteurScale*(pow(0.8,i)),facteurScale*(pow(0.8,i)),facteurScale);
 	}
 
 }
@@ -57,7 +57,7 @@ void PistonRendering::afficherPiston(Ogre::SceneNode *b1, Ogre::SceneNode *b2) {
 	//printf("Affichage Piston %d (nbC = %d, lC = %f)\n", this->num, this->nbC, this->lC	);
 	v = (b2->getPosition()-b1->getPosition());
 	lP = v.length()-2*BOULE_RAYON;
-	printf("lP = %f\n", lP);
+	//printf("lP = %f\n", lP);
 	//Ogre::Vector3 temp = b1->getPosition();
 	//printf("\t\tb1 :\tx = %f ; y = %f ; z = %f\n", temp.x, temp.y, temp.z);
 	Ogre::Real lP2 = lP-lC;
@@ -69,7 +69,7 @@ void PistonRendering::afficherPiston(Ogre::SceneNode *b1, Ogre::SceneNode *b2) {
 		Ogre::Quaternion rot;
 		rot = this->scene->getSceneNode(out1.str())->getOrientation();
 		rot = rot.zAxis().getRotationTo(v);
-		this->scene->getSceneNode(out1.str())->rotate(rot);
+		this->scene->getSceneNode(out1.str())->rotate(rot,Ogre::Node::TS_WORLD);
 		Ogre::Real distance;
 		if ( i== 0 ) {
 			distance = this->lC/2+BOULE_RAYON;
