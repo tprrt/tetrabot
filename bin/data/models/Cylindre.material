@@ -1,0 +1,15 @@
+material PM002/SOLID/TEX/dusty_metal_5132599.JPG
+{
+	technique
+	{
+		pass
+		{
+			diffuse 1.000000 1.000000 1.000000
+			specular 1.000000 1.000000 1.000000 20.000000
+			texture_unit
+			{
+				texture dusty_metal_5132599.JPG
+			}
+		}
+	}
+}
