@@ -110,23 +110,23 @@ void TetraRendering::createScene() {
 	//spheres
 	this->pSceneManager->getRootSceneNode()->createChild("NodeNoeud1");
 	this->pSceneManager->getSceneNode("NodeNoeud1")->attachObject(pEntity);
-	this->pSceneManager->getSceneNode("NodeNoeud1")->scale(1, 1, 1);
+	this->pSceneManager->getSceneNode("NodeNoeud1")->scale(BOULE_RAYON, BOULE_RAYON, BOULE_RAYON);
 	this->pSceneManager->getSceneNode("NodeNoeud1")->setPosition(Ogre::Vector3(0, 100, 0));
 
 
 	this->pSceneManager->getRootSceneNode()->createChild("NodeNoeud2");
 	this->pSceneManager->getSceneNode("NodeNoeud2")->attachObject(pEntity->clone("Sphere2"));
-	this->pSceneManager->getSceneNode("NodeNoeud2")->scale(1, 1, 1);
+	this->pSceneManager->getSceneNode("NodeNoeud2")->scale(BOULE_RAYON, BOULE_RAYON, BOULE_RAYON);
 	this->pSceneManager->getSceneNode("NodeNoeud2")->setPosition(Ogre::Vector3(50, 100, 0));
 
 	this->pSceneManager->getRootSceneNode()->createChild("NodeNoeud3");
 	this->pSceneManager->getSceneNode("NodeNoeud3")->attachObject(pEntity->clone("Sphere3"));
-	this->pSceneManager->getSceneNode("NodeNoeud3")->scale(1, 1, 1);
+	this->pSceneManager->getSceneNode("NodeNoeud3")->scale(BOULE_RAYON, BOULE_RAYON, BOULE_RAYON);
 	this->pSceneManager->getSceneNode("NodeNoeud3")->setPosition(Ogre::Vector3(0, 100, 50));
 
 	this->pSceneManager->getRootSceneNode()->createChild("NodeNoeud4");
 	this->pSceneManager->getSceneNode("NodeNoeud4")->attachObject(pEntity->clone("Sphere4"));
-	this->pSceneManager->getSceneNode("NodeNoeud4")->scale(1, 1, 1);
+	this->pSceneManager->getSceneNode("NodeNoeud4")->scale(BOULE_RAYON, BOULE_RAYON, BOULE_RAYON);
 	this->pSceneManager->getSceneNode("NodeNoeud4")->setPosition(Ogre::Vector3(50, 100, 50));
 
 	//physic
