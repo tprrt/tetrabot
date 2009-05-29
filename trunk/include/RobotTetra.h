@@ -1,16 +1,8 @@
-#ifndef ROBOTTETRA
-#define ROBOTTETRA
+#ifndef ROBOTTETRA_H
+#define ROBOTTETRA_H
 
 
 #include "Robot.h"
-/*
-#include "Noeud.h"
-#include "Piston.h"
-#include "Action.h"
-#include "Caracteristiques.h"
-#include "WorldPhysic.h"
-
-*/
 #include "ActionPiston.h"
 
 class RobotTetra: public Robot
@@ -29,6 +21,8 @@ public:
 	// Test avec Ogre
 	RobotTetra(btDynamicsWorld* world,Ogre::SceneManager * scene,const btVector3& posInit);
 
+	virtual ~RobotTetra();
+
 	btVector3 getCenterOfMassPosition();
 
 	void stretch();
@@ -39,4 +33,4 @@ public:
 
 };
 
-#endif /* ROBOTTETRA */
+#endif /* ROBOTTETRA_H*/

@@ -50,4 +50,5 @@ public:
 
 };
 
-#endif /* Robot */
+#endif /* ROBOT_H */
+

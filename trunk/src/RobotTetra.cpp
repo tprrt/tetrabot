@@ -6,12 +6,12 @@ RobotTetra::RobotTetra(btDynamicsWorld* world,Ogre::SceneManager * scene,const b
 	Piston* pistonTMP;
 
 	Noeud* bouleTMP;
-	// le vecteur decalage sert � espacer les objets
+	// le vecteur decalage sert a espacer les objets
 	// pour eviter d'eventuelles erreurs de collisions
 
 	btVector3 decalage;
 
-	// Cr�ation des boules
+	// Creation des boules
 	for(int i=0;i<4;i++) {
 
 		decalage = btVector3(RAYON_BOULE*i*2,0,0);
@@ -89,6 +89,11 @@ RobotTetra::RobotTetra(btDynamicsWorld* world,const btVector3& posInit)
 	this->Sommets[3]->lierPiston(Arcs[5],'A',angle1,(2*2*M_PI)/3);
 }
 
+
+RobotTetra::~RobotTetra() {
+	delete action;
+	delete bodyCube;
+}
 
 btVector3 RobotTetra::getCenterOfMassPosition()
 {
@@ -191,7 +196,7 @@ void RobotTetra::move(int x, int y, int z) {
 	matLiaison[3][2] = 5;
 	// Tant que le robot n'est pas assez proche du point end, on fait avancer le robot (de maniere simple)
 	// Le point end est assez proche si la distance entre ce dernier et le centre de gravite du robot
-	// est inferieure � 6.
+	// est inferieure a 6.
 	// test anti-pointeur null
 
 	for(int i=0;i<6;i++){
@@ -204,7 +209,7 @@ void RobotTetra::move(int x, int y, int z) {
 	printf("Test 6 : while(robot->IsNotInArea(robot->getCenterOfMassPosition(),end)) \n");
 	while(this->IsNotInArea(this->getCenterOfMassPosition(),end))
 	{
-		// Mettre le robot � l'etat initial (pistons au minimum de leur taille)
+		// Mettre le robot a l'etat initial (pistons au minimum de leur taille)
 		for(i=0;i<6;i++)
 		{
 			this->action[i]->setPiston(this->Arcs[i]);
@@ -222,7 +227,7 @@ void RobotTetra::move(int x, int y, int z) {
 			if((vectTMP[0].y()) < (vectTMP[1].y()))
 				NHaut = i;
 		}
-		// On cherche maintenant les 2 noeuds de la base les plus proches du point d'arriv� end.
+		// On cherche maintenant les 2 noeuds de la base les plus proches du point d'arrive end.
 		j=0;
 		for(i=0;i<4;i++)
 		{
@@ -261,11 +266,11 @@ void RobotTetra::move(int x, int y, int z) {
 				NRestant = noeuds[0]->getID();
 			}
 		}
-		// On cherche les pistons liant N1 et N2 (PBas), et celui liant NRestant � NHaut(PHaut).
+		// On cherche les pistons liant N1 et N2 (PBas), et celui liant NRestant a NHaut(PHaut).
 		PBas = matLiaison[N1][N2];
 		PHaut = matLiaison[NRestant][NHaut];
 
-		// On mets le piston d'identificateur PBas � 8
+		// On mets le piston d'identificateur PBas a 8
 		printf("NHaut: %d, N1: %d,N2: %d,NRestant: %d\n",NHaut,N1,N2,NRestant);
 		printf("PHaut: %d, PBas: %d\n",PHaut,PBas);
 		this->action[PBas]->setPiston(this->Arcs[PBas]);
@@ -281,7 +286,7 @@ void RobotTetra::move(int x, int y, int z) {
 		this->Arcs[P2]->debloquerPiston();
 
 
-		// On mets le piston d'identificateur PHaut � sa taille maximale
+		// On mets le piston d'identificateur PHaut a sa taille maximale
 		this->action[PHaut]->setPiston(this->Arcs[PHaut]);
 		this->action[PHaut]->setTailleVoulu(this->Arcs[PHaut]->getTailleMax());
 		Thread((void*)this->action[PHaut],actionThread);
@@ -294,8 +299,8 @@ void RobotTetra::move(int x, int y, int z) {
 
 
 	}// Fin WHILE
-	// La marche du robot est termin�e.
-	// Mettre le robot � l'etat final (pistons au minimum de leur taille)
+	// La marche du robot est terminee.
+	// Mettre le robot a l'etat final (pistons au minimum de leur taille)
 	for(i=0;i<6;i++)
 	{
 		this->action[i]->setPiston(this->Arcs[i]);

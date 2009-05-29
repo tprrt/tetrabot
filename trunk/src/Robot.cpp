@@ -6,8 +6,7 @@ Robot::Robot() {
 		ID++;
 }
 
-Robot::~Robot()
-	{
+Robot::~Robot() {
 		Sommets.clear();
 		Arcs.clear();
 }
