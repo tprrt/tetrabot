@@ -4,25 +4,25 @@
 #include "Caracteristiques.h"
 #include "btBulletDynamicsCommon.h"
 
-class Sinusoide
-{
+class Sinusoide {
+
 protected:
 	btScalar periode;
 	btScalar amplitude;
 	btScalar dephasage;
+
 public:
 	Sinusoide(btScalar periode, btScalar amplitude, btScalar dephasage);
 
 	Sinusoide(const Sinusoide& s);
 
-	virtual ~Sinusoide();
+	//virtual ~Sinusoide();
 
 	btScalar getPeriode();
 
 	btScalar getAmplitude();
 
 	btScalar getDephasage();
-
 
 	void setPeriode(btScalar p);
 
