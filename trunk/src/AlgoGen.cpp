@@ -15,3 +15,8 @@ AlgoGen::AlgoGen(btDynamicsWorld* monde,Robot* robot,const btVector3& startPoint
 		this->mutation = mutation;
 }
 
+AlgoGen::~AlgoGen() {
+	delete this->robot;
+	delete this->monde;
+}
+

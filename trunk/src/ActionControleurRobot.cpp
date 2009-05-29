@@ -5,6 +5,9 @@ ActionControleurRobot::ActionControleurRobot(ControleurRobot *controleurRobot)
 	this->ctrlRobot = controleurRobot;
 }
 
+ActionControleurRobot::~ActionControleurRobot() {
+	delete this->ctrlRobot;
+}
 
 ControleurRobot* ActionControleurRobot::getControleurRobot()
 {

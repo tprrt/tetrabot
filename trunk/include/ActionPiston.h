@@ -15,9 +15,7 @@ public:
 
 	ActionPiston(Piston*,btScalar);
 
-
-	//virtual ~ActionPiston();
-
+	virtual ~ActionPiston();
 	btScalar getTailleVoulu();
 
 	Piston* getPiston();
