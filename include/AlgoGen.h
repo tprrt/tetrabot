@@ -12,9 +12,9 @@ class AlgoGen
 public:
 	btDynamicsWorld* monde;
 
-	btAlignedObjectArray<ControleurRobot*> tabCtrl;
+	btAlignedObjectArray<ControleurRobot *> tabCtrl;
 
-	btAlignedObjectArray<ActionControleurRobot*> tabAction;
+	btAlignedObjectArray<ActionControleurRobot *> tabAction;
 
 	Robot* robot;
 
@@ -34,7 +34,7 @@ public:
 
 	virtual void run() = 0;
 
-	//virtual ~AlgoGen();
+	virtual ~AlgoGen();
 
 private:
 	virtual void creerControleurs(btDynamicsWorld* monde,int nbRobots) = 0;

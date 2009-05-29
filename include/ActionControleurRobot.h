@@ -15,7 +15,7 @@ protected:
 public:
 	ActionControleurRobot(ControleurRobot* controleurRobot);
 
-	//virtual ~ActionControleurRobot();
+	virtual ~ActionControleurRobot();
 
 	ControleurRobot* getControleurRobot();
 
