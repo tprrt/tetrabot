@@ -6,6 +6,10 @@ TetraMotionState::TetraMotionState(const btTransform &initialpos, Ogre::SceneNod
 	mPos1 = initialpos;
 }
 
+TetraMotionState::~TetraMotionState() {
+	delete this->mVisibleobj;
+}
+
 void TetraMotionState::setNode(Ogre::SceneNode *node) 
 {
 	mVisibleobj = node;

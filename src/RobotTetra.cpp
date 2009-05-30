@@ -91,8 +91,8 @@ RobotTetra::RobotTetra(btDynamicsWorld* world,const btVector3& posInit)
 
 
 RobotTetra::~RobotTetra() {
-	delete action;
-	delete bodyCube;
+	delete this->action;
+	delete this->bodyCube;
 }
 
 btVector3 RobotTetra::getCenterOfMassPosition()

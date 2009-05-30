@@ -18,7 +18,8 @@ protected:
 
 public:
 	TetraMotionState(const btTransform &initialpos, Ogre::SceneNode *node);
-	//virtual ~TetraMotionState();
+
+	virtual ~TetraMotionState();
 
 	void setNode(Ogre::SceneNode *node);
 

@@ -104,14 +104,16 @@ Piston::Piston(btDynamicsWorld* ownerWorld,const btVector3& positionOffset,btSca
 
 Piston::~Piston()
 {
-	// Détruire la contrainte
 	delete this->contrainte;
-	// Détruire les shapes
+
 	delete this->shapeA;
 	delete this->shapeB;
-	// Détruire les objets
+
 	delete this->bodyA;
 	delete this->bodyB;
+
+	delete this->coneA;
+	delete this->coneB;
 }
 
 btVector3 Piston::getCenterOfMassPosition()

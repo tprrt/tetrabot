@@ -7,8 +7,8 @@ Robot::Robot() {
 }
 
 Robot::~Robot() {
-		Sommets.clear();
-		Arcs.clear();
+		this->Sommets.clear();
+		this->Arcs.clear();
 }
 
 int Robot::getID() {

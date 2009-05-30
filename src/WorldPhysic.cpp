@@ -19,6 +19,18 @@ WorldPhysic::WorldPhysic(const btVector3& worldMin,const btVector3& worldMax,con
 	m_dynamicsWorld->setGravity(gravite);
 }
 
+WorldPhysic::~WorldPhysic() {
+
+	delete this->bodyCube;
+	delete this->m_dynamicsWorld;
+	delete this->m_overlappingPairCache;
+	delete this->m_dispatcher;
+	delete this->m_constraintSolver;
+	delete this->m_collisionConfiguration;
+
+	this->m_collisionShapes.clear();
+	this->m_trimeshes.clear();
+}
 
 void WorldPhysic::setGravite(const btVector3& newGravite)
 {
@@ -338,7 +350,7 @@ void WorldPhysic::initGround(const char* filename)
 			this->m_dynamicsWorld->addRigidBody(m_ground);
 
 
-			//			localCreateRigidBody( btScalar(0.F), trans,compound);
+			//localCreateRigidBody( btScalar(0.F), trans,compound);
 		}
 
 

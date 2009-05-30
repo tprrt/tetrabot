@@ -39,6 +39,8 @@ public:
 public:
 	WorldPhysic(const btVector3& worldMin,const btVector3& worldMax,const btVector3& gravite);
 
+	virtual ~WorldPhysic();
+
 	void initGround(const char* filename);
 
 	void setGravite(const btVector3& newGravite);
