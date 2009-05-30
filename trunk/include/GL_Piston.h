@@ -1,11 +1,5 @@
-//-----------------------------------------------------------------------------
-
 #ifndef GL_PISTON_H
 #define GL_PISTON_H
-
-//-----------------------------------------------------------------------------
-
-#include <cstdio> //printf debugging
 
 #include "btBulletDynamicsCommon.h"
 #include "BulletDynamics/ConstraintSolver/btSliderConstraint.h"
@@ -24,10 +18,9 @@
 #include "BMF_Api.h"
 #include "GL_ShapeDrawer.h"
 #include "GlutStuff.h"
+
 //Pour TEST
 #include "AlgoGenTetra.h"
-//-----------------------------------------------------------------------------
-
 
 /// SliderConstraintDemo shows how to create a slider constraint
 class GL_Piston : public Application
@@ -80,13 +73,16 @@ public:
 		demo->myinit();
 		demo->initPhysics();
 		return demo;
-	}	
+	}
+
 	void specialKeyboard(int key, int x, int y);
+
 	void keyboardCallback(unsigned char key, int x, int y);
+
 	bool IsNotInArea(const btVector3 &G,const btVector3 &end2);
+
 	void renderme();
 
-	// methode pour faire marcher le robot
 	static void* marcherRobot(void* demo);
 };
 

@@ -18,5 +18,12 @@ AlgoGen::AlgoGen(btDynamicsWorld* monde,Robot* robot,const btVector3& startPoint
 AlgoGen::~AlgoGen() {
 	delete this->robot;
 	delete this->monde;
+
+	for(int i=0;i<this->tabAction.size();i++){
+		delete this->tabAction[i];
+	}
+	for(int i=0;i<this->tabCtrl.size();i++){
+		delete this->tabCtrl[i];
+	}
 }
 

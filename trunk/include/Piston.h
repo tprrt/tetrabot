@@ -39,8 +39,7 @@ protected:
 	btConeTwistConstraint* coneB;
 
 public:
-	// Les Constructeurs
-	// Constructeur par copie
+
 	Piston(Piston* piston);
 
 	// Pour Ogre
@@ -49,13 +48,10 @@ public:
 	// Pour GL
 	Piston(btDynamicsWorld* ownerWorld, const btVector3& positionOffset,btScalar min,btScalar max,btScalar vitesse);
 
-	// Le Destructeur
-	~Piston();
+	virtual ~Piston();
 
-	// methode retournant le centre de gravite
 	btVector3 getCenterOfMassPosition();
 
-	// les getters & setters
 	btSliderConstraint* getContrainte();
 
 	void setContrainte(btSliderConstraint* constraint);

@@ -1,7 +1,7 @@
 material Etoiles
 {
 	receive_shadows off
-	technique //GLSL
+	technique GLSL
 	{
 		pass
 		{

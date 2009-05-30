@@ -8,10 +8,8 @@
 #else
 #include <OGRE/Ogre.h>
 #endif
-#include <cstdio>
-#include <cstdlib>
 #include <iostream>
-#include <string.h>
+#include <string>
 
 #include "GL_Piston.h"
 #include "btBulletDynamicsCommon.h"

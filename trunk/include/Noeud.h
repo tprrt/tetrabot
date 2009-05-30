@@ -3,7 +3,6 @@
 #ifndef NOEUD_H
 #define NOEUD_H
 
-#include <cstdio>
 #include "LinearMath/btIDebugDraw.h"
 #include "btBulletDynamicsCommon.h"
 #include "Caracteristiques.h"
@@ -24,7 +23,7 @@ public:
 
 	Noeud(btDynamicsWorld *ownerWorld,btConvexInternalShape* forme,const btVector3 & offset, btScalar masse);
 
-	~Noeud();
+	virtual ~Noeud();
 
 	btVector3 getCenterOfMassPosition();
 

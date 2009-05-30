@@ -1,8 +1,4 @@
-#include "Noeud.h"
-
-//-----------------------------------------------------------------------------
-
-
+#include "Noeud.h"
 Noeud::Noeud(btDynamicsWorld *ownerWorld, Ogre::SceneNode * nodeOgre,btConvexInternalShape* forme,const btVector3 & offset,btScalar masse)
 {
 	static int ID=0;
