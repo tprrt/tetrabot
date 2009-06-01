@@ -349,72 +349,42 @@ void GLTetraRendering::keyboardCallback(unsigned char key, int x, int y)
 		}
 
 		case 'Z':
-		{	Num_Piston = 0;
+		{	robot->Deplacement((unsigned char) 'Z');
 		break;
 		}
 		case 'Q':
-		{	Num_Piston = 1;
+		{	robot->Deplacement((unsigned char) 'Q');
 		break;
 		}
 		case 'W':
-		{	Num_Piston = 2;
+		{	robot->Deplacement((unsigned char) 'W');
 		break;
 		}
 		case 'E':
-		{	Num_Piston = 3;
+		{	robot->Deplacement((unsigned char) 'E');
 		break;
 		}
 		case 'D':
-		{	Num_Piston = 4;
+		{	robot->Deplacement((unsigned char) 'D');
 		break;
 		}
 		case 'X':
-		{	Num_Piston = 5;
+		{	robot->Deplacement((unsigned char) 'X');
 		break;
 		}
 		case 'S':
 		{
-			/*
+			
 			// Je comprends pas ce que tu cherche a faire mais PAS D'ATTRIBUT incremente dans robotTetra
 			// dans gl_piston peut-etre?
 			printf("Inversion %f -> %f \n",robot->incremente, (-1)*robot->incremente);
 			robot->incremente *=(btScalar) -1.;
-			*/
+			
 		}
 
 		default: break; 
 	}// FIN SWITCH
 	//        std::cout << "unused key : " << key << std::endl;
-	/*if(Num_Piston != 99){
-		printf("Piston %d : %f",Num_Piston,robot->incremente);
-		// verif piston existe
-		if(robot->Arcs[Num_Piston]!=NULL)
-		{	// verif taille futur valide
-			taille = robot->Arcs[Num_Piston]->getLength() + robot->incremente*(Step);
-			printf(" ==> taille : %f\n",taille);
-			if(robot->incremente == 1 ){
-				tailleTmp = robot->Arcs[Num_Piston]->getTailleMax() - taille ;
-			}
-			else{
-				tailleTmp = robot->Arcs[Num_Piston]->getTailleMin() + taille ;
-			}
-			if(tailleTmp< 0) tailleTmp= -tailleTmp;
-			if(tailleTmp> btScalar(0.1))
-			{	
-				// configuration de la nouvelle action
-				this->action[Num_Piston] = new ActionPiston(robot->Arcs[Num_Piston], (btScalar) (taille/1));
-				// lancement du thread
-				Thread((void*)action[Num_Piston],actionThread);
-			}
-			else{
-				printf("Taille invalide\n");				
-			}
-		}
-		else {
-			printf("Le piston %d n'existe pas !!\n",Num_Piston);
-		}
-	}
-	*/
 	glutPostRedisplay();
 }
 
