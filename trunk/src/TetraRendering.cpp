@@ -19,6 +19,7 @@ bool TetraRendering::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID
 		this->leftMousePressed = true; //for drap and drop
 
 	} else if (id == OIS::MB_Right) {
+		CEGUI::MouseCursor::getSingleton().hide();
 		this->rightMousePressed = true; //for move camera
 	}
 
@@ -31,6 +32,7 @@ bool TetraRendering::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonI
 		this->leftMousePressed = false;
 
 	} else if (id == OIS::MB_Right) {
+		CEGUI::MouseCursor::getSingleton().show();
 		this->rightMousePressed = false;
 	}
 	return(true);
@@ -39,25 +41,26 @@ bool TetraRendering::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonI
 bool TetraRendering::mouseMoved (const OIS::MouseEvent &evt) {
 
 	Ogre::Ray mouseRay;
-	Ogre::RaySceneQueryResult result;
+	//Ogre::RaySceneQueryResult result;
 	Ogre::RaySceneQueryResult::iterator itr;
 
 	CEGUI::System::getSingleton().injectMouseMove(evt.state.X.rel, evt.state.Y.rel);
 
 	if(this->leftMousePressed) {
+		//add target for robot.
 		CEGUI::Point mousePos = CEGUI::MouseCursor::getSingleton().getPosition();
 		mouseRay = this->pCamera->getCameraToViewportRay(mousePos.d_x/float(evt.state.width), mousePos.d_y/float(evt.state.height));
 		this->pRaySceneQuery->setRay(mouseRay);
-		result = this->pRaySceneQuery->execute();
-		itr = result.begin( );
-		std::cout << "MOUSE LEFT pressed" << std::endl;
+		Ogre::RaySceneQueryResult &result = this->pRaySceneQuery->execute();
+		itr = result.begin();
 		if (itr != result.end() && itr->worldFragment) {
+			std::cout << "MOUSE LEFT pressed" << std::endl;
 			this->pSceneManager->getSceneNode("NodeTarget")->setPosition(itr->worldFragment->singleIntersection);
 			this->pSceneManager->getSceneNode("NodeTarget")->setVisible(true,true);
 		}
 
 	} else if(this->rightMousePressed) {
-		//CEGUI::MouseCursor::getSingleton().hide();
+		//move camera around the robot.
 		//this->pSceneManager->getSceneNode("NodeCamera")->yaw(Ogre::Degree(-evt.state.X.rel));
 		//this->pSceneManager->getSceneNode("NodeCamera")->pitch(Ogre::Degree(-evt.state.Y.rel));
 	}
