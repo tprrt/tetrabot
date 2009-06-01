@@ -1,25 +1,50 @@
-#ifndef WORLDINFO_H
-#define WORLDINFO_H
+#ifndef PHYSIC_WORLD_H
+#define PHYSIC_WORLD_H
 
-#include "Vector3Gen.h"
+#include "cd_wavefront.h"
+#include "ConvexBuilder.h"
+#include "ConvexDecomposition.h"
 
-class WorldInfo {
+#include "btBulletDynamicsCommon.h"
 
-protected:
-	Vector3Gen *min;
-	Vector3Gen *max;
-	Vector3Gen *gravity;
+#include "LinearMath/btQuickprof.h"
+#include "LinearMath/btIDebugDraw.h"
+#include "LinearMath/btGeometryUtil.h"
+#include "BulletCollision/CollisionShapes/btShapeHull.h"
+
+class PhysicWorld
+{
+public:
+	// Attributs
+	btRigidBody* bodyCube;
+
+	btDiscreteDynamicsWorld * m_dynamicsWorld;
+
+	btVector3 m_gravite;
+
+	btRigidBody* m_ground;
+
+	btAlignedObjectArray<btCollisionShape*> m_collisionShapes;
+
+	btAlignedObjectArray<btTriangleMesh*> m_trimeshes;
+
+	class btBroadphaseInterface*	m_overlappingPairCache;
+
+	class btCollisionDispatcher*	m_dispatcher;
+
+	class btConstraintSolver*	m_constraintSolver;
+
+	class btDefaultCollisionConfiguration* m_collisionConfiguration;
 
 public:
-	WorldInfo(Vector3Gen *min, Vector3Gen *max, Vector3Gen *gravity);
+	PhysicWorld(const WorldInfo info);
 
-	//virtual ~WorldInfo();
+	void initGround(const char* filename);
 
-	const Vector3Gen *getMin() const;
+	void setGravite(const btVector3& newGravite);
 
-	const Vector3Gen *getMax() const;
-
-	const Vector3Gen *getGravity() const;
+	btVector3 getGravite();
 };
 
-#endif /* WORLDINFO_H */
+
+#endif /* PHYSIC_WORLD_H */
