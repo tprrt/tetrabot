@@ -1,7 +1,7 @@
 #include "RobotTetra.h"
 
 // JAZZ MODIF : 1 JUIN 2009 : 11h39
-/*void RobotTetra::Deplacement(unsigned char key)
+void RobotTetra::Deplacement(unsigned char key)
 {
 	btScalar taille, tailleTmp,Step;
 	PhysicPiston* pistonTMP;
@@ -96,12 +96,10 @@
 			pistonTMP = (PhysicPiston*)this->Arcs[Num_Piston];
 			taille = pistonTMP->getLength() + incremente*(Step);
 			printf(" ==> taille : %f\n",taille);
-			//if(this->incremente == -1 ){
+			if(incremente == -1 ){
 				tailleTmp = pistonTMP->getTailleMax() - taille ;
-			//}
-			else{
+			} else {
 				tailleTmp = pistonTMP->getTailleMin() + taille ;
-				//this->incremente =(btScalar) 1.;
 			}
 			if(tailleTmp< 0) tailleTmp= -tailleTmp;
 			if(tailleTmp> btScalar(0.1))
@@ -120,9 +118,8 @@
 			printf("Le piston %d n'existe pas !!\n",Num_Piston);
 		}
 	}
-	
 	//glutPostRedisplay();
-}*/tra.cpp:102: erreur: expecte
+}
 
 // JAZZ MODIF :  1 JUIN 2009 : 2h50
 void RobotTetra::StartThread(void * a, void * b, void * c){
