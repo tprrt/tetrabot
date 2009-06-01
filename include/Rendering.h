@@ -58,17 +58,19 @@ public:
 
 	void run(void);
 
+	bool keyPressed(const OIS::KeyEvent &evt);
+
+	bool keyReleased(const OIS::KeyEvent &evt);
+
+	bool mouseMoved (const OIS::MouseEvent &evt);
+
+	bool mousePressed (const OIS::MouseEvent &evt, const OIS::MouseButtonID id);
+
+	bool mouseReleased (const OIS::MouseEvent &evt, const OIS::MouseButtonID id);
+
+	CEGUI::MouseButton convertButton(const OIS::MouseButtonID buttonID);
+
 	virtual bool frameEnded(const Ogre::FrameEvent& evt) { return true; }
-
-	virtual bool keyPressed(const OIS::KeyEvent &e) { return true; }
-
-	virtual bool keyReleased(const OIS::KeyEvent &e) {  return true; }
-
-	virtual bool mouseMoved (const OIS::MouseEvent &arg) { return true; }
-
-	virtual bool mousePressed (const OIS::MouseEvent &arg, OIS::MouseButtonID id) { return true; }
-
-	virtual bool mouseReleased (const OIS::MouseEvent &arg, OIS::MouseButtonID id) { return true; }
 
 	virtual ~Rendering();
 

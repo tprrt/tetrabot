@@ -39,6 +39,43 @@ void Rendering::initSkyBox(const bool enable, const std::string& SkyName) {
 	this->pSceneManager->setSkyBox(enable, SkyName);
 }
 
+bool Rendering::keyPressed(const OIS::KeyEvent &evt) { 
+
+	//this->pGUISystem->injectKeyDown(evt.key);
+	//this->pGUISystem->injectChar(evt.text);
+	CEGUI::System::getSingleton().injectKeyDown(evt.key);
+
+	return true;
+}
+
+bool Rendering::keyReleased(const OIS::KeyEvent &evt) {
+
+	CEGUI::System::getSingleton().injectKeyUp(evt.key);
+
+	return true;
+}
+
+bool Rendering::mousePressed(const OIS::MouseEvent &evt, const OIS::MouseButtonID id) {
+
+	CEGUI::System::getSingleton().injectMouseButtonDown(convertButton(id));
+
+	return true;
+}
+
+bool Rendering::mouseReleased(const OIS::MouseEvent &evt, const OIS::MouseButtonID id) {
+
+	CEGUI::System::getSingleton().injectMouseButtonUp(convertButton(id));
+
+	return true;
+}
+
+bool Rendering::mouseMoved(const OIS::MouseEvent &evt) {
+
+	CEGUI::System::getSingleton().injectMouseMove(evt.state.X.rel, evt.state.Y.rel);
+
+	return true;
+}
+
 bool Rendering::frameStarted(const Ogre::FrameEvent& evt)  {
 
 	this->deltaT = evt.timeSinceLastFrame;
@@ -163,18 +200,18 @@ void Rendering::initInputOutput() {
 	this->pInputManager = OIS::InputManager::createInputSystem(paramList);
 
 	//creation de l'objet clavier.
-	this->pKeyboard = static_cast<OIS::Keyboard*>(this->pInputManager->createInputObject(OIS::OISKeyboard, true));
+	this->pKeyboard = dynamic_cast<OIS::Keyboard*>(this->pInputManager->createInputObject(OIS::OISKeyboard, true));
 	this->pKeyboard->setEventCallback(this);
 
 	//creation de l'objet souris.
-	this->pMouse = static_cast<OIS::Mouse*>(this->pInputManager->createInputObject(OIS::OISMouse, true));
-	const OIS::MouseState &ms = this->pMouse->getMouseState();
+	this->pMouse = dynamic_cast<OIS::Mouse*>(this->pInputManager->createInputObject(OIS::OISMouse, true));
+	//const OIS::MouseState &ms = this->pMouse->getMouseState();
 	this->pMouse->setEventCallback(this);
 
 	//taille de la fenetre de l'application pour la gestion de la souris.
 	this->pRenderWindow->getMetrics(width, height, depth, left, top);
-	ms.width = width;
-	ms.height = height;
+	//ms.width = width;
+	//ms.height = height;
 }
 
 void Rendering::initGUI() {
@@ -184,8 +221,27 @@ void Rendering::initGUI() {
 	this->pGUIRenderer = new CEGUI::OgreCEGUIRenderer(this->pRenderWindow, Ogre::RENDER_QUEUE_OVERLAY, false, 3000, this->pSceneManager);
 	this->pGUISystem = new CEGUI::System(this->pGUIRenderer);
 
-	//CEGUI::SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"TaharezLookSkin.scheme");
-	//CEGUI::MouseCursor::getSingleton().setImage("TaharezLook", "MouseArrow");
+	CEGUI::MouseCursor::getSingleton().setImage(CEGUI::System::getSingleton().getDefaultMouseCursor());
+	//CEGUI::SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"skin.scheme");
+	//CEGUI::MouseCursor::getSingleton().setImage("skinMouse", "MouseArrow");
+	//this->pGUISystem->setDefaultMouseCursor((CEGUI::utf8*)"skinMouse", (CEGUI::utf8*)"MouseArrow");
+	//this->pGUISystem->setDefaultFont((CEGUI::utf8*)"BlueHighway-12");
+}
 
+CEGUI::MouseButton Rendering::convertButton(OIS::MouseButtonID buttonID) {
+
+	switch (buttonID) {
+	case OIS::MB_Left:
+	return CEGUI::LeftButton;
+
+	case OIS::MB_Right:
+	return CEGUI::RightButton;
+
+	case OIS::MB_Middle:
+	return CEGUI::MiddleButton;
+
+	default:
+	return CEGUI::LeftButton;
+	}
 }
 
