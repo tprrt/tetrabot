@@ -5,7 +5,7 @@
 //-------------------------CARACTERISTIQUES PHYSIQUES--------------------------
 //-----------------------------------------------------------------------------
 #define NODE_NUMBER 4
-#define NODE_WEIGHT 0.7
+#define NODE_WEIGHT 0.75
 #define NODE_RADIUS 2.0
 
 #define EDGE_NUMBER 6

@@ -52,14 +52,18 @@ bool TetraRendering::keyPressed(const OIS::KeyEvent &evt) {
 	} else if(evt.key == OIS::KC_F1) {
 		std::cout << "F1 pressed" << std::endl;
 		//this->robot->move(100,100,100);
+		// MODIF JAZZ : 31 / 05 /09 : 23h48
+		//Thread(robot,RobotTetra::marcherRobot);
+		// MODIF JAZZ : 01 / 06 /09 : 3h20
+		this->robot->StartThread((void*) 30,(void *)5,(void *)0);
 
 	} else if(evt.key == OIS::KC_F2) {
 		std::cout << "F2 pressed" << std::endl;
-		//this->robot->stretch();
+		this->robot->maxiRobot();
 
 	} else if(evt.key == OIS::KC_F3) {
 		std::cout << "F3 pressed" << std::endl;
-		//this->robot->reduce();
+		this->robot->nanoRobot();
 
 	} else if(evt.key == OIS::KC_F4) {
 		std::cout << "F4 pressed" << std::endl;
@@ -78,6 +82,108 @@ bool TetraRendering::keyPressed(const OIS::KeyEvent &evt) {
 	} else if(evt.key == OIS::KC_F8) {
 		std::cout << "F8 pressed" << std::endl;
 		//
+		// Tester l'algo GEN
+		// Pos Initiale (0,0,0) , 5 pourcent de mutation
+		// 2 Robots = 2 ActifsMax , 1 etapes et 2 Croisements
+	//	AlgoGenTetra* algo = new AlgoGenTetra(this->m_dynamicsWorld,this->robot,btVector3(0,0,0),btScalar(0.05),2,1,2);
+	//	algo->run();
+	// touche piston
+	} else if(evt.key == OIS::KC_A) {
+	std::cout << "A pressed" << std::endl;
+	// piston 0 ++
+	if(this->robot->incremente != 1.){
+		this->robot->incremente = 1.;
+	}
+	this->robot->Deplacement((unsigned char) 'Z');
+
+	} else if(evt.key == OIS::KC_Z) {
+	std::cout << "Z pressed" << std::endl;
+	// piston 1 ++
+	if(this->robot->incremente != 1.){
+		this->robot->incremente = 1.;
+	}
+	this->robot->Deplacement((unsigned char) 'Q');
+	
+	} else if(evt.key == OIS::KC_E) {
+	std::cout << "E pressed" << std::endl;
+	// piston 2 ++
+	if(this->robot->incremente != 1.){
+		this->robot->incremente = 1.;
+	}
+	this->robot->Deplacement((unsigned char) 'W');
+
+	} else if(evt.key == OIS::KC_R) {
+	std::cout << "R pressed" << std::endl;
+	// piston 3 ++
+	if(this->robot->incremente != 1.){
+		this->robot->incremente = 1.;
+	}
+	this->robot->Deplacement((unsigned char) 'E');
+
+	} else if(evt.key == OIS::KC_T) {
+	std::cout << "T pressed" << std::endl;
+	// piston 4 ++
+	if(this->robot->incremente != 1.){
+		this->robot->incremente = 1.;
+	}
+	this->robot->Deplacement((unsigned char) 'D');
+
+	} else if(evt.key == OIS::KC_Y) {
+	std::cout << "Y pressed" << std::endl;
+	// piston 5 ++
+	if(this->robot->incremente != 1.){
+		this->robot->incremente = 1.;
+	}
+	this->robot->Deplacement((unsigned char) 'X');
+
+	} else if(evt.key == OIS::KC_Q) {
+	std::cout << "Q pressed" << std::endl;
+	// piston 0 --
+	if(this->robot->incremente != -1.){
+		this->robot->incremente = -1.;
+	}
+	this->robot->Deplacement((unsigned char) 'Z');
+
+	} else if(evt.key == OIS::KC_S){
+	std::cout << "S pressed" << std::endl;
+	// piston 1 --
+	if(this->robot->incremente != -1.){
+		this->robot->incremente = -1.;
+	}
+	this->robot->Deplacement((unsigned char) 'Q');
+
+	} else if(evt.key == OIS::KC_D) {
+	std::cout << "D pressed" << std::endl;
+	// piston 2 --
+	if(this->robot->incremente != -1.){
+		this->robot->incremente = -1.;
+	}
+	this->robot->Deplacement((unsigned char) 'W');
+
+	}  else if(evt.key == OIS::KC_F) {
+	std::cout << "F pressed" << std::endl;
+	// piston 3 --
+	if(this->robot->incremente != -1.){
+		this->robot->incremente = -1.;
+	}
+	this->robot->Deplacement((unsigned char) 'E');
+
+	} else if(evt.key == OIS::KC_G) {
+	std::cout << "G pressed" << std::endl;
+	// piston 4 --
+	if(this->robot->incremente != -1.){
+		this->robot->incremente = -1.;
+	}
+	this->robot->Deplacement((unsigned char) 'D');
+
+	} else if(evt.key == OIS::KC_H) {
+	std::cout << "H pressed" << std::endl;
+	// piston 5 --
+	if(this->robot->incremente != -1.){
+		this->robot->incremente = -1.;
+	}
+	this->robot->Deplacement((unsigned char) 'X');
+
 	}
 	return(true);
 }

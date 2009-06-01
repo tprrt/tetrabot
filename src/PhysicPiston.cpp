@@ -272,7 +272,8 @@ int PhysicPiston::actionnerEdge(btScalar tailleVoulu)
 {
 	btScalar sens,ecart;
 	bool arreterPiston;
-	int timeOut = 40*EDGE_WAIT;// (40*10)*25 ms <=> 10 seconde
+	// MODIF JAZZ : 31 / 05 /09 : 23h51 : 40 => 10
+	int timeOut = 10*EDGE_WAIT;// (40*10)*25 ms <=> 10 seconde
 
 	// Restraindre un peu les limites d'allongement du piston
 	contrainte->setLowerLinLimit(btScalar(this->tailleMin - 0.1));

@@ -416,7 +416,6 @@ void GLTetraRendering::keyboardCallback(unsigned char key, int x, int y)
 	}
 	*/
 	glutPostRedisplay();
-
 }
 
 
@@ -431,7 +430,10 @@ void GLTetraRendering::specialKeyboard(int key, int x, int y)
 	case GLUT_KEY_F1:
 	{
 		printf("F1\n");
-		Thread(this,RobotTetra::marcherRobot);
+		// MODIF JAZZ : 31 / 05 /09 : 23h30
+		printf("Recuperation du point d'arrivee ...\n");
+		this->robot->bodyCube = this->bodyCube;
+		Thread(this->robot,RobotTetra::marcherRobot);
 		break;
 	}
 
