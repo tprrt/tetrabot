@@ -41,8 +41,6 @@ void Rendering::initSkyBox(const bool enable, const std::string& SkyName) {
 
 bool Rendering::keyPressed(const OIS::KeyEvent &evt) { 
 
-	//this->pGUISystem->injectKeyDown(evt.key);
-	//this->pGUISystem->injectChar(evt.text);
 	CEGUI::System::getSingleton().injectKeyDown(evt.key);
 
 	return true;
@@ -95,7 +93,9 @@ Rendering::~Rendering(void) {
 		delete this->pRoot;
 	}
 	if(this->pRenderWindow) {
-		delete this->pRenderWindow;
+		Ogre::WindowEventUtilities::removeWindowEventListener(this->pRenderWindow, this);
+		windowClosed(this->pRenderWindow);
+		//delete this->pRenderWindow;
 	}
 	if(this->pSceneManager) {
 		this->pSceneManager->destroyQuery(this->pRaySceneQuery);
@@ -154,6 +154,8 @@ void Rendering::initRendering(const std::string &name, const Ogre::SceneTypeMask
 	//this->pCamera->setFarClipDistance(1000);
 
 	this->pViewport = this->pRenderWindow->addViewport(pCamera);
+	this->pViewport->setOverlaysEnabled(false);
+	this->pViewport->setClearEveryFrame(true);
 	this->pViewport->setBackgroundColour(Ogre::ColourValue(0,0,0));
 
 	this->pCamera->setAspectRatio(Ogre::Real(this->pViewport->getActualWidth())/Ogre::Real(this->pViewport->getActualHeight()));
@@ -205,13 +207,13 @@ void Rendering::initInputOutput() {
 
 	//creation de l'objet souris.
 	this->pMouse = dynamic_cast<OIS::Mouse*>(this->pInputManager->createInputObject(OIS::OISMouse, true));
-	//const OIS::MouseState &ms = this->pMouse->getMouseState();
+	const OIS::MouseState &ms = this->pMouse->getMouseState();
 	this->pMouse->setEventCallback(this);
 
 	//taille de la fenetre de l'application pour la gestion de la souris.
 	this->pRenderWindow->getMetrics(width, height, depth, left, top);
-	//ms.width = width;
-	//ms.height = height;
+	ms.width = width;
+	ms.height = height;
 }
 
 void Rendering::initGUI() {
@@ -228,7 +230,7 @@ void Rendering::initGUI() {
 	//this->pGUISystem->setDefaultFont((CEGUI::utf8*)"BlueHighway-12");
 }
 
-CEGUI::MouseButton Rendering::convertButton(OIS::MouseButtonID buttonID) {
+const CEGUI::MouseButton Rendering::convertButton(const OIS::MouseButtonID buttonID) const {
 
 	switch (buttonID) {
 	case OIS::MB_Left:
