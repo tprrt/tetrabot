@@ -89,19 +89,19 @@ void RobotTetra::Deplacement(unsigned char key)
 	}// FIN SWITCH
 	//        std::cout << "unused key : " << key << std::endl;
 	if(Num_Piston != 99){
-		printf("Piston %d : %f",Num_Piston,incremente);
+		printf("Piston %d : %d",Num_Piston,incremente);
 		// verif piston existe
 		if(this->Arcs[Num_Piston]!=NULL)
 		{	// verif taille futur valide
 			pistonTMP = (PhysicPiston*)this->Arcs[Num_Piston];
 			taille = pistonTMP->getLength() + incremente*(Step);
 			printf(" ==> taille : %f\n",taille);
-			if(this->incremente == -1 ){
+			if(incremente == -1 ){
 				tailleTmp = pistonTMP->getTailleMax() - taille ;
 			}
 			else{
 				tailleTmp = pistonTMP->getTailleMin() + taille ;
-				this->incremente =(btScalar) 1.;
+				incremente =(btScalar) 1.;
 			}
 			if(tailleTmp< 0) tailleTmp= -tailleTmp;
 			if(tailleTmp> btScalar(0.1))
