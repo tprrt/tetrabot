@@ -13,20 +13,20 @@ TetraRendering::TetraRendering() : Rendering("tetrabot", Ogre::ST_EXTERIOR_CLOSE
 	this->rightMousePressed = false;
 }
 
-bool TetraRendering::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id) {
+bool TetraRendering::mousePressed(const OIS::MouseEvent &evt, const OIS::MouseButtonID id) {
 
+printf("ssssss");
 	if(id == OIS::MB_Left) {
 		this->leftMousePressed = true; //for drap and drop
-
 	} else if (id == OIS::MB_Right) {
 		CEGUI::MouseCursor::getSingleton().hide();
 		this->rightMousePressed = true; //for move camera
 	}
 
-	return(true);
+	return Rendering::mousePressed(evt, id);
 }
 
-bool TetraRendering::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id) {
+bool TetraRendering::mouseReleased(const OIS::MouseEvent &evt, const OIS::MouseButtonID id) {
 
 	if(id == OIS::MB_Left) {
 		this->leftMousePressed = false;
@@ -35,23 +35,23 @@ bool TetraRendering::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonI
 		CEGUI::MouseCursor::getSingleton().show();
 		this->rightMousePressed = false;
 	}
-	return(true);
+
+	return Rendering::mouseReleased(evt, id);
 }
 
 bool TetraRendering::mouseMoved (const OIS::MouseEvent &evt) {
 
 	Ogre::Ray mouseRay;
-	//Ogre::RaySceneQueryResult result;
+	Ogre::RaySceneQueryResult result;
 	Ogre::RaySceneQueryResult::iterator itr;
-
-	CEGUI::System::getSingleton().injectMouseMove(evt.state.X.rel, evt.state.Y.rel);
 
 	if(this->leftMousePressed) {
 		//add target for robot.
-		CEGUI::Point mousePos = CEGUI::MouseCursor::getSingleton().getPosition();
-		mouseRay = this->pCamera->getCameraToViewportRay(mousePos.d_x/float(evt.state.width), mousePos.d_y/float(evt.state.height));
+		//CEGUI::Point mousePos = CEGUI::MouseCursor::getSingleton().getPosition();
+		//mouseRay = this->pCamera->getCameraToViewportRay(mousePos.d_x/float(evt.state.width), mousePos.d_y/float(evt.state.height));
+		mouseRay = this->pCamera->getCameraToViewportRay(evt.state.X.rel/float(evt.state.width), evt.state.Y.rel/float(evt.state.height));
 		this->pRaySceneQuery->setRay(mouseRay);
-		Ogre::RaySceneQueryResult &result = this->pRaySceneQuery->execute();
+		result = this->pRaySceneQuery->execute();
 		itr = result.begin();
 		if (itr != result.end() && itr->worldFragment) {
 			std::cout << "MOUSE LEFT pressed" << std::endl;
@@ -64,7 +64,7 @@ bool TetraRendering::mouseMoved (const OIS::MouseEvent &evt) {
 		//this->pSceneManager->getSceneNode("NodeCamera")->yaw(Ogre::Degree(-evt.state.X.rel));
 		//this->pSceneManager->getSceneNode("NodeCamera")->pitch(Ogre::Degree(-evt.state.Y.rel));
 	}
-	return(true);
+	return Rendering::mouseMoved(evt);
 }
 
 bool TetraRendering::keyPressed(const OIS::KeyEvent &evt) {
@@ -163,21 +163,25 @@ bool TetraRendering::keyPressed(const OIS::KeyEvent &evt) {
 	} else if(evt.key == OIS::KC_H) {
 		std::cout << "H pressed" << std::endl;
 		//this->robot->Deplacement((unsigned char) 'H');
+
 	} else if(evt.key == OIS::KC_I) {
 		std::cout << "I pressed" << std::endl;
 		//this->robot->Deplacement((unsigned char) 'I');
+
 	} else if(evt.key == OIS::KC_J) {
 		std::cout << "J pressed" << std::endl;
 		//this->robot->Deplacement((unsigned char) 'J');
+
 	} else if(evt.key == OIS::KC_K) {
 		std::cout << "K pressed" << std::endl;
 		//this->robot->Deplacement((unsigned char) 'K');
+
 	} else if(evt.key == OIS::KC_L) {
 		std::cout << "L pressed" << std::endl;
 		//this->robot->Deplacement((unsigned char) 'L');
-	}
 
-	return(true);
+	}
+	return Rendering::keyPressed(evt);
 }
 
 TetraRendering::~TetraRendering() {
@@ -262,15 +266,12 @@ void TetraRendering::createScene() {
 	this->pSceneManager->getSceneNode("NodeTarget")->setVisible(false,true);
 }
 
-Ogre::SceneManager * TetraRendering::getSceneManager(void) {
+const Ogre::SceneManager * TetraRendering::getSceneManager(void) const {
 	return(this->pSceneManager);
 }
 
 bool TetraRendering::frameStarted(const Ogre::FrameEvent & evt)
 {
-
-	
-
 	//update physic calcul.
 	if(this->physicWorld != NULL) {
 		this->physicWorld->m_dynamicsWorld->stepSimulation(this->deltaT, 10);

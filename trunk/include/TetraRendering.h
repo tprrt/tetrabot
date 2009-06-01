@@ -35,17 +35,19 @@ public:
 
 	bool keyPressed(const OIS::KeyEvent &e);
 
-	bool mouseMoved (const OIS::MouseEvent &arg);
+	//bool keyReleased(const OIS::KeyEvent &evt);
 
-	bool mousePressed (const OIS::MouseEvent &evt, OIS::MouseButtonID id);
+	bool mouseMoved (const OIS::MouseEvent &evt);
 
-	bool mouseReleased (const OIS::MouseEvent &evt, OIS::MouseButtonID id);
+	bool mousePressed (const OIS::MouseEvent &evt, const OIS::MouseButtonID id);
+
+	bool mouseReleased (const OIS::MouseEvent &evt, const OIS::MouseButtonID id);
 
 	virtual ~TetraRendering();
 
 	void createScene();
 
-	Ogre::SceneManager *getSceneManager(void);
+	const Ogre::SceneManager *getSceneManager(void) const;
 
 	bool frameStarted(const Ogre::FrameEvent & evt);
 
