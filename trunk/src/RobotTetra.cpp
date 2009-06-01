@@ -1,11 +1,11 @@
 #include "RobotTetra.h"
 
-
 // JAZZ MODIF : 1 JUIN 2009 : 11h39
 void RobotTetra::Deplacement(unsigned char key)
 {
 	btScalar taille, tailleTmp,Step;
 	PhysicPiston* pistonTMP;
+	int incremente =1;
 	int Num_Piston = 99;
 	taille=0.;
 	tailleTmp=0.;
@@ -26,99 +26,75 @@ void RobotTetra::Deplacement(unsigned char key)
 */
 	switch (key) 
 	{
-	/*	case 'z' :
-			{	
-				printf("Indication du piston 0\n"); 
-				// test boule 0 et boule 2
-				Gravity =  (b0+b2)*0.5 ;
-				this->bodyPave->translate(-b4);
-				this->bodyPave->translate(Gravity);
-				break;	
-			}
-		case 'q' :
-			{	
-				printf("Indication du piston 1\n");
-				// test boule 0 et boule 1
-				Gravity =  (b0+b1)*0.5 ;
-				this->bodyPave->translate(-b4);
-				this->bodyPave->translate(Gravity);
-				break;	
-			}
-		case 'w' :{
-			printf("Indication du piston 2\n");
-			// test boule 0 et boule 3
-			Gravity =  (b0+b3)*0.5 ;
-			this->bodyPave->translate(-b4);
-			this->bodyPave->translate(Gravity);
-			break;	
+		case 'A':
+		{	incremente =1;
+			Num_Piston = 0;
+		break;
 		}
-		case 'e' :{
-			printf("Indication du piston 3\n");
-			// test boule 1 et boule 2
-			Gravity =  (b1+b2)*0.5 ;
-			this->bodyPave->translate(-b4);
-			this->bodyPave->translate(Gravity);
-			break;	
-		}
-		case 'd' :{
-			printf("Indication du piston 4\n");
-			// test boule 1 et boule 3
-			Gravity =  (b1+b3)*0.5 ;
-			this->bodyPave->translate(-b4);
-			this->bodyPave->translate(Gravity);
-			break;	
-		}
-		case 'x' :{
-			printf("Indication du piston 5\n");
-			// test boule 2 et boule 3
-			Gravity =  (b2+b3)*0.5 ;
-			this->bodyPave->translate(-b4);
-			this->bodyPave->translate(Gravity);
-			break;
-		} */
-
 		case 'Z':
-		{	Num_Piston = 0;
-		break;
-		}
-		case 'Q':
-		{	Num_Piston = 1;
-		break;
-		}
-		case 'W':
-		{	Num_Piston = 2;
+		{	incremente =1;
+			Num_Piston = 1;
 		break;
 		}
 		case 'E':
-		{	Num_Piston = 3;
+		{	incremente =1;
+			Num_Piston = 2;
 		break;
 		}
-		case 'D':
-		{	Num_Piston = 4;
+		case 'R':
+		{	incremente =1;
+			Num_Piston = 3;
 		break;
 		}
-		case 'X':
-		{	Num_Piston = 5;
+		case 'T':
+		{	incremente =1;
+			Num_Piston = 4;
+		break;
+		}
+		case 'Y':
+		{	incremente =1;
+			Num_Piston = 5;
+		break;
+		}
+		case 'Q':
+		{	incremente =-1;
+			Num_Piston = 0;
 		break;
 		}
 		case 'S':
-		{
-			
-			printf("Inversion %f -> %f \n",this->incremente, (-1)*this->incremente);
-			this->incremente *=(btScalar) -1.;
-			
+		{	incremente =-1;
+			Num_Piston = 1;
+		break;
 		}
-
-		default: break; 
+		case 'D':
+		{	incremente =-1;
+			Num_Piston = 2;
+		break;
+		}
+		case 'F':
+		{	incremente =-1;
+			Num_Piston = 3;
+		break;
+		}
+		case 'G':
+		{	incremente =-1;
+			Num_Piston = 4;
+		break;
+		}
+		case 'H':
+		{	incremente =-1;
+			Num_Piston = 5;
+		break;
+		}
 	}// FIN SWITCH
 	//        std::cout << "unused key : " << key << std::endl;
 	if(Num_Piston != 99){
-		printf("Piston %d : %f",Num_Piston,this->incremente);
+		printf("Piston %d : %f",Num_Piston,incremente);
 		// verif piston existe
 		if(this->Arcs[Num_Piston]!=NULL)
 		{	// verif taille futur valide
 			pistonTMP = (PhysicPiston*)this->Arcs[Num_Piston];
-			taille = pistonTMP->getLength() + this->incremente*(Step);
+			taille = pistonTMP->getLength() + incremente*(Step);
 			printf(" ==> taille : %f\n",taille);
 			if(this->incremente == -1 ){
 				tailleTmp = pistonTMP->getTailleMax() - taille ;
