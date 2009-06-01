@@ -61,11 +61,12 @@ Rendering::~Rendering(void) {
 		delete this->pRenderWindow;
 	}
 	if(this->pSceneManager) {
+		this->pSceneManager->destroyQuery(this->pRaySceneQuery);
 		delete this->pSceneManager;
 	}
-	if(this->pViewport) {
+	/*if(this->pViewport) {
 		delete this->pViewport;
-	}
+	}*/
 	if(this->pCamera) {
 		delete this->pCamera;
 	}

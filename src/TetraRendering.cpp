@@ -15,18 +15,20 @@ TetraRendering::TetraRendering() : Rendering("tetrabot", Ogre::ST_EXTERIOR_CLOSE
 
 bool TetraRendering::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id) {
 
+	if(id == OIS::MB_Left) {
+		this->leftMousePressed = true;
+	} else if (id == OIS::MB_Right) {
+		CEGUI::MouseCursor::getSingleton().hide();
+		this->rightMousePressed = true;
+	}
+
 
 	return(true);
 }
 
 bool TetraRendering::mouseMoved (const OIS::MouseEvent &evt) {
 
-	/*if(this->shiftLeftPressed) {
-		//this->pSceneManager->getSceneNode("Scene1")->yaw(Ogre::Radian(evt.state.X.rel*(-0.005)));
-		//this->pSceneManager->getSceneNode("Scene1")->pitch(Ogre::Radian(evt.state.Y.rel*(-0.005)));
-		//this->pCamera->yaw(Ogre::Radian(evt.state.X.rel*(-0.005)));
-		//this->pCamera->pitch(Ogre::Radian(evt.state.Y.rel*(-0.005)));
-	}*/
+	CEGUI::System::getSingleton().injectMouseMove(evt.state.X.rel, evt.state.Y.rel);
 	return(true);
 }
 
@@ -245,3 +247,4 @@ bool TetraRendering::frameStarted(const Ogre::FrameEvent & evt)
 
 	return Rendering::frameStarted(evt);
 }
+
