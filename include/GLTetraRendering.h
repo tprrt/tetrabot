@@ -11,7 +11,7 @@
 #include "BulletDynamics/ConstraintSolver/btSliderConstraint.h"
 #include "Application.h"
 #include "Threads.h"
-#include "WorldPhysic.h"
+#include "PhysicWorld.h"
 #include "RobotTetra.h"
 #include "characteristics.h"
 #include "ControleurRobot.h"
@@ -46,7 +46,7 @@ public:
 	
 	ActionPiston *action[6];
 
-	WorldPhysic * world;
+	PhysicWorld * world;
 
 	RobotTetra * robot;
 

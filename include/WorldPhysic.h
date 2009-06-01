@@ -1,5 +1,5 @@
-#ifndef WORLD_PHYSIC_H
-#define WORLD_PHYSIC_H
+#ifndef PHYSIC_WORLD_H
+#define PHYSIC_WORLD_H
 
 #include "cd_wavefront.h"
 #include "ConvexBuilder.h"
@@ -12,7 +12,7 @@
 #include "LinearMath/btGeometryUtil.h"
 #include "BulletCollision/CollisionShapes/btShapeHull.h"
 
-class WorldPhysic
+class PhysicWorld
 {
 public:
 	// Attributs
@@ -37,7 +37,7 @@ public:
 	class btDefaultCollisionConfiguration* m_collisionConfiguration;
 
 public:
-	WorldPhysic(const btVector3& worldMin,const btVector3& worldMax,const btVector3& gravite);
+	PhysicWorld(const WorldInfo info);
 
 	void initGround(const char* filename);
 
@@ -47,4 +47,4 @@ public:
 };
 
 
-#endif /* WORLD_PHYSIC_H */
+#endif /* PHYSIC_WORLD_H */
