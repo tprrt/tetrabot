@@ -348,40 +348,54 @@ void GLTetraRendering::keyboardCallback(unsigned char key, int x, int y)
 			break;
 		}
 
+		case 'A':
+		{	robot->Deplacement((unsigned char) 'A');
+		break;
+		}
 		case 'Z':
 		{	robot->Deplacement((unsigned char) 'Z');
-		break;
-		}
-		case 'Q':
-		{	robot->Deplacement((unsigned char) 'Q');
-		break;
-		}
-		case 'W':
-		{	robot->Deplacement((unsigned char) 'W');
 		break;
 		}
 		case 'E':
 		{	robot->Deplacement((unsigned char) 'E');
 		break;
 		}
+		case 'R':
+		{	robot->Deplacement((unsigned char) 'R');
+		break;
+		}
+		case 'T':
+		{	robot->Deplacement((unsigned char) 'T');
+		break;
+		}
+		case 'Y':
+		{	robot->Deplacement((unsigned char) 'Y');
+		break;
+		}
+		case 'Q':
+		{	robot->Deplacement((unsigned char) 'Q');
+		break;
+		}
+		case 'S':
+		{	robot->Deplacement((unsigned char) 'S');
+		break;
+		}
 		case 'D':
 		{	robot->Deplacement((unsigned char) 'D');
 		break;
 		}
-		case 'X':
-		{	robot->Deplacement((unsigned char) 'X');
+		case 'F':
+		{	robot->Deplacement((unsigned char) 'F');
 		break;
 		}
-		case 'S':
-		{
-			
-			// Je comprends pas ce que tu cherche a faire mais PAS D'ATTRIBUT incremente dans robotTetra
-			// dans gl_piston peut-etre?
-			printf("Inversion %f -> %f \n",robot->incremente, (-1)*robot->incremente);
-			robot->incremente *=(btScalar) -1.;
-			
+		case 'G':
+		{	robot->Deplacement((unsigned char) 'G');
+		break;
 		}
-
+		case 'H':
+		{	robot->Deplacement((unsigned char) 'H');
+		break;
+		}
 		default: break; 
 	}// FIN SWITCH
 	//        std::cout << "unused key : " << key << std::endl;
