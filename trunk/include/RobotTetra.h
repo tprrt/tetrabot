@@ -11,14 +11,21 @@
 #include "WorldPhysic.h"
 */
 #include "ActionPiston.h"
+// JAZZ MODIF :  1 JUIN 2009 : 2h42
+#include "Threads.h"
+// JAZZ MODIF :  1 JUIN 2009 : 3h31
+#include "AlgoGenTetra.h"
 
 class RobotTetra: public PhysicRobot
 {
 protected:
 
-	ActionPiston *action[6];
+	ActionPiston*	action[6];
+
 public:	
 	btRigidBody* bodyCube;
+	btVector3* end;
+	btScalar 	incremente;
 	
 public:
 	// Test avec GL
@@ -39,6 +46,13 @@ public:
 
 	// Deplacer le robot
 	void translate(const btVector3& to);
+	// JAZZ MODIF :  1 JUIN 2009 : 2h42
+	// Lance des Threads
+	//void StartThread(btScalar a, btScalar b, btScalar c);
+	void StartThread(void * a, void * b, void * c);
+	
+	// JAZZ MODIF : 1 JUIN 2009 : 11h52
+	void Deplacement(unsigned char key);
 };
 
 #endif /* ROBOT_TETRA */

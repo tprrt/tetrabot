@@ -1,6 +1,161 @@
 #include "RobotTetra.h"
 
 
+// JAZZ MODIF : 1 JUIN 2009 : 11h39
+void RobotTetra::Deplacement(unsigned char key)
+{
+	btScalar taille, tailleTmp,Step;
+	PhysicPiston* pistonTMP;
+	int Num_Piston = 99;
+	taille=0.;
+	tailleTmp=0.;
+	Step = 1.F;
+	//PhysicNoeud* noeudTMP;
+	
+	// Calcul de la position du piston voulu
+/*	noeudTMP = (PhysicNoeud*) robot->Sommets[0];
+	const btVector3& b0 =  noeudTMP->getBody()->getCenterOfMassPosition();
+	noeudTMP = (PhysicNoeud*) robot->Sommets[1];
+	const btVector3& b1 =  noeudTMP->getBody()->getCenterOfMassPosition();
+	noeudTMP = (PhysicNoeud*) robot->Sommets[2];
+	const btVector3& b2 =  noeudTMP->getBody()->getCenterOfMassPosition();
+	noeudTMP = (PhysicNoeud*) robot->Sommets[3];
+	const btVector3& b3 =  noeudTMP->getBody()->getCenterOfMassPosition();
+	const btVector3& b4 =  this->bodyPave->getCenterOfMassPosition();
+	btVector3 Gravity = btVector3(0.,0.,0.);
+*/
+	switch (key) 
+	{
+	/*	case 'z' :
+			{	
+				printf("Indication du piston 0\n"); 
+				// test boule 0 et boule 2
+				Gravity =  (b0+b2)*0.5 ;
+				this->bodyPave->translate(-b4);
+				this->bodyPave->translate(Gravity);
+				break;	
+			}
+		case 'q' :
+			{	
+				printf("Indication du piston 1\n");
+				// test boule 0 et boule 1
+				Gravity =  (b0+b1)*0.5 ;
+				this->bodyPave->translate(-b4);
+				this->bodyPave->translate(Gravity);
+				break;	
+			}
+		case 'w' :{
+			printf("Indication du piston 2\n");
+			// test boule 0 et boule 3
+			Gravity =  (b0+b3)*0.5 ;
+			this->bodyPave->translate(-b4);
+			this->bodyPave->translate(Gravity);
+			break;	
+		}
+		case 'e' :{
+			printf("Indication du piston 3\n");
+			// test boule 1 et boule 2
+			Gravity =  (b1+b2)*0.5 ;
+			this->bodyPave->translate(-b4);
+			this->bodyPave->translate(Gravity);
+			break;	
+		}
+		case 'd' :{
+			printf("Indication du piston 4\n");
+			// test boule 1 et boule 3
+			Gravity =  (b1+b3)*0.5 ;
+			this->bodyPave->translate(-b4);
+			this->bodyPave->translate(Gravity);
+			break;	
+		}
+		case 'x' :{
+			printf("Indication du piston 5\n");
+			// test boule 2 et boule 3
+			Gravity =  (b2+b3)*0.5 ;
+			this->bodyPave->translate(-b4);
+			this->bodyPave->translate(Gravity);
+			break;
+		} */
+
+		case 'Z':
+		{	Num_Piston = 0;
+		break;
+		}
+		case 'Q':
+		{	Num_Piston = 1;
+		break;
+		}
+		case 'W':
+		{	Num_Piston = 2;
+		break;
+		}
+		case 'E':
+		{	Num_Piston = 3;
+		break;
+		}
+		case 'D':
+		{	Num_Piston = 4;
+		break;
+		}
+		case 'X':
+		{	Num_Piston = 5;
+		break;
+		}
+		case 'S':
+		{
+			
+			printf("Inversion %f -> %f \n",this->incremente, (-1)*this->incremente);
+			this->incremente *=(btScalar) -1.;
+			
+		}
+
+		default: break; 
+	}// FIN SWITCH
+	//        std::cout << "unused key : " << key << std::endl;
+	if(Num_Piston != 99){
+		printf("Piston %d : %f",Num_Piston,this->incremente);
+		// verif piston existe
+		if(this->Arcs[Num_Piston]!=NULL)
+		{	// verif taille futur valide
+			pistonTMP = (PhysicPiston*)this->Arcs[Num_Piston];
+			taille = pistonTMP->getLength() + this->incremente*(Step);
+			printf(" ==> taille : %f\n",taille);
+			if(this->incremente == -1 ){
+				tailleTmp = pistonTMP->getTailleMax() - taille ;
+			}
+			else{
+				tailleTmp = pistonTMP->getTailleMin() + taille ;
+				this->incremente =(btScalar) 1.;
+			}
+			if(tailleTmp< 0) tailleTmp= -tailleTmp;
+			if(tailleTmp> btScalar(0.1))
+			{	
+				// configuration de la nouvelle action
+				pistonTMP = (PhysicPiston*)this->Arcs[Num_Piston];
+				this->action[Num_Piston] = new ActionPiston(pistonTMP, (btScalar) (taille/1));
+				// lancement du thread
+				Thread((void*)this->action[Num_Piston],actionThread);
+			}
+			else{
+				printf("Taille invalide\n");				
+			}
+		}
+		else {
+			printf("Le piston %d n'existe pas !!\n",Num_Piston);
+		}
+	}
+	
+	//glutPostRedisplay();
+}
+
+// JAZZ MODIF :  1 JUIN 2009 : 2h50
+void RobotTetra::StartThread(void * a, void * b, void * c){
+	printf("StartThread used\n");
+	this->end = new btVector3;
+	this->end = (btVector3*)((btScalar*)a,(btScalar*)b,(btScalar*)c);
+	Thread(this,RobotTetra::marcherRobot);
+}
+
 bool RobotTetra::IsNotInArea(const btVector3 &G,const btVector3 &end2){
 	return (
 		 end2.distance(G) > btScalar(5.)
@@ -64,10 +219,26 @@ void* RobotTetra::marcherRobot(void *demo)
 	btVector3 vectTMP[3];
 	PhysicPiston* pistonTMP;
 	PhysicNoeud* noeuds[4];
+	// MODIF JAZZ : 31 / 05 /09 : 23h45
+	// De base on definit le pt d'arrivee
+	btVector3 end = btVector3(btScalar(30.),btScalar(5.),btScalar(0.));
 	// On va deplacer le robot
 	// On choisi un point d'arrive du robot sur le cercle de centre ( G : center of masse et de rayon R = 5.)
+	// MODIF JAZZ : 31 / 05 /09 : 23h45
+	if(robot->bodyCube != NULL){
 	printf("Test 1 : btVector3 end = robot->bodyCube->getCenterOfMassPosition();\n");
 	btVector3 end = robot->bodyCube->getCenterOfMassPosition();
+	}
+	else{
+		if(robot->end != NULL){
+				printf("Test 1Bis: btVector3 end = robot->end;\n");
+			btVector3 end = *robot->end;
+		}
+		else{
+			printf("Definition d'un nouveau point d'arrivee ( 30,5,0 )\n");
+			btVector3 end = btVector3(btScalar(30.),btScalar(5.),btScalar(0.));}
+	}
+	
 	printf("Test 2 : end.setY(btScalar(robot->getCenterOfMassPosition().getY()));\n");
 	end.setY(btScalar(robot->getCenterOfMassPosition().getY()));
 
@@ -119,7 +290,8 @@ void* RobotTetra::marcherRobot(void *demo)
 			Thread((void*)robot->action[i],actionThread);
 		}
 		// On attends 8 secondes que l'initialisation ce termine
-		sleep(10);
+		// MODIF JAZZ : 31 / 05 /09 : 23h50 : 10 => 3
+		sleep(3);
 		NHaut = 0;
 		// On cherche le noeud NHaut le plus haut.
 		for(i=1;i<4;i++)
@@ -197,15 +369,17 @@ void* RobotTetra::marcherRobot(void *demo)
 		robot->action[PHaut]->setTailleVoulu(pistonTMP->getTailleMax());
 		Thread((void*)robot->action[PHaut],actionThread);
 		// On attends 12 secondes
-		sleep(12);
+		// MODIF JAZZ : 31 / 05 /09 : 23h55 12 => 4
+		sleep(4);
 		// On bloque les pistons liant le noeuds NHaut precedement debloques
 		pistonTMP = (PhysicPiston*) robot->Arcs[P1];
 		pistonTMP->lock();
 		pistonTMP = (PhysicPiston*) robot->Arcs[P2];
 		pistonTMP->lock();
 		// On debloque les contraintes coniques des deux precedents pistons
-
-
+	
+	// MODIF JAZZ : 31 / 05 /09 : 23h54
+	end.setY(btScalar(robot->getCenterOfMassPosition().getY()));
 	}// Fin WHILE
 	// La marche du robot est terminée.
 	// Mettre le robot à l'etat final (pistons au minimum de leur taille)
@@ -217,7 +391,8 @@ void* RobotTetra::marcherRobot(void *demo)
 		Thread((void*)robot->action[i],actionThread);
 	}
 	// Attendre que les pistons soient arretes
-	sleep(10);
+	// MODIF JAZZ : 31 / 05 /09 : 23h53  8 => 3
+	sleep(3);
 
 	printf("Arret du robot!\n");
 
