@@ -9,6 +9,7 @@
 
 Rendering::Rendering(const std::string &name, const Ogre::SceneTypeMask typeMask) {
 
+	this->deltaT = 0;
 	this->finish = false;
 	this->initRendering(name, typeMask);
 	this->initInputOutput();
@@ -38,6 +39,8 @@ void Rendering::initSkyBox(const bool enable, const std::string& SkyName) {
 }
 
 bool Rendering::frameStarted(const Ogre::FrameEvent& evt)  {
+
+	this->deltaT = evt.timeSinceLastFrame;
 
 	if(this->pMouse) {
 		this->pMouse->capture();

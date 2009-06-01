@@ -9,49 +9,41 @@
 
 TetraRendering::TetraRendering() : Rendering("tetrabot", Ogre::ST_EXTERIOR_CLOSE) {
 
-	this->shiftLeftPressed = false;
 }
 
 bool TetraRendering::mouseMoved (const OIS::MouseEvent &evt) {
 
-	if(this->shiftLeftPressed) {
+	/*if(this->shiftLeftPressed) {
 		//this->pSceneManager->getSceneNode("Scene1")->yaw(Ogre::Radian(evt.state.X.rel*(-0.005)));
 		//this->pSceneManager->getSceneNode("Scene1")->pitch(Ogre::Radian(evt.state.Y.rel*(-0.005)));
 		//this->pCamera->yaw(Ogre::Radian(evt.state.X.rel*(-0.005)));
 		//this->pCamera->pitch(Ogre::Radian(evt.state.Y.rel*(-0.005)));
-	}
+	}*/
 	return(true);
 }
 
 bool TetraRendering::keyPressed(const OIS::KeyEvent &evt) {
 
 	if(evt.key == OIS::KC_ESCAPE) {
+		std::cout << "ESC pressed" << std::endl;
 		this->finish = true;
-	} else if(evt.key == OIS::KC_LSHIFT) {
-		if(this->shiftLeftPressed) {
-			this->shiftLeftPressed = false;
-		} else {
-			this->shiftLeftPressed = true;
-		}
+
 	} else if(evt.key == OIS::KC_UP) {
 		std::cout << "UP pressed" << std::endl;
-		//this->pSceneManager->getSceneNode("Scene1")->
+		//this->pSceneManager->getSceneNode("NodeCamera")->;
 
 	} else if(evt.key == OIS::KC_DOWN) {
 		std::cout << "DOWN pressed" << std::endl;
-		//this->pSceneManager->getSceneNode("Scene1")->
 
 	} else if(evt.key == OIS::KC_LEFT) {
 		std::cout << "LEFT pressed" << std::endl;
-		//this->pSceneManager->getSceneNode("Scene1")->
 
 	} else if(evt.key == OIS::KC_RIGHT) {
 		std::cout << "RIGHT pressed" << std::endl;
-		//this->pSceneManager->getSceneNode("Scene1")->
 
 	} else if(evt.key == OIS::KC_F1) {
 		std::cout << "F1 pressed" << std::endl;
-		//this->robot->move(100,100,100);
+		//this->robot->move(100, 100, 100);
 		// MODIF JAZZ : 31 / 05 /09 : 23h48
 		//Thread(robot,RobotTetra::marcherRobot);
 		// MODIF JAZZ : 01 / 06 /09 : 3h20
@@ -188,9 +180,11 @@ bool TetraRendering::keyPressed(const OIS::KeyEvent &evt) {
 	return(true);
 }
 
-//TetraRendering::~TetraRendering() {
-	//Rendering::~Rendering();
-//}
+TetraRendering::~TetraRendering() {
+
+	delete this->robot;
+	delete this->physicWorld;
+}
 
 void TetraRendering::createScene() {
 
@@ -212,12 +206,11 @@ void TetraRendering::createScene() {
 	pLight->setSpecularColour(1.0, 1.0, 1.0);
 
 
-	//spheres
+	//sceneNode for nodes of robot.
 	this->pSceneManager->getRootSceneNode()->createChild("NodeNoeud1");
 	this->pSceneManager->getSceneNode("NodeNoeud1")->attachObject(pEntity);
 	this->pSceneManager->getSceneNode("NodeNoeud1")->scale(NODE_RADIUS, NODE_RADIUS, NODE_RADIUS);
 	this->pSceneManager->getSceneNode("NodeNoeud1")->setPosition(Ogre::Vector3(0, 100, 0));
-
 
 	this->pSceneManager->getRootSceneNode()->createChild("NodeNoeud2");
 	this->pSceneManager->getSceneNode("NodeNoeud2")->attachObject(pEntity->clone("Sphere2"));
@@ -234,7 +227,7 @@ void TetraRendering::createScene() {
 	this->pSceneManager->getSceneNode("NodeNoeud4")->scale(NODE_RADIUS, NODE_RADIUS, NODE_RADIUS);
 	this->pSceneManager->getSceneNode("NodeNoeud4")->setPosition(Ogre::Vector3(50, 100, 50));
 
-	//physic
+	//init physic
 	btVector3 worldMin(-1000,-1000,-1000);
 	btVector3 worldMax(1000,1000,1000);
 	btVector3 gravity(0,-9.8,0);
@@ -244,9 +237,21 @@ void TetraRendering::createScene() {
 
 	this->robot = new RobotTetra(this->physicWorld->m_dynamicsWorld,this->pSceneManager,btVector3(0,30,0));
 
+	//init pistonRendering.
 	for (int i=0 ; i<EDGE_NUMBER ; i++ ) {
 		this->pistons.push_back(new PistonRendering(EDGE_MIN_SIZE, EDGE_MAX_SIZE, this->pSceneManager, i));
 	}
+
+	//init sceneNode for CenterOfMass of robot.
+	this->pSceneManager->getRootSceneNode()->createChild("NodeCenterOfMass");
+	this->pSceneManager->getSceneNode("NodeCenterOfMass")->setPosition(Vector3Gen(this->robot->getCenterOfMassPosition()).toVector3());
+	this->pSceneManager->getSceneNode("NodeCenterOfMass")->setVisible(false,true);
+
+	//init sceneNode for camera 3rd.
+	this->pSceneManager->getSceneNode("NodeCenterOfMass")->createChild("NodeCamera");
+	this->pSceneManager->getSceneNode("NodeCamera")->attachObject(this->pCamera);
+	this->pSceneManager->getSceneNode("NodeCamera")->setPosition(50, 50, 50);
+	this->pCamera->lookAt(this->pSceneManager->getSceneNode("NodeCenterOfMass")->getPosition());
 }
 
 Ogre::SceneManager * TetraRendering::getSceneManager(void) {
@@ -255,18 +260,18 @@ Ogre::SceneManager * TetraRendering::getSceneManager(void) {
 
 bool TetraRendering::frameStarted(const Ogre::FrameEvent & evt)
 {
-	btVector3 btCenter;
 
+	
+
+	//update physic calcul.
 	if(this->physicWorld != NULL) {
-		this->physicWorld->m_dynamicsWorld->stepSimulation(1.f/60.f,10);
+		this->physicWorld->m_dynamicsWorld->stepSimulation(this->deltaT, 10);
 	}
 
-	//NodePosition = this->pSceneManager->getSceneNode("NodeNoeud1")->getPosition();
-	btCenter = this->robot->getCenterOfMassPosition();
+	//update position center of Mass.
+	this->pSceneManager->getSceneNode("NodeCenterOfMass")->setPosition(Vector3Gen(this->robot->getCenterOfMassPosition()).toVector3());
 
-	this->pCamera->setPosition(btCenter.x()+50, btCenter.y()+50, btCenter.z()+50);
-	this->pCamera->lookAt(btCenter.x(), btCenter.y(), btCenter.z());
-
+	//update piston.
 	this->pistons[0]->afficherPiston(this->pSceneManager->getSceneNode("NodeNoeud1"),this->pSceneManager->getSceneNode("NodeNoeud2"));
 	this->pistons[1]->afficherPiston(this->pSceneManager->getSceneNode("NodeNoeud1"),this->pSceneManager->getSceneNode("NodeNoeud3"));
 	this->pistons[2]->afficherPiston(this->pSceneManager->getSceneNode("NodeNoeud1"),this->pSceneManager->getSceneNode("NodeNoeud4"));

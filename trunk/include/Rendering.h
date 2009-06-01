@@ -13,13 +13,18 @@
 #include <iostream>
 #include <string>
 
-//#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-#include "Ogre.h"
-#include "OIS/OIS.h"
-//#else
-//#include <OGRE/Ogre.h>
-//#include <OIS/OIS.h>
-//#endif
+#include <CEGUI/CEGUISystem.h>
+#include <CEGUI/CEGUISchemeManager.h>
+#include <OgreCEGUIRenderer.h>
+
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+	#include "Ogre.h"
+	#include "OIS/OIS.h"
+#else
+	#include <OGRE/Ogre.h>
+	#include <OIS/OIS.h>
+#endif
+
 class Rendering : public Ogre::FrameListener, public Ogre::WindowEventListener,
 	public OIS::MouseListener, public OIS::KeyListener {
 
@@ -35,6 +40,8 @@ protected:
 	OIS::Mouse *pMouse;
 	OIS::Keyboard *pKeyboard;
 
+
+	float deltaT;
 	bool finish;
 
 public:
@@ -62,12 +69,10 @@ public:
 
 	virtual ~Rendering();
 
-
 protected:
 	void initRendering(const std::string &name, const Ogre::SceneTypeMask typeMask);
 
 	void initInputOutput();
-
 };
 
 #endif /* RENDERING_H_ */

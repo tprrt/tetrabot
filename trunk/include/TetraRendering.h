@@ -8,19 +8,22 @@
 #ifndef TETRA_RENDERING_H_
 #define TETRA_RENDERING_H_
 
+#include "characteristics.h"
+#include "Vector3Gen.h"
+
 #include "Rendering.h"
+#include "PistonRendering.h"
+
 #include "RobotTetra.h"
 #include "WorldPhysic.h"
-#include "PistonRendering.h"
-#include "characteristics.h"
 
 class TetraRendering : public Rendering {
 
-public:
-	bool shiftLeftPressed;
+protected:
 
-	RobotTetra* robot;
-	WorldPhysic* physicWorld;
+	RobotTetra *robot;
+	WorldPhysic *physicWorld;
+
 	std::vector<PistonRendering *> pistons;
 
 public:
@@ -30,7 +33,7 @@ public:
 
 	bool mouseMoved (const OIS::MouseEvent &arg);
 
-	//virtual ~TetraRendering();
+	virtual ~TetraRendering();
 
 	void createScene();
 
