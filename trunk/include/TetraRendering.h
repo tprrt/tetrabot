@@ -22,7 +22,6 @@ class TetraRendering : public Rendering {
 
 protected:
 
-
 	RobotTetra* robot;
 	PhysicWorld* physicWorld;
 
