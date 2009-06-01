@@ -11,6 +11,12 @@ TetraRendering::TetraRendering() : Rendering("tetrabot", Ogre::ST_EXTERIOR_CLOSE
 
 }
 
+bool TetraRendering::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id) {
+
+
+	return(true);
+}
+
 bool TetraRendering::mouseMoved (const OIS::MouseEvent &evt) {
 
 	/*if(this->shiftLeftPressed) {
