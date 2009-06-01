@@ -25,7 +25,6 @@ protected:
 public:	
 	btRigidBody* bodyCube;
 	btVector3* end;
-	btScalar 	incremente;
 	
 public:
 	// Test avec GL

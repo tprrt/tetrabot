@@ -21,14 +21,10 @@ class TetraRendering : public Rendering {
 
 protected:
 
-<<<<<<< .mine
+
 	RobotTetra* robot;
 	PhysicWorld* physicWorld;
-=======
-	RobotTetra *robot;
-	WorldPhysic *physicWorld;
 
->>>>>>> .r67
 	std::vector<PistonRendering *> pistons;
 
 	bool leftMousePressed;
