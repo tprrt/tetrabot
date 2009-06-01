@@ -15,8 +15,8 @@ TetraRendering::TetraRendering() : Rendering("tetrabot", Ogre::ST_EXTERIOR_CLOSE
 
 bool TetraRendering::mousePressed(const OIS::MouseEvent &evt, const OIS::MouseButtonID id) {
 
-printf("ssssss");
 	if(id == OIS::MB_Left) {
+		std::cout << "MOUSE LEFT pressed" << std::endl;
 		this->leftMousePressed = true; //for drap and drop
 	} else if (id == OIS::MB_Right) {
 		CEGUI::MouseCursor::getSingleton().hide();
@@ -41,20 +41,18 @@ bool TetraRendering::mouseReleased(const OIS::MouseEvent &evt, const OIS::MouseB
 
 bool TetraRendering::mouseMoved (const OIS::MouseEvent &evt) {
 
-	Ogre::Ray mouseRay;
-	Ogre::RaySceneQueryResult result;
-	Ogre::RaySceneQueryResult::iterator itr;
-
 	if(this->leftMousePressed) {
-		//add target for robot.
-		//CEGUI::Point mousePos = CEGUI::MouseCursor::getSingleton().getPosition();
-		//mouseRay = this->pCamera->getCameraToViewportRay(mousePos.d_x/float(evt.state.width), mousePos.d_y/float(evt.state.height));
+
+		Ogre::Ray mouseRay;
+		Ogre::RaySceneQueryResult::iterator itr;
+
 		mouseRay = this->pCamera->getCameraToViewportRay(evt.state.X.rel/float(evt.state.width), evt.state.Y.rel/float(evt.state.height));
 		this->pRaySceneQuery->setRay(mouseRay);
-		result = this->pRaySceneQuery->execute();
+
+		Ogre::RaySceneQueryResult &result = this->pRaySceneQuery->execute();
 		itr = result.begin();
 		if (itr != result.end() && itr->worldFragment) {
-			std::cout << "MOUSE LEFT pressed" << std::endl;
+			std::cout << "Target ADD" << std::endl;
 			this->pSceneManager->getSceneNode("NodeTarget")->setPosition(itr->worldFragment->singleIntersection);
 			this->pSceneManager->getSceneNode("NodeTarget")->setVisible(true,true);
 		}
@@ -183,6 +181,11 @@ bool TetraRendering::keyPressed(const OIS::KeyEvent &evt) {
 	}
 	return Rendering::keyPressed(evt);
 }
+
+/*bool TetraRendering::keyReleased(const OIS::KeyEvent &evt) {
+
+	return Rendering::keyReleased(evt);
+}*/
 
 TetraRendering::~TetraRendering() {
 

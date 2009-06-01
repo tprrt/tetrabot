@@ -58,6 +58,10 @@ public:
 
 	void run(void);
 
+	//void windowResized(Ogre::RenderWindow* rw);
+
+	//void windowClosed(Ogre::RenderWindow* rw)
+
 	bool keyPressed(const OIS::KeyEvent &evt);
 
 	bool keyReleased(const OIS::KeyEvent &evt);
@@ -68,7 +72,7 @@ public:
 
 	bool mouseReleased (const OIS::MouseEvent &evt, const OIS::MouseButtonID id);
 
-	CEGUI::MouseButton convertButton(const OIS::MouseButtonID buttonID);
+	const CEGUI::MouseButton convertButton(const OIS::MouseButtonID buttonID) const;
 
 	virtual bool frameEnded(const Ogre::FrameEvent& evt) { return true; }
 
