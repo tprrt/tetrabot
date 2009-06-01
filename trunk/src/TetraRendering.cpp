@@ -181,7 +181,7 @@ void TetraRendering::createScene() {
 	btVector3 worldMax(1000,1000,1000);
 	btVector3 gravity(0,-9.8,0);
 
-	this->physicWorld = new WorldPhysic(worldMin,worldMax,gravity);
+	this->physicWorld = new PhysicWorld(worldMin,worldMax,gravity);
 	this->physicWorld->initGround("./data/terrains/Ground.obj");
 
 	this->robot = new RobotTetra(this->physicWorld->m_dynamicsWorld,this->pSceneManager,btVector3(0,30,0));

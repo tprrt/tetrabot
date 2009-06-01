@@ -1,12 +1,12 @@
-#include "WorldPhysic.h"
+#include "PhysicWorld.h"
 
-WorldPhysic::WorldPhysic(const btVector3& worldMin,const btVector3& worldMax,const btVector3& gravite)
+PhysicWorld::PhysicWorld(const WorldInfo info)
 {
 
 	m_collisionConfiguration = new btDefaultCollisionConfiguration();
 	m_dispatcher = new btCollisionDispatcher(m_collisionConfiguration);
 
-	m_overlappingPairCache = new btAxisSweep3(worldMin,worldMax);
+	m_overlappingPairCache = new btAxisSweep3(info.getMin()->toBtVector3(),info.getMax()->toBtVector3());
 
 	#if SLIDER_DEMO_USE_ODE_SOLVER
 	m_constraintSolver = new btOdeQuickstepConstraintSolver();
@@ -15,23 +15,23 @@ WorldPhysic::WorldPhysic(const btVector3& worldMin,const btVector3& worldMax,con
 	#endif
 	m_dynamicsWorld = new btDiscreteDynamicsWorld(m_dispatcher,m_overlappingPairCache,m_constraintSolver,m_collisionConfiguration);
 	//	wp->getSolverInfo().m_numIterations = 20; // default is 10
-	this->m_gravite = gravite;
-	m_dynamicsWorld->setGravity(gravite);
+	this->m_gravite = info.getGravity()->toBtVector3();
+	m_dynamicsWorld->setGravity(this->m_gravite);
 }
 
 
-void WorldPhysic::setGravite(const btVector3& newGravite)
+void PhysicWorld::setGravite(const btVector3& newGravite)
 {
 	this->m_dynamicsWorld->setGravity(newGravite);
 	this->m_gravite = newGravite;
 }
 
-btVector3 WorldPhysic::getGravite(){
+btVector3 PhysicWorld::getGravite(){
 	return this->m_gravite;
 }
 
 
-void WorldPhysic::initGround(const char* filename)
+void PhysicWorld::initGround(const char* filename)
 {
 	ConvexDecomposition::WavefrontObj wo;
 
@@ -46,7 +46,7 @@ void WorldPhysic::initGround(const char* filename)
 
 	class MyConvexDecomposition : public ConvexDecomposition::ConvexDecompInterface
 	{
-		WorldPhysic*	world;
+		PhysicWorld*	world;
 		btVector3 centroid;
 
 		public:
@@ -54,7 +54,7 @@ void WorldPhysic::initGround(const char* filename)
 			btAlignedObjectArray<btConvexHullShape*> m_convexShapes;
 			btAlignedObjectArray<btVector3> m_convexCentroids;
 
-			MyConvexDecomposition (FILE* outputFile,WorldPhysic* worldPhysic,btVector3& centre)
+			MyConvexDecomposition (FILE* outputFile,PhysicWorld* worldPhysic,btVector3& centre)
 			:world(worldPhysic),
 			mBaseCount(0),
 			mHullCount(0),

@@ -8,7 +8,7 @@
 /*
 #include "Action.h"
 #include "Caracteristiques.h"
-#include "WorldPhysic.h"
+#include "PhysicWorld.h"
 */
 #include "ActionPiston.h"
 // JAZZ MODIF :  1 JUIN 2009 : 2h42

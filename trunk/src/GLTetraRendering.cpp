@@ -91,7 +91,7 @@ void GLTetraRendering::initPhysics()
 	btVector3 worldMax(btScalar(1000),btScalar(1000),btScalar(1000));
 	btVector3 gravite = btVector3(btScalar(0.),btScalar(-9.8),btScalar(0.));
 
-	WorldPhysic* monde = new WorldPhysic(worldMin,worldMax,gravite);
+	PhysicWorld* monde = new PhysicWorld(worldMin,worldMax,gravite);
 	monde->initGround("./data/terrains/Ground.obj");
 
 	m_collisionConfiguration = monde->m_collisionConfiguration;

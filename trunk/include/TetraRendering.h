@@ -15,15 +15,20 @@
 #include "PistonRendering.h"
 
 #include "RobotTetra.h"
-#include "WorldPhysic.h"
+#include "PhysicWorld.h"
 
 class TetraRendering : public Rendering {
 
 protected:
 
+<<<<<<< .mine
+	RobotTetra* robot;
+	PhysicWorld* physicWorld;
+=======
 	RobotTetra *robot;
 	WorldPhysic *physicWorld;
 
+>>>>>>> .r67
 	std::vector<PistonRendering *> pistons;
 
 public:
