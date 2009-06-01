@@ -33,6 +33,8 @@ public:
 
 	bool mouseMoved (const OIS::MouseEvent &arg);
 
+	bool mousePressed (const OIS::MouseEvent &arg, OIS::MouseButtonID id);
+
 	virtual ~TetraRendering();
 
 	void createScene();

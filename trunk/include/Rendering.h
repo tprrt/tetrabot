@@ -34,12 +34,15 @@ protected:
 	Ogre::SceneManager *pSceneManager;
 	Ogre::Viewport *pViewport;
 	Ogre::Camera *pCamera;
+	Ogre::RaySceneQuery *pRaySceneQuery;
 	//Ogre::String ResourcePath;
 
 	OIS::InputManager *pInputManager;
 	OIS::Mouse *pMouse;
 	OIS::Keyboard *pKeyboard;
 
+	CEGUI::OgreCEGUIRenderer *pGUIRenderer;
+	CEGUI::System *pGUISystem;
 
 	float deltaT;
 	bool finish;

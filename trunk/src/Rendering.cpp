@@ -77,6 +77,15 @@ Rendering::~Rendering(void) {
 	if(this->pKeyboard) {
 		delete this->pKeyboard;
 	}
+	if(this->pRaySceneQuery) {
+		delete this->pRaySceneQuery;
+	}
+	if(this->pGUIRenderer) {
+		delete this->pGUIRenderer;
+	}
+	if(this->pGUISystem) {
+		delete this->pGUISystem;
+	}
 }
 
 void Rendering::initRendering(const std::string &name, const Ogre::SceneTypeMask typeMask) {
