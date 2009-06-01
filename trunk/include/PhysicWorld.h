@@ -12,6 +12,8 @@
 #include "LinearMath/btGeometryUtil.h"
 #include "BulletCollision/CollisionShapes/btShapeHull.h"
 
+#include "WorldInfo.h"
+
 class PhysicWorld
 {
 public:

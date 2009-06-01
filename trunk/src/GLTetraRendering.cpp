@@ -87,11 +87,11 @@ void GLTetraRendering::initPhysics()
 	setCameraDistance(26.f);
 
 	// init world
-	btVector3 worldMin(btScalar(-1000),btScalar(-1000),btScalar(-1000));
-	btVector3 worldMax(btScalar(1000),btScalar(1000),btScalar(1000));
-	btVector3 gravite = btVector3(btScalar(0.),btScalar(-9.8),btScalar(0.));
-
-	PhysicWorld* monde = new PhysicWorld(worldMin,worldMax,gravite);
+	Vector3Gen *worldMin = new Vector3Gen(-1000,-1000,-1000);
+	Vector3Gen* worldMax= new Vector3Gen(1000,1000,1000);
+	Vector3Gen *gravite = new Vector3Gen(0,-9.8,0.);
+	WorldInfo infos = WorldInfo(worldMin,worldMax,gravite);
+	PhysicWorld* monde = new PhysicWorld(infos);
 	monde->initGround("./data/terrains/Ground.obj");
 
 	m_collisionConfiguration = monde->m_collisionConfiguration;

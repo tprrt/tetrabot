@@ -191,11 +191,12 @@ void TetraRendering::createScene() {
 	this->pSceneManager->getSceneNode("NodeNoeud4")->setPosition(Ogre::Vector3(50, 100, 50));
 
 	//init physic
-	btVector3 worldMin(-1000,-1000,-1000);
-	btVector3 worldMax(1000,1000,1000);
-	btVector3 gravity(0,-9.8,0);
+	Vector3Gen *worldMin = new Vector3Gen(-1000,-1000,-1000);
+	Vector3Gen* worldMax= new Vector3Gen(1000,1000,1000);
+	Vector3Gen *gravite = new Vector3Gen(0,-9.8,0.);
+	WorldInfo infos = WorldInfo(worldMin,worldMax,gravite);
+	this->physicWorld = new PhysicWorld(infos);
 
-	this->physicWorld = new PhysicWorld(worldMin,worldMax,gravity);
 	this->physicWorld->initGround("./data/terrains/Ground.obj");
 
 	this->robot = new RobotTetra(this->physicWorld->m_dynamicsWorld,this->pSceneManager,btVector3(0,30,0));

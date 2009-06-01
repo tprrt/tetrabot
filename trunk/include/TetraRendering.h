@@ -16,6 +16,7 @@
 
 #include "RobotTetra.h"
 #include "PhysicWorld.h"
+#include "WorldInfo.h"
 
 class TetraRendering : public Rendering {
 

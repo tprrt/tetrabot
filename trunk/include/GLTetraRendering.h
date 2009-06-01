@@ -12,6 +12,7 @@
 #include "Application.h"
 #include "Threads.h"
 #include "PhysicWorld.h"
+#include "WorldInfo.h"
 #include "RobotTetra.h"
 #include "characteristics.h"
 #include "ControleurRobot.h"
