@@ -11,13 +11,13 @@ INCLUDE_DIRECTORIES(
 	OpenGL
 	/usr/local/include
 	/usr/local/include/OGRE
-	#/usr/local/include/CEGUI
+	/usr/local/include/CEGUI
 	/usr/local/lib
 )
 LINK_DIRECTORIES(
 	/usr/local/include
 	/usr/local/include/OGRE
-	#/usr/local/include/CEGUI
+	/usr/local/include/CEGUI
 	/usr/local/lib
 )
 
@@ -28,7 +28,8 @@ LINK_LIBRARIES(
 
 	OgreMain
 	OIS
-	#CEGUIBase
+	CEGUIBase
+	CEGUIOgreRenderer
 
 	GL
 	glut
@@ -77,7 +78,8 @@ TARGET_LINK_LIBRARIES(
 
 	OgreMain
 	OIS
-	#CEGUIBase
+	CEGUIBase
+	CEGUIOgreRenderer
 
 	GL
 	glut
