@@ -9,6 +9,8 @@
 
 TetraRendering::TetraRendering() : Rendering("tetrabot", Ogre::ST_EXTERIOR_CLOSE) {
 
+	this->leftMousePressed = false;
+	this->rightMousePressed = false;
 }
 
 bool TetraRendering::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id) {
@@ -144,7 +146,7 @@ void TetraRendering::createScene() {
 	pEntity->setCastShadows(true);
 
 	//create environement
-	this->initGround("Ground.mesh", false);
+	this->initGround("Ground.mesh", false, GROUND_SCALE);
 	this->initSkyBox(true, "Etoiles");
 
 	//light
