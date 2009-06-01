@@ -1,7 +1,7 @@
 #include "RobotTetra.h"
 
 // JAZZ MODIF : 1 JUIN 2009 : 11h39
-void RobotTetra::Deplacement(unsigned char key)
+/*void RobotTetra::Deplacement(unsigned char key)
 {
 	btScalar taille, tailleTmp,Step;
 	PhysicPiston* pistonTMP;
@@ -89,19 +89,19 @@ void RobotTetra::Deplacement(unsigned char key)
 	}// FIN SWITCH
 	//        std::cout << "unused key : " << key << std::endl;
 	if(Num_Piston != 99){
-		printf("Piston %d : %d",Num_Piston,incremente);
+		//printf("Piston %d : %f",Num_Piston,incremente);
 		// verif piston existe
 		if(this->Arcs[Num_Piston]!=NULL)
 		{	// verif taille futur valide
 			pistonTMP = (PhysicPiston*)this->Arcs[Num_Piston];
 			taille = pistonTMP->getLength() + incremente*(Step);
 			printf(" ==> taille : %f\n",taille);
-			if(incremente == -1 ){
+			//if(this->incremente == -1 ){
 				tailleTmp = pistonTMP->getTailleMax() - taille ;
-			}
+			//}
 			else{
 				tailleTmp = pistonTMP->getTailleMin() + taille ;
-				incremente =(btScalar) 1.;
+				//this->incremente =(btScalar) 1.;
 			}
 			if(tailleTmp< 0) tailleTmp= -tailleTmp;
 			if(tailleTmp> btScalar(0.1))
@@ -122,7 +122,7 @@ void RobotTetra::Deplacement(unsigned char key)
 	}
 	
 	//glutPostRedisplay();
-}
+}*/tra.cpp:102: erreur: expecte
 
 // JAZZ MODIF :  1 JUIN 2009 : 2h50
 void RobotTetra::StartThread(void * a, void * b, void * c){
