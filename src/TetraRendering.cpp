@@ -15,20 +15,41 @@ TetraRendering::TetraRendering() : Rendering("tetrabot", Ogre::ST_EXTERIOR_CLOSE
 
 bool TetraRendering::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id) {
 
+	Ogre::Entity *pEntity;
+
 	if(id == OIS::MB_Left) {
-		this->leftMousePressed = true;
+		this->leftMousePressed = true;//utile ?
+
+		this->pSceneManager->getSceneNode("NodeTarget")->setPosition(Ogre::Vector3(300, 300, 300));
+		this->pSceneManager->getSceneNode("NodeTarget")->setVisible(true,true);
+
 	} else if (id == OIS::MB_Right) {
-		CEGUI::MouseCursor::getSingleton().hide();
+		//CEGUI::MouseCursor::getSingleton().hide();
 		this->rightMousePressed = true;
 	}
+	return(true);
+}
 
+bool TetraRendering::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id) {
 
+	if(id == OIS::MB_Left) {
+		this->leftMousePressed = false;
+	} else if (id == OIS::MB_Right) {
+		CEGUI::MouseCursor::getSingleton().hide();
+		this->rightMousePressed = false;
+	}
 	return(true);
 }
 
 bool TetraRendering::mouseMoved (const OIS::MouseEvent &evt) {
 
 	CEGUI::System::getSingleton().injectMouseMove(evt.state.X.rel, evt.state.Y.rel);
+	if(this->leftMousePressed) {
+		
+	} else if(this->rightMousePressed) {
+		//this->pSceneManager->getSceneNode("NodeCamera")->yaw(Ogre::Degree(-evt.state.X.rel));
+		//this->pSceneManager->getSceneNode("NodeCamera")->pitch(Ogre::Degree(-evt.state.Y.rel));
+	}
 	return(true);
 }
 
@@ -218,6 +239,13 @@ void TetraRendering::createScene() {
 	this->pSceneManager->getSceneNode("NodeCamera")->attachObject(this->pCamera);
 	this->pSceneManager->getSceneNode("NodeCamera")->setPosition(50, 50, 50);
 	this->pCamera->lookAt(this->pSceneManager->getSceneNode("NodeCenterOfMass")->getPosition());
+
+	//init sceneNode for target.
+	this->pSceneManager->getRootSceneNode()->createChild("NodeTarget");
+	this->pSceneManager->getSceneNode("NodeTarget")->attachObject(pEntity->clone("Target"));
+	this->pSceneManager->getSceneNode("NodeTarget")->scale(1, 1, 1);
+	this->pSceneManager->getSceneNode("NodeTarget")->setPosition(Ogre::Vector3(300, 300, 300));
+	this->pSceneManager->getSceneNode("NodeTarget")->setVisible(false,true);
 }
 
 Ogre::SceneManager * TetraRendering::getSceneManager(void) {
