@@ -31,6 +31,9 @@ protected:
 >>>>>>> .r67
 	std::vector<PistonRendering *> pistons;
 
+	bool leftMousePressed;
+	bool rightMousePressed;
+
 public:
 	TetraRendering();
 

@@ -20,7 +20,7 @@ void Rendering::run(void) {
 	this->pRoot->startRendering();
 }
 
-void Rendering::initGround(const std::string& fileMesh, const bool shadows) {
+void Rendering::initGround(const std::string& fileMesh, const bool shadows, const int scale) {
 
 	Ogre::Entity *pEntity;
 
@@ -30,7 +30,7 @@ void Rendering::initGround(const std::string& fileMesh, const bool shadows) {
 
 	this->pSceneManager->getRootSceneNode()->createChild("NodeGround");
 	this->pSceneManager->getSceneNode("NodeGround")->attachObject(pEntity);
-	this->pSceneManager->getSceneNode("NodeGround")->scale(6, 6, 6);
+	this->pSceneManager->getSceneNode("NodeGround")->scale(scale, scale, scale);
 	//this->pSceneManager->getSceneNode("NodeGround")->setPosition(Ogre::Vector3(0, 0, 0));
 }
 
@@ -128,6 +128,9 @@ void Rendering::initRendering(const std::string &name, const Ogre::SceneTypeMask
 
 	this->pRoot->addFrameListener(this);
 	Ogre::WindowEventUtilities::addWindowEventListener(this->pRenderWindow, this);
+
+	this->pRaySceneQuery = this->pSceneManager->createRayQuery(Ogre::Ray());
+
 }
 
 void Rendering::initInputOutput() {
@@ -175,7 +178,13 @@ void Rendering::initInputOutput() {
 
 void Rendering::initGUI() {
 
+	Ogre::LogManager::getSingletonPtr()->logMessage("*** Initializing GUI ***");
+
 	this->pGUIRenderer = new CEGUI::OgreCEGUIRenderer(this->pRenderWindow, Ogre::RENDER_QUEUE_OVERLAY, false, 3000, this->pSceneManager);
 	this->pGUISystem = new CEGUI::System(this->pGUIRenderer);
+
+	//CEGUI::SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"TaharezLookSkin.scheme");
+	//CEGUI::MouseCursor::getSingleton().setImage("TaharezLook", "MouseArrow");
+
 }
 
