@@ -13,29 +13,24 @@ TetraRendering::TetraRendering() : Rendering("tetrabot", Ogre::ST_EXTERIOR_CLOSE
 	this->rightMousePressed = false;
 }
 
-bool TetraRendering::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id) {
-
-	Ogre::Entity *pEntity;
+bool TetraRendering::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id) {
 
 	if(id == OIS::MB_Left) {
-		this->leftMousePressed = true;//utile ?
-
-		this->pSceneManager->getSceneNode("NodeTarget")->setPosition(Ogre::Vector3(300, 300, 300));
-		this->pSceneManager->getSceneNode("NodeTarget")->setVisible(true,true);
+		this->leftMousePressed = true; //for drap and drop
 
 	} else if (id == OIS::MB_Right) {
-		//CEGUI::MouseCursor::getSingleton().hide();
-		this->rightMousePressed = true;
+		this->rightMousePressed = true; //for move camera
 	}
+
 	return(true);
 }
 
-bool TetraRendering::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id) {
+bool TetraRendering::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id) {
 
 	if(id == OIS::MB_Left) {
 		this->leftMousePressed = false;
+
 	} else if (id == OIS::MB_Right) {
-		CEGUI::MouseCursor::getSingleton().hide();
 		this->rightMousePressed = false;
 	}
 	return(true);
@@ -43,10 +38,26 @@ bool TetraRendering::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonI
 
 bool TetraRendering::mouseMoved (const OIS::MouseEvent &evt) {
 
+	Ogre::Ray mouseRay;
+	Ogre::RaySceneQueryResult result;
+	Ogre::RaySceneQueryResult::iterator itr;
+
 	CEGUI::System::getSingleton().injectMouseMove(evt.state.X.rel, evt.state.Y.rel);
+
 	if(this->leftMousePressed) {
-		
+		CEGUI::Point mousePos = CEGUI::MouseCursor::getSingleton().getPosition();
+		mouseRay = this->pCamera->getCameraToViewportRay(mousePos.d_x/float(evt.state.width), mousePos.d_y/float(evt.state.height));
+		this->pRaySceneQuery->setRay(mouseRay);
+		result = this->pRaySceneQuery->execute();
+		itr = result.begin( );
+		std::cout << "MOUSE LEFT pressed" << std::endl;
+		if (itr != result.end() && itr->worldFragment) {
+			this->pSceneManager->getSceneNode("NodeTarget")->setPosition(itr->worldFragment->singleIntersection);
+			this->pSceneManager->getSceneNode("NodeTarget")->setVisible(true,true);
+		}
+
 	} else if(this->rightMousePressed) {
+		//CEGUI::MouseCursor::getSingleton().hide();
 		//this->pSceneManager->getSceneNode("NodeCamera")->yaw(Ogre::Degree(-evt.state.X.rel));
 		//this->pSceneManager->getSceneNode("NodeCamera")->pitch(Ogre::Degree(-evt.state.Y.rel));
 	}
