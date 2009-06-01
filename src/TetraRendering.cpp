@@ -79,7 +79,7 @@ bool TetraRendering::keyPressed(const OIS::KeyEvent &evt) {
 		std::cout << "F8 pressed" << std::endl;
 		//
 
-	} else if(evt.key == OIS::KC_A) {
+	}  else if(evt.key == OIS::KC_A) {
 		std::cout << "A pressed" << std::endl;
 		//this->robot->Deplacement((unsigned char) 'A');
 
@@ -126,6 +126,18 @@ bool TetraRendering::keyPressed(const OIS::KeyEvent &evt) {
 	} else if(evt.key == OIS::KC_H) {
 		std::cout << "H pressed" << std::endl;
 		//this->robot->Deplacement((unsigned char) 'H');
+	} else if(evt.key == OIS::KC_I) {
+		std::cout << "I pressed" << std::endl;
+		//this->robot->Deplacement((unsigned char) 'I');
+	} else if(evt.key == OIS::KC_J) {
+		std::cout << "J pressed" << std::endl;
+		//this->robot->Deplacement((unsigned char) 'J');
+	} else if(evt.key == OIS::KC_K) {
+		std::cout << "K pressed" << std::endl;
+		//this->robot->Deplacement((unsigned char) 'K');
+	} else if(evt.key == OIS::KC_L) {
+		std::cout << "L pressed" << std::endl;
+		//this->robot->Deplacement((unsigned char) 'L');
 	}
 
 	return(true);
