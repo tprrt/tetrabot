@@ -79,51 +79,51 @@ bool TetraRendering::keyPressed(const OIS::KeyEvent &evt) {
 
 	} else if(evt.key == OIS::KC_A) {
 		std::cout << "A pressed" << std::endl;
-		//this->robot->Deplacement((unsigned char) 'Z');
+		//this->robot->Deplacement((unsigned char) 'A');
 
 	} else if(evt.key == OIS::KC_Z) {
 		std::cout << "Z pressed" << std::endl;
-		//this->robot->Deplacement((unsigned char) 'Q');
+		//this->robot->Deplacement((unsigned char) 'Z');
 
 	} else if(evt.key == OIS::KC_E) {
 		std::cout << "E pressed" << std::endl;
-		//this->robot->Deplacement((unsigned char) 'W');
+		//this->robot->Deplacement((unsigned char) 'E');
 
 	} else if(evt.key == OIS::KC_R) {
 		std::cout << "R pressed" << std::endl;
-		//this->robot->Deplacement((unsigned char) 'E');
+		//this->robot->Deplacement((unsigned char) 'R');
 
 	} else if(evt.key == OIS::KC_T) {
 		std::cout << "T pressed" << std::endl;
-		//this->robot->Deplacement((unsigned char) 'D');
+		//this->robot->Deplacement((unsigned char) 'T');
 
 	} else if(evt.key == OIS::KC_Y) {
 		std::cout << "Y pressed" << std::endl;
-		//this->robot->Deplacement((unsigned char) 'X');
+		//this->robot->Deplacement((unsigned char) 'Y');
 
 	} else if(evt.key == OIS::KC_Q) {
 		std::cout << "Q pressed" << std::endl;
-		//this->robot->Deplacement((unsigned char) 'Z');
+		//this->robot->Deplacement((unsigned char) 'Q');
 
 	} else if(evt.key == OIS::KC_S){
 		std::cout << "S pressed" << std::endl;
-		//this->robot->Deplacement((unsigned char) 'Q');
+		//this->robot->Deplacement((unsigned char) 'S');
 
 	} else if(evt.key == OIS::KC_D) {
 		std::cout << "D pressed" << std::endl;
-		//this->robot->Deplacement((unsigned char) 'W');
+		//this->robot->Deplacement((unsigned char) 'D');
 
 	}  else if(evt.key == OIS::KC_F) {
 		std::cout << "F pressed" << std::endl;
-		//this->robot->Deplacement((unsigned char) 'E');
+		//this->robot->Deplacement((unsigned char) 'F');
 
 	} else if(evt.key == OIS::KC_G) {
 		std::cout << "G pressed" << std::endl;
-		//this->robot->Deplacement((unsigned char) 'D');
+		//this->robot->Deplacement((unsigned char) 'G');
 
 	} else if(evt.key == OIS::KC_H) {
 		std::cout << "H pressed" << std::endl;
-		//
+		//this->robot->Deplacement((unsigned char) 'H');
 	}
 
 	return(true);
