@@ -13,6 +13,7 @@ Rendering::Rendering(const std::string &name, const Ogre::SceneTypeMask typeMask
 	this->finish = false;
 	this->initRendering(name, typeMask);
 	this->initInputOutput();
+	this->initGUI();
 }
 
 void Rendering::run(void) {
@@ -170,5 +171,11 @@ void Rendering::initInputOutput() {
 	this->pRenderWindow->getMetrics(width, height, depth, left, top);
 	ms.width = width;
 	ms.height = height;
+}
+
+void Rendering::initGUI() {
+
+	this->pGUIRenderer = new CEGUI::OgreCEGUIRenderer(this->pRenderWindow, Ogre::RENDER_QUEUE_OVERLAY, false, 3000, this->pSceneManager);
+	this->pGUISystem = new CEGUI::System(this->pGUIRenderer);
 }
 

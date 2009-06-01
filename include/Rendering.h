@@ -76,6 +76,8 @@ protected:
 	void initRendering(const std::string &name, const Ogre::SceneTypeMask typeMask);
 
 	void initInputOutput();
+
+	void initGUI();
 };
 
 #endif /* RENDERING_H_ */
