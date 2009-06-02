@@ -181,7 +181,6 @@ void Rendering::initInputOutput() {
 	size_t windowHnd = 0;
 	std::ostringstream windowHndStr;
 
-	OIS::MouseState state;
 	unsigned int width, height, depth;
 	int top, left;
 
@@ -213,15 +212,13 @@ void Rendering::initInputOutput() {
 	this->pMouse->setEventCallback(this);
 
 	//taille de la fenetre de l'application pour la gestion de la souris.
-	state = this->pMouse->getMouseState();
+	const OIS::MouseState &state = this->pMouse->getMouseState();
 	this->pRenderWindow->getMetrics(width, height, depth, left, top);
 	state.width = width;
 	state.height = height;
 }
 
 void Rendering::initGUI() {
-
-	OIS::MouseState state;
 
 	Ogre::LogManager::getSingletonPtr()->logMessage("*** Initializing GUI ***");
 
@@ -232,7 +229,7 @@ void Rendering::initGUI() {
 	CEGUI::MouseCursor::getSingleton().setImage(CEGUI::System::getSingleton().getDefaultMouseCursor());
 
 	//center cursor
-	state = this->pMouse->getMouseState();
+	const OIS::MouseState &state = this->pMouse->getMouseState();
 	//CEGUI::Point mousePos = CEGUI::MouseCursor::getSingleton().getPosition();  
 	CEGUI::System::getSingleton().injectMouseMove(state.X.abs/*-mousePos.d_x*/,state.Y.abs/*-mousePos.d_y*/);
 
