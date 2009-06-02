@@ -17,7 +17,7 @@ bool TetraRendering::mousePressed(const OIS::MouseEvent &evt, const OIS::MouseBu
 
 	if(id == OIS::MB_Left) {
 		std::cout << "MOUSE LEFT pressed" << std::endl;
-		this->leftMousePressed = true; //for drap and drop
+		this->leftMousePressed = true; //for drap and drop with mouseMoved
 	} else if (id == OIS::MB_Right) {
 		CEGUI::MouseCursor::getSingleton().hide();
 		this->rightMousePressed = true; //for move camera
@@ -47,11 +47,11 @@ bool TetraRendering::mouseMoved (const OIS::MouseEvent &evt) {
 		//Ogre::RaySceneQueryResult queryResult;
 		Ogre::RaySceneQueryResult::iterator itr;
 
-		CEGUI::Point mousePos = CEGUI::MouseCursor::getSingleton().getPosition();
-
-		//std::cout << "X:" << mousePos.d_x/float(evt.state.width) << std::endl;
-		//std::cout << "Y:" << mousePos.d_y/float(evt.state.height) << std::endl;
-		mouseRay = this->pCamera->getCameraToViewportRay(mousePos.d_x/float(evt.state.width), mousePos.d_y/float(evt.state.height));
+		//CEGUI::Point mousePos = CEGUI::MouseCursor::getSingleton().getPosition();
+		//mouseRay = this->pCamera->getCameraToViewportRay(mousePos.d_x/float(evt.state.width), mousePos.d_y/float(evt.state.height));
+		mouseRay = this->pCamera->getCameraToViewportRay(evt.state.X.abs/float(evt.state.width), evt.state.Y.abs/float(evt.state.height));
+		//std::cout << "X:" << evt.state.X.abs/float(evt.state.width) << std::endl;
+		//std::cout << "Y:" << evt.state.Y.abs/float(evt.state.height) << std::endl;
 
 		this->pRaySceneQuery->setRay(mouseRay);
 
@@ -278,6 +278,7 @@ void TetraRendering::createScene() {
 	this->pSceneManager->getSceneNode("NodeTarget")->scale(1, 1, 1);
 	this->pSceneManager->getSceneNode("NodeTarget")->setPosition(Ogre::Vector3(300, 300, 300));
 	this->pSceneManager->getSceneNode("NodeTarget")->setVisible(false,true);
+
 }
 
 const Ogre::SceneManager * TetraRendering::getSceneManager(void) const {

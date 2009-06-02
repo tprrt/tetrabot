@@ -14,6 +14,7 @@
 #include <string>
 
 #include <CEGUI/CEGUISystem.h>
+#include <CEGUI/CEGUILogger.h>
 #include <CEGUI/CEGUISchemeManager.h>
 #include <OgreCEGUIRenderer.h>
 

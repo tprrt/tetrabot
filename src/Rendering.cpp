@@ -181,6 +181,7 @@ void Rendering::initInputOutput() {
 	size_t windowHnd = 0;
 	std::ostringstream windowHndStr;
 
+	OIS::MouseState state;
 	unsigned int width, height, depth;
 	int top, left;
 
@@ -209,23 +210,32 @@ void Rendering::initInputOutput() {
 
 	//creation de l'objet souris.
 	this->pMouse = dynamic_cast<OIS::Mouse*>(this->pInputManager->createInputObject(OIS::OISMouse, true));
-	const OIS::MouseState &ms = this->pMouse->getMouseState();
 	this->pMouse->setEventCallback(this);
 
 	//taille de la fenetre de l'application pour la gestion de la souris.
+	state = this->pMouse->getMouseState();
 	this->pRenderWindow->getMetrics(width, height, depth, left, top);
-	ms.width = width;
-	ms.height = height;
+	state.width = width;
+	state.height = height;
 }
 
 void Rendering::initGUI() {
+
+	OIS::MouseState state;
 
 	Ogre::LogManager::getSingletonPtr()->logMessage("*** Initializing GUI ***");
 
 	this->pGUIRenderer = new CEGUI::OgreCEGUIRenderer(this->pRenderWindow, Ogre::RENDER_QUEUE_OVERLAY, false, 3000, this->pSceneManager);
 	this->pGUISystem = new CEGUI::System(this->pGUIRenderer);
+	CEGUI::Logger::getSingleton().setLoggingLevel(CEGUI::Informative);
 
 	CEGUI::MouseCursor::getSingleton().setImage(CEGUI::System::getSingleton().getDefaultMouseCursor());
+
+	//center cursor
+	state = this->pMouse->getMouseState();
+	//CEGUI::Point mousePos = CEGUI::MouseCursor::getSingleton().getPosition();  
+	CEGUI::System::getSingleton().injectMouseMove(state.X.abs/*-mousePos.d_x*/,state.Y.abs/*-mousePos.d_y*/);
+
 	//CEGUI::SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"skin.scheme");
 	//CEGUI::MouseCursor::getSingleton().setImage("skinMouse", "MouseArrow");
 	//this->pGUISystem->setDefaultMouseCursor((CEGUI::utf8*)"skinMouse", (CEGUI::utf8*)"MouseArrow");
