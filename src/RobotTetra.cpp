@@ -5,8 +5,8 @@ void RobotTetra::Deplacement(unsigned char key)
 {
 	btScalar taille, tailleTmp,Step;
 	PhysicPiston* pistonTMP;
-	int incremente =1;
-	int Num_Piston = 99;
+	int sensMouvement =1;
+	int Num_Piston = -1;
 	taille=0.;
 	tailleTmp=0.;
 	Step = 1.F;
@@ -27,76 +27,78 @@ void RobotTetra::Deplacement(unsigned char key)
 	switch (key) 
 	{
 		case 'A':
-		{	incremente =1;
+		{	sensMouvement =1;
 			Num_Piston = 0;
 		break;
 		}
 		case 'Z':
-		{	incremente =1;
+		{	sensMouvement =1;
 			Num_Piston = 1;
 		break;
 		}
 		case 'E':
-		{	incremente =1;
+		{	sensMouvement =1;
 			Num_Piston = 2;
 		break;
 		}
 		case 'R':
-		{	incremente =1;
+		{	sensMouvement =1;
 			Num_Piston = 3;
 		break;
 		}
 		case 'T':
-		{	incremente =1;
+		{	sensMouvement =1;
 			Num_Piston = 4;
 		break;
 		}
 		case 'Y':
-		{	incremente =1;
+		{	sensMouvement =1;
 			Num_Piston = 5;
 		break;
 		}
 		case 'Q':
-		{	incremente =-1;
+		{	sensMouvement =-1;
 			Num_Piston = 0;
 		break;
 		}
 		case 'S':
-		{	incremente =-1;
+		{	sensMouvement =-1;
 			Num_Piston = 1;
 		break;
 		}
 		case 'D':
-		{	incremente =-1;
+		{	sensMouvement =-1;
 			Num_Piston = 2;
 		break;
 		}
 		case 'F':
-		{	incremente =-1;
+		{	sensMouvement =-1;
 			Num_Piston = 3;
 		break;
 		}
 		case 'G':
-		{	incremente =-1;
+		{	sensMouvement =-1;
 			Num_Piston = 4;
 		break;
 		}
 		case 'H':
-		{	incremente =-1;
+		{	sensMouvement =-1;
 			Num_Piston = 5;
 		break;
 		}
+	default : Num_Piston = -1;
+	break;
 	}// FIN SWITCH
 	//        std::cout << "unused key : " << key << std::endl;
-	if(Num_Piston != 99){
-		//printf("Piston %d : %f",Num_Piston,incremente);
+	if(Num_Piston != -1){
+		//printf("Piston %d : %f",Num_Piston,sensMouvement);
 		// verif piston existe
 		if(this->Arcs[Num_Piston]!=NULL)
 		{	// verif taille futur valide
 			pistonTMP = (PhysicPiston*)this->Arcs[Num_Piston];
-			taille = pistonTMP->getLength() + incremente*(Step);
+			taille = pistonTMP->getLength() + sensMouvement*(Step);
 			printf(" ==> taille : %f\n",taille);
-			if(incremente == -1 ){
+			if(sensMouvement == -1 ){
 				tailleTmp = pistonTMP->getTailleMax() - taille ;
 			} else {
 				tailleTmp = pistonTMP->getTailleMin() + taille ;
