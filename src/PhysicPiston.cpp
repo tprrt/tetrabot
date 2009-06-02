@@ -244,7 +244,7 @@ void PhysicPiston::lock()
 {
 	if(!this->estBloque)
 	{
-		printf("Piston [%d]: blocage en cours...\n",this->id);
+		//printf("Piston [%d]: blocage en cours...\n",this->id);
 		this->contrainte->setLowerLinLimit(this->getLength());
 		this->contrainte->setUpperLinLimit(this->getLength());
 		this->estBloque = true;
@@ -254,7 +254,7 @@ void PhysicPiston::unlock()
 {
 	if(this->getEstBloque())
 	{
-		printf("Piston [%d]: deblocage en cours...\n",this->id);
+		//printf("Piston [%d]: deblocage en cours...\n",this->id);
 		// Pour débloquer le Piston, il suffit de lui attribuer les memes caracteristiques que contrainte
 		this->contrainte->setLowerLinLimit(this->tailleMin);
 		this->contrainte->setUpperLinLimit(this->tailleMax);
@@ -308,11 +308,11 @@ int PhysicPiston::actionnerEdge(btScalar tailleVoulu)
 	// Afficher Reussite ou echec
 	if(timeOut <= 0 )
 	{
-		printf("Piston [%d]: ---- Echec! ---- \n",this->id);
+		//printf("Piston [%d]: ---- Echec! ---- \n",this->id);
 	}
 	else
 	{
-		printf("Piston [%d]: ---- Success! ---- \n",this->id);
+		//printf("Piston [%d]: ---- Success! ---- \n",this->id);
 	}
 	// Arreter le moteur
 	this->contrainte->setPoweredLinMotor(false);

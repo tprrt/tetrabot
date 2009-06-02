@@ -90,7 +90,7 @@ void RobotTetra::Deplacement(unsigned char key)
 		{
 		btVector3 G = this->getCenterOfMassPosition();
 		// vers le nord
-		G.setX((btScalar)10.);
+		G.setX(G.getX()+(btScalar)10.);
 		this->StartThread(G);
 		Num_Piston = -1;
 		break;
@@ -99,7 +99,7 @@ void RobotTetra::Deplacement(unsigned char key)
 		{
 		btVector3 G = this->getCenterOfMassPosition();
 		// vers le Ouest
-		G.setZ((btScalar)(-10.));
+		G.setZ(G.getZ()+(btScalar)(-10.));
 		this->StartThread(G);
 		Num_Piston = -1;
 		break;
@@ -108,7 +108,7 @@ void RobotTetra::Deplacement(unsigned char key)
 		{
 		btVector3 G = this->getCenterOfMassPosition();
 		// vers le Sud
-		G.setX((btScalar)(-10.));
+		G.setX(G.getX()+(btScalar)(-10.));
 		this->StartThread(G);
 		Num_Piston = -1;
 		break;
@@ -117,7 +117,7 @@ void RobotTetra::Deplacement(unsigned char key)
 		{
 		btVector3 G = this->getCenterOfMassPosition();
 		// vers le Est
-		G.setZ((btScalar)10.);
+		G.setZ(G.getZ()+(btScalar)10.);
 		this->StartThread(G);
 		Num_Piston = -1;
 		break;
@@ -221,9 +221,9 @@ void RobotTetra::maxiRobot(){
 
 void* RobotTetra::marcherRobot(void *demo)
 {	printf("marcher robot\n");
-	printf("Test 0: RobotTetra* robot = (RobotTetra*) demo;\n");
+	//printf("Test 0: RobotTetra* robot = (RobotTetra*) demo;\n");
 	RobotTetra* robot = (RobotTetra*) demo;
-
+	int TimeOut = 8;
 	int NHaut=0,N1=-1,N2=-1,NRestant=-1;
 	int PBas = -1,PHaut = -1,P1=-1,P2=-1;
 	int i,j;
@@ -233,32 +233,34 @@ void* RobotTetra::marcherRobot(void *demo)
 	// MODIF JAZZ : 31 / 05 /09 : 23h45
 	// De base on definit le pt d'arrivee
 	btVector3 end = btVector3(btScalar(30.),btScalar(5.),btScalar(0.));
+	printf("end0 %f %f %f\n",end.getX(),end.getY(),end.getZ());
 	// On va deplacer le robot
 	// On choisi un point d'arrive du robot sur le cercle de centre ( G : center of masse et de rayon R = 5.)
 	// MODIF JAZZ : 31 / 05 /09 : 23h45
 	if(robot->bodyCube != NULL){
-	printf("Test 1 : btVector3 end = robot->bodyCube->getCenterOfMassPosition();\n");
-		btVector3 end = robot->bodyCube->getCenterOfMassPosition();
-		printf("end %f %f %f\n",end.getX(),end.getY(),end.getZ());
+	//printf("Test 1 : btVector3 end = robot->bodyCube->getCenterOfMassPosition();\n");
+		 end = robot->bodyCube->getCenterOfMassPosition();
+		printf("end1 %f %f %f\n",end.getX(),end.getY(),end.getZ());
 	}
 	else{
 		if(robot->end != NULL){
-			printf("Test 1Bis: btVector3 end = robot->end;\n");
-			btVector3 end = *robot->end;
-			printf("end %f %f %f\n",end.getX(),end.getY(),end.getZ());
+		//	printf("Test 1Bis: btVector3 end = robot->end;\n");
+			 end = *robot->end;
+			printf("end2 %f %f %f\n",end.getX(),end.getY(),end.getZ());
 		}
 		else{
-			printf("Definition d'un nouveau point d'arrivee ( 30,5,0 )\n");
-			btVector3 end = btVector3(btScalar(30.),btScalar(5.),btScalar(0.));
-			printf("end %f %f %f\n",end.getX(),end.getY(),end.getZ());
+			//printf("Definition d'un nouveau point d'arrivee ( 30,5,0 )\n");
+			 end = btVector3(btScalar(30.),btScalar(5.),btScalar(0.));
+			printf("end3 %f %f %f\n",end.getX(),end.getY(),end.getZ());
 		}
 	}
 	
-	printf("Test 2 : end.setY(btScalar(robot->getCenterOfMassPosition().getY()));\n");
+	//printf("Test 2 : end.setY(btScalar(robot->getCenterOfMassPosition().getY()));\n");
 	end.setY(btScalar(robot->getCenterOfMassPosition().getY()));
+	printf("end4 %f %f %f\n",end.getX(),end.getY(),end.getZ());
 
 	// Pour faire simple, on va creer la matrice de liaison des noeuds (matrice d'identificateurs)
-	printf("Test 3 : Suite \n");
+	//printf("Test 3 : Suite \n");
 	int matLiaison[4][4];
 	// initialisation de matLiaison à -1
 	for( i=0;i<4;i++)
@@ -286,18 +288,18 @@ void* RobotTetra::marcherRobot(void *demo)
 	// test anti-pointeur null
 	
 	for(int i=0;i<6;i++){
-	printf(" Test 4 : if(robot->action[i]==NULL)\n");
+	//printf(" Test 4 : if(robot->action[i]==NULL)\n");
 		if(robot->action[i]==NULL){
 			robot->action[i] = NULL;
 		}
-		printf("Test 5 : robot->action[i] = new ActionPiston(robot->Arcs[i],robot->Arcs[i]->getTailleMax()/2); \n");
+		//printf("Test 5 : robot->action[i] = new ActionPiston(robot->Arcs[i],robot->Arcs[i]->getTailleMax()/2); \n");
 			pistonTMP = (PhysicPiston*)robot->Arcs[i];
 			robot->action[i] = new ActionPiston(pistonTMP,pistonTMP->getTailleMax()/2);
 		
 	}
-	printf("Test 6 : while(robot->IsNotInArea(robot->getCenterOfMassPosition(),end)) \n");
-	while(robot->IsNotInArea(robot->getCenterOfMassPosition(),end))
-	{
+	//printf("Test 6 : while(robot->IsNotInArea(robot->getCenterOfMassPosition(),end)) \n");
+	while(((TimeOut--) != 0)&&(robot->IsNotInArea(robot->getCenterOfMassPosition(),end)))
+	{ printf("TimeOut %d\n",TimeOut);
 		// Mettre le robot à l'etat initial (pistons au minimum de leur taille)
 		for(i=0;i<6;i++)
 		{	
@@ -397,6 +399,7 @@ void* RobotTetra::marcherRobot(void *demo)
 	
 	// MODIF JAZZ : 31 / 05 /09 : 23h54
 	end.setY(btScalar(robot->getCenterOfMassPosition().getY()));
+	printf("end5 %f %f %f\n",end.getX(),end.getY(),end.getZ());
 	}// Fin WHILE
 	// La marche du robot est terminée.
 	// Mettre le robot à l'etat final (pistons au minimum de leur taille)
@@ -440,7 +443,7 @@ RobotTetra::RobotTetra(btDynamicsWorld* world,Ogre::SceneManager * scene,const b
 	{
 		decalage = btVector3(0,0,5*i+15);
 		pistonTMP = new PhysicPiston(world,NULL,posInit+decalage,EDGE_MIN_SIZE,EDGE_MAX_SIZE,EDGE_VELOCITY);
-		pistonTMP->lock();
+		pistonTMP->unlock();
 		this->Arcs.expand(pistonTMP);
 	}
 	// On lie les pistons aux boules

@@ -8,7 +8,7 @@ ActionPiston::ActionPiston(PhysicPiston * piston, btScalar tailleVoulu)
 
 void ActionPiston::execute()
 {
-	printf("Piston [%d]: taille voulu : %f\n",piston->getID(),tailleVoulu);
+	//printf("Piston [%d]: taille voulu : %f\n",piston->getID(),tailleVoulu);
 	piston->actionnerEdge(this->tailleVoulu);
 }
 
