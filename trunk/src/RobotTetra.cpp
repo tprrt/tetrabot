@@ -86,6 +86,42 @@ void RobotTetra::Deplacement(unsigned char key)
 			Num_Piston = 5;
 		break;
 		}
+		case 'I':
+		{
+		btVector3 G = this->getCenterOfMassPosition();
+		// vers le nord
+		G.setX((btScalar)10.);
+		this->StartThread(G);
+		Num_Piston = -1;
+		break;
+		}
+		case 'J':
+		{
+		btVector3 G = this->getCenterOfMassPosition();
+		// vers le Ouest
+		G.setZ((btScalar)(-10.));
+		this->StartThread(G);
+		Num_Piston = -1;
+		break;
+		}
+		case 'K':
+		{
+		btVector3 G = this->getCenterOfMassPosition();
+		// vers le Sud
+		G.setX((btScalar)(-10.));
+		this->StartThread(G);
+		Num_Piston = -1;
+		break;
+		}
+		case 'L':
+		{
+		btVector3 G = this->getCenterOfMassPosition();
+		// vers le Est
+		G.setZ((btScalar)10.);
+		this->StartThread(G);
+		Num_Piston = -1;
+		break;
+		}
 	default : Num_Piston = -1;
 	break;
 	}// FIN SWITCH
@@ -124,10 +160,10 @@ void RobotTetra::Deplacement(unsigned char key)
 }
 
 // JAZZ MODIF :  1 JUIN 2009 : 2h50
-void RobotTetra::StartThread(void * a, void * b, void * c){
+void RobotTetra::StartThread(btVector3 ending){
 	printf("StartThread used\n");
 	this->end = new btVector3;
-	this->end = (btVector3*)((btScalar*)a,(btScalar*)b,(btScalar*)c);
+	this->end = (btVector3*)&ending;
 	Thread(this,RobotTetra::marcherRobot);
 }
 
@@ -202,16 +238,20 @@ void* RobotTetra::marcherRobot(void *demo)
 	// MODIF JAZZ : 31 / 05 /09 : 23h45
 	if(robot->bodyCube != NULL){
 	printf("Test 1 : btVector3 end = robot->bodyCube->getCenterOfMassPosition();\n");
-	btVector3 end = robot->bodyCube->getCenterOfMassPosition();
+		btVector3 end = robot->bodyCube->getCenterOfMassPosition();
+		printf("end %f %f %f\n",end.getX(),end.getY(),end.getZ());
 	}
 	else{
 		if(robot->end != NULL){
-				printf("Test 1Bis: btVector3 end = robot->end;\n");
+			printf("Test 1Bis: btVector3 end = robot->end;\n");
 			btVector3 end = *robot->end;
+			printf("end %f %f %f\n",end.getX(),end.getY(),end.getZ());
 		}
 		else{
 			printf("Definition d'un nouveau point d'arrivee ( 30,5,0 )\n");
-			btVector3 end = btVector3(btScalar(30.),btScalar(5.),btScalar(0.));}
+			btVector3 end = btVector3(btScalar(30.),btScalar(5.),btScalar(0.));
+			printf("end %f %f %f\n",end.getX(),end.getY(),end.getZ());
+		}
 	}
 	
 	printf("Test 2 : end.setY(btScalar(robot->getCenterOfMassPosition().getY()));\n");
@@ -246,12 +286,14 @@ void* RobotTetra::marcherRobot(void *demo)
 	// test anti-pointeur null
 	
 	for(int i=0;i<6;i++){
-	printf(" Test 4 : if(robot->action[i]!=NULL)\n");
-		if(robot->action[i]!=NULL){
+	printf(" Test 4 : if(robot->action[i]==NULL)\n");
+		if(robot->action[i]==NULL){
+			robot->action[i] = NULL;
+		}
 		printf("Test 5 : robot->action[i] = new ActionPiston(robot->Arcs[i],robot->Arcs[i]->getTailleMax()/2); \n");
 			pistonTMP = (PhysicPiston*)robot->Arcs[i];
 			robot->action[i] = new ActionPiston(pistonTMP,pistonTMP->getTailleMax()/2);
-		}
+		
 	}
 	printf("Test 6 : while(robot->IsNotInArea(robot->getCenterOfMassPosition(),end)) \n");
 	while(robot->IsNotInArea(robot->getCenterOfMassPosition(),end))
@@ -418,6 +460,12 @@ RobotTetra::RobotTetra(btDynamicsWorld* world,Ogre::SceneManager * scene,const b
 	this->Sommets[3]->linkEdge(Arcs[2],'B',angle1,(0*2*M_PI)/3);
 	this->Sommets[3]->linkEdge(Arcs[4],'B',angle1,(1*2*M_PI)/3);
 	this->Sommets[3]->linkEdge(Arcs[5],'A',angle1,(2*2*M_PI)/3);
+	
+	for(int k=0;k<6;k++){
+		this->action[k]=NULL;
+	}
+	this->bodyCube = NULL;
+	this->end = NULL;
 
 }
 
@@ -460,6 +508,12 @@ RobotTetra::RobotTetra(btDynamicsWorld* world,const btVector3& posInit)
 	this->Sommets[3]->linkEdge(Arcs[2],'B',angle1,(0*2*M_PI)/3);
 	this->Sommets[3]->linkEdge(Arcs[4],'B',angle1,(1*2*M_PI)/3);
 	this->Sommets[3]->linkEdge(Arcs[5],'A',angle1,(2*2*M_PI)/3);
+	
+	for(int k=0;k<6;k++){
+		this->action[k]=NULL;
+	}
+	this->bodyCube = NULL;
+	this->end = NULL;
 }
 
 

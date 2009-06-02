@@ -54,7 +54,7 @@ bool TetraRendering::mouseMoved (const OIS::MouseEvent &evt) {
 		//std::cout << "Y:" << evt.state.Y.abs/float(evt.state.height) << std::endl;
 
 		this->pRaySceneQuery->setRay(mouseRay);
-
+	
 		if(this->pRaySceneQuery->execute().size() > 0) {
 			std::cout << "Ray positive result" << std::endl;
 			Ogre::RaySceneQueryResult &queryResult = this->pRaySceneQuery->getLastResults();
@@ -97,7 +97,8 @@ bool TetraRendering::keyPressed(const OIS::KeyEvent &evt) {
 
 	} else if(evt.key == OIS::KC_F1) {
 		std::cout << "F1 pressed" << std::endl;
-		//this->robot->StartThread(Vector3Gen(100, 100, 100));
+		this->robot->StartThread(btVector3(30., 5., 0.));
+		
 
 	} else if(evt.key == OIS::KC_F2) {
 		std::cout << "F2 pressed" << std::endl;
@@ -127,67 +128,67 @@ bool TetraRendering::keyPressed(const OIS::KeyEvent &evt) {
 
 	}  else if(evt.key == OIS::KC_A) {
 		std::cout << "A pressed" << std::endl;
-		//this->robot->Deplacement((unsigned char) 'A');
+		this->robot->Deplacement((unsigned char) 'A');
 
 	} else if(evt.key == OIS::KC_Z) {
 		std::cout << "Z pressed" << std::endl;
-		//this->robot->Deplacement((unsigned char) 'Z');
+		this->robot->Deplacement((unsigned char) 'Z');
 
 	} else if(evt.key == OIS::KC_E) {
 		std::cout << "E pressed" << std::endl;
-		//this->robot->Deplacement((unsigned char) 'E');
+		this->robot->Deplacement((unsigned char) 'E');
 
 	} else if(evt.key == OIS::KC_R) {
 		std::cout << "R pressed" << std::endl;
-		//this->robot->Deplacement((unsigned char) 'R');
+		this->robot->Deplacement((unsigned char) 'R');
 
 	} else if(evt.key == OIS::KC_T) {
 		std::cout << "T pressed" << std::endl;
-		//this->robot->Deplacement((unsigned char) 'T');
+		this->robot->Deplacement((unsigned char) 'T');
 
 	} else if(evt.key == OIS::KC_Y) {
 		std::cout << "Y pressed" << std::endl;
-		//this->robot->Deplacement((unsigned char) 'Y');
+		this->robot->Deplacement((unsigned char) 'Y');
 
 	} else if(evt.key == OIS::KC_Q) {
 		std::cout << "Q pressed" << std::endl;
-		//this->robot->Deplacement((unsigned char) 'Q');
+		this->robot->Deplacement((unsigned char) 'Q');
 
 	} else if(evt.key == OIS::KC_S){
 		std::cout << "S pressed" << std::endl;
-		//this->robot->Deplacement((unsigned char) 'S');
+		this->robot->Deplacement((unsigned char) 'S');
 
 	} else if(evt.key == OIS::KC_D) {
 		std::cout << "D pressed" << std::endl;
-		//this->robot->Deplacement((unsigned char) 'D');
+		this->robot->Deplacement((unsigned char) 'D');
 
 	}  else if(evt.key == OIS::KC_F) {
 		std::cout << "F pressed" << std::endl;
-		//this->robot->Deplacement((unsigned char) 'F');
+		this->robot->Deplacement((unsigned char) 'F');
 
 	} else if(evt.key == OIS::KC_G) {
 		std::cout << "G pressed" << std::endl;
-		//this->robot->Deplacement((unsigned char) 'G');
+		this->robot->Deplacement((unsigned char) 'G');
 
 	} else if(evt.key == OIS::KC_H) {
 		std::cout << "H pressed" << std::endl;
-		//this->robot->Deplacement((unsigned char) 'H');
+		this->robot->Deplacement((unsigned char) 'H');
 
 	} else if(evt.key == OIS::KC_I) {
 		std::cout << "I pressed" << std::endl;
-		//this->robot->Deplacement((unsigned char) 'I');
+		this->robot->Deplacement((unsigned char) 'I');
 
 	} else if(evt.key == OIS::KC_J) {
 		std::cout << "J pressed" << std::endl;
-		//this->robot->Deplacement((unsigned char) 'J');
+		this->robot->Deplacement((unsigned char) 'J');
 
 	} else if(evt.key == OIS::KC_K) {
 		std::cout << "K pressed" << std::endl;
-		//this->robot->Deplacement((unsigned char) 'K');
+		this->robot->Deplacement((unsigned char) 'K');
 
 	} else if(evt.key == OIS::KC_L) {
 		std::cout << "L pressed" << std::endl;
-		//this->robot->Deplacement((unsigned char) 'L');
+		this->robot->Deplacement((unsigned char) 'L');
 
 	}
 	return Rendering::keyPressed(evt);

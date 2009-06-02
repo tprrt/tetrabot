@@ -48,7 +48,7 @@ public:
 	// JAZZ MODIF :  1 JUIN 2009 : 2h42
 	// Lance des Threads
 	//void StartThread(btScalar a, btScalar b, btScalar c);
-	void StartThread(void * a, void * b, void * c);
+	void StartThread(btVector3 ending);
 	
 	// JAZZ MODIF : 1 JUIN 2009 : 11h52
 	void Deplacement(unsigned char key);
