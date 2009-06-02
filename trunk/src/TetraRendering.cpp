@@ -50,8 +50,8 @@ bool TetraRendering::mouseMoved (const OIS::MouseEvent &evt) {
 		//CEGUI::Point mousePos = CEGUI::MouseCursor::getSingleton().getPosition();
 		//mouseRay = this->pCamera->getCameraToViewportRay(mousePos.d_x/float(evt.state.width), mousePos.d_y/float(evt.state.height));
 		mouseRay = this->pCamera->getCameraToViewportRay(evt.state.X.abs/float(evt.state.width), evt.state.Y.abs/float(evt.state.height));
-		std::cout << "X:" << evt.state.X.abs/float(evt.state.width) << std::endl;
-		std::cout << "Y:" << evt.state.Y.abs/float(evt.state.height) << std::endl;
+		//std::cout << "X:" << evt.state.X.abs/float(evt.state.width) << std::endl;
+		//std::cout << "Y:" << evt.state.Y.abs/float(evt.state.height) << std::endl;
 
 		this->pRaySceneQuery->setRay(mouseRay);
 
