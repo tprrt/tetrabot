@@ -170,7 +170,9 @@ void Rendering::initRendering(const std::string &name, const Ogre::SceneTypeMask
 	Ogre::WindowEventUtilities::addWindowEventListener(this->pRenderWindow, this);
 
 	this->pRaySceneQuery = this->pSceneManager->createRayQuery(Ogre::Ray());
-
+	this->pRaySceneQuery->setQueryTypeMask(Ogre::SceneManager::WORLD_GEOMETRY_TYPE_MASK );
+	this->pRaySceneQuery->setSortByDistance(true);
+	//this->pRaySceneQuery->setWorldFragmentType(Ogre::SceneQuery::WFT_SINGLE_INTERSECTION);
 }
 
 void Rendering::initInputOutput() {

@@ -44,17 +44,28 @@ bool TetraRendering::mouseMoved (const OIS::MouseEvent &evt) {
 	if(this->leftMousePressed) {
 
 		Ogre::Ray mouseRay;
+		//Ogre::RaySceneQueryResult queryResult;
 		Ogre::RaySceneQueryResult::iterator itr;
 
-		mouseRay = this->pCamera->getCameraToViewportRay(evt.state.X.rel/float(evt.state.width), evt.state.Y.rel/float(evt.state.height));
+		CEGUI::Point mousePos = CEGUI::MouseCursor::getSingleton().getPosition();
+
+		//std::cout << "X:" << mousePos.d_x/float(evt.state.width) << std::endl;
+		//std::cout << "Y:" << mousePos.d_y/float(evt.state.height) << std::endl;
+		mouseRay = this->pCamera->getCameraToViewportRay(mousePos.d_x/float(evt.state.width), mousePos.d_y/float(evt.state.height));
+
 		this->pRaySceneQuery->setRay(mouseRay);
 
-		Ogre::RaySceneQueryResult &result = this->pRaySceneQuery->execute();
-		itr = result.begin();
-		if (itr != result.end() && itr->worldFragment) {
-			std::cout << "Target ADD" << std::endl;
-			this->pSceneManager->getSceneNode("NodeTarget")->setPosition(itr->worldFragment->singleIntersection);
-			this->pSceneManager->getSceneNode("NodeTarget")->setVisible(true,true);
+		if(this->pRaySceneQuery->execute().size() > 0) {
+			std::cout << "Ray positive result" << std::endl;
+			Ogre::RaySceneQueryResult &queryResult = this->pRaySceneQuery->getLastResults();
+
+			itr = queryResult.begin();
+
+			if (itr != queryResult.end() && itr->worldFragment) {
+				std::cout << "Target ADD" << std::endl;
+				this->pSceneManager->getSceneNode("NodeTarget")->setPosition(itr->worldFragment->singleIntersection);
+				this->pSceneManager->getSceneNode("NodeTarget")->setVisible(true,true);
+			}
 		}
 
 	} else if(this->rightMousePressed) {
