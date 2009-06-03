@@ -1,3 +1,9 @@
+//  @ Project : Tetrabot
+//  @ File Name : characteristics.h
+//  @ Date : 01/06/2009
+//  @ Author : Frozen Brains
+
+
 #ifndef CHARACTERISTICS_H
 #define CHARACTERISTICS_H
 

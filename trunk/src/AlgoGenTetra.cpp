@@ -1,7 +1,13 @@
+//  @ Project : Tetrabot
+//  @ File Name : AlgoGenTetra.cpp
+//  @ Date : 01/06/2009
+//  @ Author : Frozen Brains
+
 #include "AlgoGenTetra.h"
 
-// type de la fonction de tri
+// type de la fonction de tri ( propre a l'algo Genetique )
 typedef bool (*fct_tri)(ControleurRobot* c1,ControleurRobot* c2);
+
 // Fonction interne  pour classer les resultats
 bool triResultat(ControleurRobot* c1,ControleurRobot* c2)
 {
@@ -29,13 +35,13 @@ void AlgoGenTetra::creerControleurs(btDynamicsWorld* monde,int nbRobotsActifs)
 
 	}
 }
-
+// Methode permettant de lancer l' algoGen
 void AlgoGenTetra::run()
 {
 	Thread(this,AlgoGenTetra::execute);
 }
 
-
+// Methode permettant de derouler l' algoGen
 void* AlgoGenTetra::execute(void *algoGenTetra)
 {
 	int random1,random2,random3,random4;
@@ -46,30 +52,42 @@ void* AlgoGenTetra::execute(void *algoGenTetra)
 	//initialiser la fonction pseudo-aleatoire rand
 	srand(time(NULL));
 	// Allouer nbRobotsActifs Actions
-	printf("Debut Algo_gen\n");
-	printf("nbRobotsActifs = %d\n",algo->nbRobotsActifs);
+	printf("=================  PROCEDURE D' EVOLUTION =================\n");
+	printf("\tParametre de l' Algorithme Genetique :\n");
+	printf("  Population de robot participant : %6d\n",algo->nbRobotsActifs);
+	printf("  Indice de mutation              : %6f\n",algo->mutation);
+	printf("  Nombre de croisement		  : %6d\n",algo->nbCroisements);
+	printf("  Nombre d' etape (par croisement): %6d\n",algo->nbEtapes);
+	/*
+		this->pointDepart = startPoint;
+	*/
+	
+	printf("================= LANCEMENT =================\n");
+	// on initialise le tableau des Actions des Controleurs de Robots
 	for(int i=0;i<algo->nbRobotsActifs;i++)
 	{
 		algo->tabAction.expand(new ActionControleurRobot(NULL));
 	}
+	
 	for(int nbCroisementEffectuees=0;nbCroisementEffectuees<= algo->nbCroisements;nbCroisementEffectuees++)
 	{
 		
-		printf("========== Croisement %d ==========\n",nbCroisementEffectuees);
+		printf("\tGeneration de Robot %d / %d\n\t( etat d' avancement de l' algoGen : %5G )\n",nbCroisementEffectuees,algo->nbCroisements,((nbCroisementEffectuees/algo->nbCroisements)*100.));
 		// Pour chaques controleurs actifs, on effectue les nbEtapes
 		for(int i=0;i<algo->nbRobotsActifs;i++)
 		{
 			// Positionner le robot au point de depart
 			algo->robot->translate(algo->pointDepart);
 			// Mettre en position initiale les pistons du robot
-			printf("----------nbCroisementEffectuees %d Robot Initialisation %d----------\n",nbCroisementEffectuees,i);
+			printf("\t\t Robot %d de la Generation %d\n\t\t( etat d' avancement de l' algoGen : %5G )\n",i,nbCroisementEffectuees,((i+(algo->nbRobotsActifs*nbCroisementEffectuees))/(algo->nbRobotsActifs*algo->nbCroisements)*100.));
 			// Taille minimale du robot
 			((RobotTetra*)algo->robot)->nanoRobot();
 			sleep(EDGE_WAIT);
 			// Affecter un Thread et une Action au Controleur de Robot
 			for(int j = 0;j<algo->nbEtapes;j++)
 			{
-				printf("----------nbCroisementEffectuees %d Robot %d - Etape %d ----------\n",nbCroisementEffectuees,i,j);
+				printf("\t\t\tEtape %d-R(%d)G(%d)\n\t\t\t( etat d' avancement de l' algoGen : %5G )\n",j,i,nbCroisementEffectuees,( (j+(i*(nbCroisementEffectuees)*(algo->nbEtapes))) / ((algo->nbRobotsActifs)*(algo->nbCroisements)*(algo->nbEtapes)))*100.);
+				
 				algo->tabAction[i]->setControleurRobot(algo->tabCtrl[i]);
 				algo->tabAction[i]->setEtape(j);
 				Thread(algo->tabAction[i],actionThread);
@@ -77,7 +95,7 @@ void* AlgoGenTetra::execute(void *algoGenTetra)
 				sleep(EDGE_WAIT);		
 			}
 		}
-		printf("Fin des Threads\n");
+		printf("\nArret de l'etude de la Generation %d\n",nbCroisementEffectuees);
 		//Maintenant on mets a jour les resultats des Controleurs
 		for(int i=0;i<algo->nbRobotsActifs;i++)
 		{
@@ -136,7 +154,7 @@ void* AlgoGenTetra::execute(void *algoGenTetra)
 				// On modifie maintenant un parametre d'une des sinusoide si mutation
 				if(rand()%100 <= algo->mutation)
 				{// MUTATION
-					printf("Mutation!\n");
+					printf("Brassage genetique de la population courante ... \n");
 					random1 = rand()%tailleTabTMP;
 					random2 = rand()%3;
 					switch(random2)
@@ -162,7 +180,7 @@ void* AlgoGenTetra::execute(void *algoGenTetra)
 						default:break;
 					}// Fin SWITCH MUTATION
 				}// Fin MUTATION
-				printf("Fin des Mutation !\n");
+				//printf("Fin des Mutation !\n");
 				// On ajoute ce nouveau controleur au tableau
 				tabTMP.expand(controleurTMP);
 			}// Fin GENETIQUE
@@ -183,9 +201,9 @@ void* AlgoGenTetra::execute(void *algoGenTetra)
 			}
 
 		}
-		printf("Fin CroisementEffectuees %d\n",nbCroisementEffectuees);
+		printf("\nCreation & etude de la Generation suivante\n");
 	}
-	printf("Fin Algo\n");
+	printf("=================  PROCEDURE D' EVOLUTION TERMINEE =================\n");
 	// Code de retours du thread: 666 (pour diferencier de ceux des controleurs)
 	ExitThread((void *)666);
 	return NULL;

@@ -1,3 +1,9 @@
+//  @ Project : Tetrabot
+//  @ File Name : EdgeInfo.h
+//  @ Date : 01/06/2009
+//  @ Author : Frozen Brains
+
+
 #ifndef EDGEINFO_H
 #define EDGEINFO_H
 

@@ -1,6 +1,11 @@
+//  @ Project : Tetrabot
+//  @ File Name : Action.cpp
+//  @ Date : 01/06/2009
+//  @ Author : Frozen Brains
+
 #include "Action.h"
 
-
+// Constructeur de la classe action
 Action::Action()
 	{
 		static int ID = 0;
@@ -8,14 +13,15 @@ Action::Action()
 		ID++;
 	}
 
-
+// Retourne l'attribut id (identifiant) de l'action
 int Action::getID() {
 	return this->id;
 }
 
+// Permet l'exécution d'une action via un thread
 void * actionThread ( void* p_data )
 {
-	// on recup les donnees
+	// on recupère les donnees
 	Action* a = (Action*) p_data ;
 
 	// on exécute l'action

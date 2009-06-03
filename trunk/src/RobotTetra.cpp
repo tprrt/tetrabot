@@ -223,7 +223,7 @@ void* RobotTetra::marcherRobot(void *demo)
 {	printf("marcher robot\n");
 	//printf("Test 0: RobotTetra* robot = (RobotTetra*) demo;\n");
 	RobotTetra* robot = (RobotTetra*) demo;
-	int TimeOut = 8;
+	int TimeOut = 5;
 	int NHaut=0,N1=-1,N2=-1,NRestant=-1;
 	int PBas = -1,PHaut = -1,P1=-1,P2=-1;
 	int i,j;
@@ -305,7 +305,7 @@ void* RobotTetra::marcherRobot(void *demo)
 		{	
 			pistonTMP = (PhysicPiston*) robot->Arcs[i];
 			robot->action[i]->setPiston(pistonTMP);
-			robot->action[i]->setTailleVoulu(pistonTMP->getTailleMin());
+			robot->action[i]->setTailleVoulue(pistonTMP->getTailleMin());
 			Thread((void*)robot->action[i],actionThread);
 		}
 		// On attends 8 secondes que l'initialisation ce termine
@@ -368,7 +368,7 @@ void* RobotTetra::marcherRobot(void *demo)
 		printf("PHaut: %d, PBas: %d\n",PHaut,PBas);
 		pistonTMP = (PhysicPiston*) robot->Arcs[PBas];
 		robot->action[PBas]->setPiston(pistonTMP);
-		robot->action[PBas]->setTailleVoulu(btScalar(8.));
+		robot->action[PBas]->setTailleVoulue(btScalar(8.));
 		Thread((void*)robot->action[PBas],actionThread);
 
 		// On debloque les pistons liant le noeuds NHaut (P1 et P2)
@@ -385,7 +385,7 @@ void* RobotTetra::marcherRobot(void *demo)
 		// On mets le piston d'identificateur PHaut à sa taille maximale
 		pistonTMP = (PhysicPiston*) robot->Arcs[PHaut];
 		robot->action[PHaut]->setPiston(pistonTMP);
-		robot->action[PHaut]->setTailleVoulu(pistonTMP->getTailleMax());
+		robot->action[PHaut]->setTailleVoulue(pistonTMP->getTailleMax());
 		Thread((void*)robot->action[PHaut],actionThread);
 		// On attends 12 secondes
 		// MODIF JAZZ : 31 / 05 /09 : 23h55 12 => 4
@@ -407,7 +407,7 @@ void* RobotTetra::marcherRobot(void *demo)
 	{
 		pistonTMP = (PhysicPiston*) robot->Arcs[i];
 		robot->action[i]->setPiston(pistonTMP);
-		robot->action[i]->setTailleVoulu(pistonTMP->getTailleMin());
+		robot->action[i]->setTailleVoulue(pistonTMP->getTailleMin());
 		Thread((void*)robot->action[i],actionThread);
 	}
 	// Attendre que les pistons soient arretes
