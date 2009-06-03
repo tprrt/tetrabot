@@ -1,3 +1,8 @@
+//  @ Project : Tetrabot
+//  @ File Name : ControleurRobot.h
+//  @ Date : 01/06/2009
+//  @ Author : Frozen Brains
+
 #ifndef CONTROLEURROBOT_H
 #define CONTROLEURROBOT_H
 
@@ -16,33 +21,35 @@
 class ControleurRobot
 {
 protected:
+	// robot : robot traitait par ce controleur
 	PhysicRobot* robot;
-
+	// tabSin : vecteur de sinusoide
 	btAlignedObjectArray<Sinusoide*> tabSin;
-
+	// tabction : vecteur d Action de piston
 	btAlignedObjectArray<ActionPiston*> tabAction;
-
+	// etape : etape courante
 	int etape;
-
+	// id : identifieur
 	int id;
-
+	// posInitial : position initiale du robot au debut du test
 	btVector3 posInitial;
-
+	// resultat : distance entre le point d arrivee et le point de depart
 	Resultat* resultat;
 
 public:
+	// Constructeur de la classe ControleurRobot avec les parametres d une sinusoide
 	ControleurRobot(PhysicRobot* robot,btScalar periodeMax,btScalar amplitudeMax,btScalar dephasageMax);
-
+	// Constructeur de la classe ControleurRobot avec un vecteur de sinusoide
 	ControleurRobot(PhysicRobot* robot, btAlignedObjectArray<Sinusoide*> tab_Sinus);
-
+	// Destructeur de l objet
 	~ControleurRobot();
-
+	// Retourne un vecteur de sinusoide
 	btAlignedObjectArray<Sinusoide*> getTabSin();
-
+	// Retourne l etape courante du controleur
 	int getEtape();
-
+	// Retourne le robot traitait par ce controleur
 	PhysicRobot* getRobot();
-
+	// Retourne le resultat du controleur
 	Resultat* getResultat();
 
 	// retourne l'identifiant du controleur

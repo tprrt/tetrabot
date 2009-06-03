@@ -38,7 +38,7 @@ void ActionControleurRobot::setEtape(int numEtape)
 // Methode pour execute une etape de l'algoGen
 void ActionControleurRobot::execute()
 {
-	printf("Execution de l'etape %d, signature IDControleur : %d\n",this->getEtape(),this->ctrlRobot->getID());
+	//printf("Execution de l'etape %d, signature IDControleur : %d\n",this->getEtape(),this->ctrlRobot->getID());
 	this->ctrlRobot->execute(this->etape);	
 }
 

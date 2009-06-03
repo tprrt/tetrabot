@@ -1,3 +1,8 @@
+//  @ Project : Tetrabot
+//  @ File Name : EdgeInfo.h
+//  @ Date : 01/06/2009
+//  @ Author : Frozen Brains
+
 /*
 	Définition de la classe abstraite Robot.
 Cette classe contiendra tout les éléments du robot ainsi que les actions associes au robot.

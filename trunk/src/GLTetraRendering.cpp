@@ -1,5 +1,12 @@
+//  @ Project : Tetrabot
+//  @ File Name : GLTetraRendering.cpp
+//  @ Date : 01/06/2009
+//  @ Author : Frozen Brains
+
+
 #include "GLTetraRendering.h"
 
+// Constructeur de la classe GLTetraRendering pour initialiser les Actions des pistons d un robot 
 GLTetraRendering::GLTetraRendering()
 {
 	for(int i=0;i<6;i++)
@@ -7,6 +14,7 @@ GLTetraRendering::GLTetraRendering()
 		action[i] = new ActionPiston(NULL,NULL);
 	}
 }
+// Configuration des axes dans le monde bullet
 static void draw_axes(const btRigidBody& rb, const btTransform& frame)
 {
 	glBegin(GL_LINES);
@@ -79,6 +87,7 @@ static void	drawSlider(btSliderConstraint* pSlider)
 
 //-----------------------------------------------------------------------------
 
+// Methode pour initialiser le monde bullet et pour creer un robot
 void GLTetraRendering::initPhysics()
 {
 	setTexturing(true);
@@ -149,14 +158,10 @@ void GLTetraRendering::initPhysics()
 
 	// Creation du robot
 	this->robot = new RobotTetra(this->m_dynamicsWorld,btVector3(btScalar(0.),btScalar(10.),btScalar(0.)));
-
-	// Creation d'un controleur
-	//controleur = new ControleurRobot(this->robot,btScalar(M_PI),btScalar(8.F),btScalar(4.F));
-
 }
 
 //-----------------------------------------------------------------------------
-
+// Destructeur de la classe GLTetraRendering
 GLTetraRendering::~GLTetraRendering()
 {
 	//cleanup in the reverse order of creation/initialization
@@ -250,7 +255,7 @@ void GLTetraRendering::clientMoveAndDisplay()
 }
 
 //-----------------------------------------------------------------------------
-
+// Methode pour dessiner les contraintes lienaires des pistons du robot
 void GLTetraRendering::displayCallback(void) 
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
@@ -272,7 +277,7 @@ void GLTetraRendering::displayCallback(void)
 }
 
 //-----------------------------------------------------------------------------
-
+// Methode pour interagir avec bullet ( touches clavier )
 void GLTetraRendering::keyboardCallback(unsigned char key, int x, int y)
 {
 	(void)x;
@@ -404,6 +409,7 @@ void GLTetraRendering::keyboardCallback(unsigned char key, int x, int y)
 
 
 //-----------------------------------------------------------------------------
+// Methode pour interagir avec bullet ( touches clavier Fn )
 void GLTetraRendering::specialKeyboard(int key, int x, int y)	
 {
 	(void)x;
@@ -425,21 +431,6 @@ void GLTetraRendering::specialKeyboard(int key, int x, int y)
 	{
 		printf("F2\n");
 		// Tous les pistons a la taille maximale
-		/*btScalar tailleTmp;
-		for(int i=0;i<6;i++)
-		{
-			if(robot->Arcs[i]!=NULL)
-			{
-				tailleTmp = robot->Arcs[i]->getTailleMax()- robot->Arcs[i]->getLength();
-				if(tailleTmp< 0)tailleTmp= -tailleTmp;
-				if(tailleTmp> btScalar(0.1))
-				{
-					this->action[i] = new ActionPiston(robot->Arcs[i],robot->Arcs[i]->getTailleMax());
-					//CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE) actionThread,action[i], 0, &threadID);
-					Thread((void*)action[i],actionThread);
-				}
-			}
-		}*/
 		this->robot->maxiRobot();
 		break;
 	}
@@ -447,22 +438,6 @@ void GLTetraRendering::specialKeyboard(int key, int x, int y)
 	{
 		printf("F3\n");
 		// Tous les pistons a la taille minimale
-		/*btScalar tailleTmp;
-		for(int i=0;i<6;i++)
-		{
-			if(robot->Arcs[i]!=NULL)
-			{
-				tailleTmp = robot->Arcs[i]->getTailleMin()- robot->Arcs[i]->getLength();
-				if(tailleTmp< 0)tailleTmp= -tailleTmp;
-				if(tailleTmp> btScalar(0.1))
-				{
-					this->action[i] = new ActionPiston(robot->Arcs[i],robot->Arcs[i]->getTailleMin());
-					//CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)actionThread,action[i], 0, &threadID);
-					Thread((void*)action[i],actionThread);
-				}
-			}
-		}
-		*/
 		this->robot->nanoRobot();
 		break;
 	}
@@ -568,7 +543,7 @@ void GLTetraRendering::specialKeyboard(int key, int x, int y)
 
 }
 
-
+//Methode pour configuer l affichage de ecran 
 void GLTetraRendering::renderme()
 {
 	myinit();
@@ -849,158 +824,4 @@ void GLTetraRendering::renderme()
 	updateCamera();
 
 }
-bool GLTetraRendering::IsNotInArea(const btVector3 &G,const btVector3 &end2){
-	return (
-		 end2.distance(G) > btScalar(5.)
-	);
-}
 
-/*
-void* GL_Piston::marcherRobot(void *demo)
-{
-	GL_Piston* This = (GL_Piston*) demo;
-	int NHaut=0,N1=-1,N2=-1,NRestant=-1;
-	int PBas = -1,PHaut = -1,P1=-1,P2=-1;
-	int i,j;
-	btVector3 vectTMP[3];
-	Noeud* noeuds[4];
-	// On va deplacer le robot
-	// On choisi un point d'arrive du robot sur le cercle de centre ( G : center of masse et de rayon R = 5.)
-	btVector3 end = This->bodyCube->getCenterOfMassPosition();
-	end.setY(btScalar(This->robot->getCenterOfMassPosition().getY()));
-
-
-	// Pour faire simple, on va creer la matrice de liaison des noeuds (matrice d'identificateurs)
-	int matLiaison[4][4];
-	// initialisation de matLiaison à -1
-	for( i=0;i<4;i++)
-	{
-		for(j=0;j<4;j++)
-		{
-			matLiaison[i][j] = -1;
-		}
-	}
-	matLiaison[0][2] = 0;
-	matLiaison[2][0] = 0;
-	matLiaison[0][1] = 1;
-	matLiaison[1][0] = 1;
-	matLiaison[0][3] = 2;
-	matLiaison[3][0] = 2;
-	matLiaison[1][2] = 3;
-	matLiaison[2][1] = 3;
-	matLiaison[1][3] = 4;
-	matLiaison[3][1] = 4;
-	matLiaison[2][3] = 5;
-	matLiaison[3][2] = 5;
-	// Tant que le robot n'est pas assez proche du point end, on fait avancer le robot (de maniere simple)
-	// Le point end est assez proche si la distance entre ce dernier et le centre de gravite du robot
-	// est inferieure à 6.
-	while(This->IsNotInArea(This->robot->getCenterOfMassPosition(),end))
-	{
-		// Mettre le robot à l'etat initial (pistons au minimum de leur taille)
-		for(i=0;i<6;i++)
-		{
-			This->action[i]->setPiston(This->robot->Arcs[i]);
-			This->action[i]->setTailleVoulu(This->robot->Arcs[i]->getTailleMin());
-			Thread((void*)This->action[i],actionThread);
-		}
-		// On attends 8 secondes que l'initialisation ce termine
-		sleep(8);
-		NHaut = 0;
-		// On cherche le noeud NHaut le plus haut.
-		for(i=1;i<4;i++)
-		{
-			vectTMP[0] = (This->robot->Sommets[NHaut]->getCenterOfMassPosition());
-			vectTMP[1] = (This->robot->Sommets[i]->getCenterOfMassPosition());
-			if((vectTMP[0].y()) < (vectTMP[1].y()))
-				NHaut = i;
-		}
-		// On cherche maintenant les 2 noeuds de la base les plus proches du point d'arrivé end.
-		j=0;
-		for(i=0;i<4;i++)
-		{
-			if(i!= NHaut && j<3){
-				noeuds[j] = This->robot->Sommets[i];
-				vectTMP[j] = noeuds[j]->getCenterOfMassPosition();
-				j++;
-			}
-		}
-		if( (vectTMP[0].distance(end)) < (vectTMP[1].distance(end)) )
-		{
-			N1 = noeuds[0]->getID();
-			if( (vectTMP[1].distance(end)) < (vectTMP[2].distance(end)) )
-			{
-				N2 = noeuds[1]->getID();
-				NRestant = noeuds[2]->getID();
-			}
-			else
-			{
-				N2 = noeuds[2]->getID();
-				NRestant = noeuds[1]->getID();
-			}
-		}
-		else
-		{
-			if( (vectTMP[0].distance(end)) < (vectTMP[2].distance(end)) )
-			{
-				N1 = noeuds[0]->getID();
-				N2 = noeuds[1]->getID();
-				NRestant = noeuds[2]->getID();
-			}
-			else
-			{
-				N1 = noeuds[2]->getID();
-				N2 = noeuds[1]->getID();
-				NRestant = noeuds[0]->getID();
-			}
-		}
-		// On cherche les pistons liant N1 et N2 (PBas), et celui liant NRestant à NHaut(PHaut).
-		PBas = matLiaison[N1][N2];
-		PHaut = matLiaison[NRestant][NHaut];
-
-		// On mets le piston d'identificateur PBas à 8
-		printf("NHaut: %d, N1: %d,N2: %d,NRestant: %d\n",NHaut,N1,N2,NRestant);
-		printf("PHaut: %d, PBas: %d\n",PHaut,PBas);
-		This->action[PBas]->setPiston(This->robot->Arcs[PBas]);
-		This->action[PBas]->setTailleVoulu(btScalar(8.));
-		Thread((void*)This->action[PBas],actionThread);
-
-		// On debloque les pistons liant le noeuds NHaut (P1 et P2)
-		//printf("P1: %d, P2: %d\n",matLiaison[NHaut][N1],matLiaison[NHaut][N2]);
-		P1 = matLiaison[NHaut][N1];
-		P2 = matLiaison[NHaut][N2];
-		//printf("P1: %d, P2: %d\n",P1,P2);
-		This->robot->Arcs[P1]->unlock();
-		This->robot->Arcs[P2]->unlock();
-
-
-		// On mets le piston d'identificateur PHaut à sa taille maximale
-		This->action[PHaut]->setPiston(This->robot->Arcs[PHaut]);
-		This->action[PHaut]->setTailleVoulu(This->robot->Arcs[PHaut]->getTailleMax());
-		Thread((void*)This->action[PHaut],actionThread);
-		// On attends 10 secondes
-		sleep(10);
-		// On bloque les pistons liant le noeuds NHaut precedement debloques
-		This->robot->Arcs[P1]->lock();
-		This->robot->Arcs[P2]->lock();
-		// On debloque les contraintes coniques des deux precedents pistons
-
-
-	}// Fin WHILE
-	// La marche du robot est terminée.
-	// Mettre le robot à l'etat final (pistons au minimum de leur taille)
-	for(i=0;i<6;i++)
-	{
-		This->action[i]->setPiston(This->robot->Arcs[i]);
-		This->action[i]->setTailleVoulu(This->robot->Arcs[i]->getTailleMin());
-		Thread((void*)This->action[i],actionThread);
-	}
-	// Attendre que les pistons soient arretes
-	sleep(8);
-
-	printf("Arret du robot!\n");
-
-
-	return NULL;
-}
-*/

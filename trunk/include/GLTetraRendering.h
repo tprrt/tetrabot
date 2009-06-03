@@ -1,3 +1,8 @@
+//  @ Project : Tetrabot
+//  @ File Name : GLTetraRendering.h
+//  @ Date : 01/06/2009
+//  @ Author : Frozen Brains
+
 //-----------------------------------------------------------------------------
 
 #ifndef GLTETRARENDERING_H
@@ -45,24 +50,25 @@ public:
 
 	class btDefaultCollisionConfiguration* m_collisionConfiguration;
 	
+	// action : tableau des actions des pistons
 	ActionPiston *action[6];
 
 	PhysicWorld * world;
-
+	// robot : robot qui est dans le monde bullet
 	RobotTetra * robot;
-
-	ControleurRobot* controleur;
-
+	
+	// bodyCube : indicateur de la position cible
 	btRigidBody* bodyCube;
-
+	
+	// bodyPave : indicateur de piston
 	btRigidBody* bodyPave;
 
 public:
-
+	// Constructeur de la classe GLTetraRendering pour initialiser les Actions des pistons d un robot 
 	GLTetraRendering();
-
+	// Destructeur de la classe GLTetraRendering
 	virtual ~GLTetraRendering();
-
+	// Methode pour initialiser le monde bullet et pour creer un robot
 	void	initPhysics();
 
 	void	initModel();
@@ -72,7 +78,7 @@ public:
 	void	drawSliderConstraint(btSliderConstraint* constraint);
 
 	virtual void clientMoveAndDisplay();
-
+	// Methode pour dessiner les contraintes lienaires des pistons du robot
 	virtual void displayCallback();
 
 	static Application* Create()
@@ -82,17 +88,13 @@ public:
 		demo->initPhysics();
 		return demo;
 	}
-
+	// Methode pour interagir avec bullet ( touches clavier Fn )
 	void specialKeyboard(int key, int x, int y);
-
+	// Methode pour interagir avec bullet ( touches clavier )
 	void keyboardCallback(unsigned char key, int x, int y);
 
-	bool IsNotInArea(const btVector3 &G,const btVector3 &end2);
-
+	//Methode pour configuer l affichage de ecran
 	void renderme();
-
-	// methode pour faire marcher le robot
-	//static void* marcherRobot(void* demo);
 };
 
 #endif /* GLTETRARENDERING_H */
