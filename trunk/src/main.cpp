@@ -1,3 +1,8 @@
+//  @ Project : Tetrabot
+//  @ File Name : main.cpp
+//  @ Date : 01/06/2009
+//  @ Author : Frozen Brains
+
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 #define WIN32_LEAN_AND_MEAN
 #ifdef WIN32

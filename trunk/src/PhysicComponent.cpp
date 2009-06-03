@@ -1,13 +1,21 @@
+//  @ Project : Tetrabot
+//  @ File Name : PhysicComponent.cpp
+//  @ Date : 01/06/2009
+//  @ Author : Frozen Brains
+
 #include "PhysicComponent.h"
 
+// Retourne l identifieur de l objet
 int PhysicComponent::getID() {
 	return this->id;
 }
 
+// Retourne le monde
 btDynamicsWorld *PhysicComponent::getWorld() {
 	return this->World;
 }
 
+//Parametre le monde
 void PhysicComponent::setWorld(btDynamicsWorld* newWorld) {
 	this->World = newWorld;
 }
@@ -31,7 +39,7 @@ btRigidBody* PhysicComponent::localCreateRigidBody (btScalar mass, const btTrans
 	return body;
 }
 
-	// Création d'un corps pour GL
+// Création d'un corps pour GL
 btRigidBody* PhysicComponent::localCreateRigidBody (btScalar mass, const btTransform& startTransform, btCollisionShape* shape) {
 
 	bool isDynamic = (mass != 0.f);
