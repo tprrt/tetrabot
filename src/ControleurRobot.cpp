@@ -135,7 +135,7 @@ void ControleurRobot::execute(int numEtape)
 		}
 		// Creation de l'action
 		this->tabAction[i]->setPiston(pistonTMP);
-		this->tabAction[i]->setTailleVoulu(longueurTMP);
+		this->tabAction[i]->setTailleVoulue(longueurTMP);
 		// Creation d'un Thread
 		Thread((void*)tabAction[i],actionThread);
 
