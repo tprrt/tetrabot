@@ -1,8 +1,13 @@
+//  @ Project : Tetrabot
+//  @ File Name : PhysicNoeud.cpp
+//  @ Date : 01/06/2009
+//  @ Author : Frozen Brains
+
 #include "PhysicNoeud.h"
 
 //-----------------------------------------------------------------------------
 
-
+//Constructeur de la classe PhysicNoeud pour Ogre
 PhysicNoeud::PhysicNoeud(btDynamicsWorld *ownerWorld,Ogre::SceneNode * nodeOgre,btConvexInternalShape* forme,const btVector3 & offset,btScalar masse): PhysicVertex(ownerWorld),PhysicComponent(ownerWorld)
 {
 	static int ID=0;
@@ -22,7 +27,7 @@ PhysicNoeud::PhysicNoeud(btDynamicsWorld *ownerWorld,Ogre::SceneNode * nodeOgre,
 	// Friction boule/sol
 	this->bodyNoeud->setFriction(RUBDOWN);
 }
-
+//Constructeur de la classe PhysicNoeud pour Bullet
 PhysicNoeud::PhysicNoeud(btDynamicsWorld *ownerWorld,btConvexInternalShape* forme,const btVector3 & offset, btScalar masse):PhysicVertex(ownerWorld),PhysicComponent(ownerWorld)
 {
 	static int ID=0;
@@ -42,32 +47,34 @@ PhysicNoeud::PhysicNoeud(btDynamicsWorld *ownerWorld,btConvexInternalShape* form
 	// Friction boule/sol
 	this->bodyNoeud->setFriction(RUBDOWN);
 }
-
+//Destructeur de la classe PhysicNoeud
 PhysicNoeud::~PhysicNoeud()
 {
 	delete this->shapeNoeud;
 	delete this->bodyNoeud;
 }
-
+// Methode pour obtenir le centre de masse
 btVector3 PhysicNoeud::getCenterOfMassPosition()
 {
 	return this->bodyNoeud->getCenterOfMassPosition();
 }
 
-
+// Retourne le Body de l objet
 btRigidBody* PhysicNoeud::getBody()
 {
 	return this->bodyNoeud;
 }
+//Parametre le Body de l objet
 void PhysicNoeud::setBody(btRigidBody *body)
 {
 	this->bodyNoeud = body;
 }
-
+// Retourne le ShapeNoeud de l objet
 btConvexInternalShape* PhysicNoeud::getShapeNoeud()
 {
 	return this->shapeNoeud;
 }
+//Parametre le ShapeNoeud de l objet
 void PhysicNoeud::setShapeNoeud(btConvexInternalShape* shape)
 {
 	this->shapeNoeud = shape;
@@ -153,6 +160,7 @@ int PhysicNoeud::linkEdge(PhysicEdge *edge, char extremitee, btScalar rotationY,
 	return 0;
 }
 
+// Methode pour translater l objet
 void PhysicNoeud::translate(const btVector3& to)
 {
 	this->bodyNoeud->translate(to);
