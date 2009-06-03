@@ -1,6 +1,11 @@
+//  @ Project : Tetrabot
+//  @ File Name : ControleurRobot.cpp
+//  @ Date : 01/06/2009
+//  @ Author : Frozen Brains
+
 #include "ControleurRobot.h"
 
-
+// Constructeur de la classe ControleurRobot avec les parametres d une sinusoide
 ControleurRobot::ControleurRobot(PhysicRobot* robot,btScalar periodeMax,btScalar amplitudeMax,btScalar dephasageMax)
 :robot(robot),
 etape(0),
@@ -51,7 +56,7 @@ posInitial(robot->getCenterOfMassPosition())
 	this->resultat = new Resultat(this->id,btScalar(0.));
 }
 
-
+// Constructeur de la classe ControleurRobot avec un vecteur de sinusoide
 ControleurRobot::ControleurRobot(PhysicRobot* robot, btAlignedObjectArray<Sinusoide*> tab_Sinus)
 :robot(robot),
 etape(0),
@@ -76,7 +81,7 @@ posInitial(robot->getCenterOfMassPosition())
 }
 
 
-
+// Destructeur de l objet
 ControleurRobot::~ControleurRobot(){
 	for(int i=0;i<this->tabSin.size();i++){
 		delete this->tabSin[i];
@@ -87,25 +92,26 @@ ControleurRobot::~ControleurRobot(){
 	//delete (void *)posInitial;
 	delete this->resultat;
 }
+// Retourne le robot traitait par ce controleur
 PhysicRobot* ControleurRobot::getRobot()
 {
 	return this->robot;
 }
 
-
+// Retourne un vecteur de sinusoide
 btAlignedObjectArray<Sinusoide*> ControleurRobot::getTabSin()
 {
 	return this->tabSin;
 }
 
-
+// Retourne l etape courante du controleur
 int ControleurRobot::getEtape()
 {
 	return this->etape;
 }
 
 
-
+// Methode permettant d executer une etape en particulier
 void ControleurRobot::execute(int numEtape)
 {
 	btScalar longueurTMP;
@@ -142,6 +148,7 @@ void ControleurRobot::execute(int numEtape)
 	}
 }
 
+// Methode permettant la mise a jour du resultat
 void ControleurRobot::updateResultat()
 {
 	btScalar distance;
@@ -152,16 +159,19 @@ void ControleurRobot::updateResultat()
 	this->resultat->setDistance(distance);
 }
 
+// Retourne le resultat du controleur
 Resultat* ControleurRobot::getResultat()
 {
 	return this->resultat;
 }
 
+//Retourne l identifieur du controleur
 int ControleurRobot::getID()
 {
 	return this->id;
 }
 
+//Parametre l identifieur du controleur
 void ControleurRobot::setID()
 {
 	static int ID=0;

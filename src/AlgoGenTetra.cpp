@@ -52,17 +52,17 @@ void* AlgoGenTetra::execute(void *algoGenTetra)
 	//initialiser la fonction pseudo-aleatoire rand
 	srand(time(NULL));
 	// Allouer nbRobotsActifs Actions
-	printf("=================  PROCEDURE D' EVOLUTION =================\n");
-	printf("\tParametre de l' Algorithme Genetique :\n");
+	printf("=====================  PROCEDURE D' EVOLUTION =====================\n");
+	printf("\tParametre de l' Algorithme Genetique :\n\n");
 	printf("  Population de robot participant : %6d\n",algo->nbRobotsActifs);
-	printf("  Indice de mutation              : %6f\n",algo->mutation);
+	printf("  Indice de mutation  (%c)         : %6d\n",37,(int)(algo->mutation*100));
 	printf("  Nombre de croisement		  : %6d\n",algo->nbCroisements);
 	printf("  Nombre d' etape (par croisement): %6d\n",algo->nbEtapes);
 	/*
 		this->pointDepart = startPoint;
 	*/
 	
-	printf("================= LANCEMENT =================\n");
+	printf("============================ LANCEMENT ============================\n");
 	// on initialise le tableau des Actions des Controleurs de Robots
 	for(int i=0;i<algo->nbRobotsActifs;i++)
 	{
@@ -72,21 +72,21 @@ void* AlgoGenTetra::execute(void *algoGenTetra)
 	for(int nbCroisementEffectuees=0;nbCroisementEffectuees<= algo->nbCroisements;nbCroisementEffectuees++)
 	{
 		
-		printf("\tGeneration de Robot %d / %d\n\t( etat d' avancement de l' algoGen : %5G )\n",nbCroisementEffectuees,algo->nbCroisements,((nbCroisementEffectuees/algo->nbCroisements)*100.));
+		printf("\tGeneration de Robot %d / %d\n\t(Progression : %3.2f %c )\n",nbCroisementEffectuees,algo->nbCroisements,((nbCroisementEffectuees*100./(algo->nbCroisements+1))),37);
 		// Pour chaques controleurs actifs, on effectue les nbEtapes
 		for(int i=0;i<algo->nbRobotsActifs;i++)
 		{
 			// Positionner le robot au point de depart
 			algo->robot->translate(algo->pointDepart);
 			// Mettre en position initiale les pistons du robot
-			printf("\t\t Robot %d de la Generation %d\n\t\t( etat d' avancement de l' algoGen : %5G )\n",i,nbCroisementEffectuees,((i+(algo->nbRobotsActifs*nbCroisementEffectuees))/(algo->nbRobotsActifs*algo->nbCroisements)*100.));
+			printf("\t|\n\t|------> Robot %d de la Generation %d\n\t|\t (Progression : %3.2f %c )\n",i,nbCroisementEffectuees,((((i+(algo->nbRobotsActifs*nbCroisementEffectuees))*100.)/(algo->nbRobotsActifs*(algo->nbCroisements+1)))),37);
 			// Taille minimale du robot
 			((RobotTetra*)algo->robot)->nanoRobot();
 			sleep(EDGE_WAIT);
 			// Affecter un Thread et une Action au Controleur de Robot
 			for(int j = 0;j<algo->nbEtapes;j++)
 			{
-				printf("\t\t\tEtape %d-R(%d)G(%d)\n\t\t\t( etat d' avancement de l' algoGen : %5G )\n",j,i,nbCroisementEffectuees,( (j+(i*(nbCroisementEffectuees)*(algo->nbEtapes))) / ((algo->nbRobotsActifs)*(algo->nbCroisements)*(algo->nbEtapes)))*100.);
+				printf("\t|\t|\n\t|\t|------> Etape %d-R(%d)G(%d)\n\t|\t|\t signature IDControleur %d\n\t|\t|\t (Progression : %3.2f %c )\n",j,i,nbCroisementEffectuees,algo->tabCtrl[i]->getID(),( 100.*(1+j+(i*(algo->nbEtapes))+((algo->nbRobotsActifs)*(nbCroisementEffectuees)*(algo->nbEtapes))) / ((algo->nbRobotsActifs)*(algo->nbCroisements+1)*(algo->nbEtapes))),37);
 				
 				algo->tabAction[i]->setControleurRobot(algo->tabCtrl[i]);
 				algo->tabAction[i]->setEtape(j);

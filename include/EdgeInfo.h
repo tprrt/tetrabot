@@ -12,17 +12,19 @@
 class EdgeInfo : public ComponentInfo {
 
 protected:
+	// minSize :  minimum du edge
 	float minSize;
-
+	// maxSize :  maximum du edge
 	float maxSize;
 
 public:
+	//Constructeur de la classe EdgeInfo
 	EdgeInfo(const float weight, const float minSize, const float maxSize);
 
 	//virtual ~Edge();
-
+	// Retourne le minimum d un edge
 	const float getMinSize() const;
-
+	// Retourne le maximum d un edge
 	const float getMaxSize() const;
 
 };

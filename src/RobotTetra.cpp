@@ -174,7 +174,7 @@ bool RobotTetra::IsNotInArea(const btVector3 &G,const btVector3 &end2){
 }
 
 void RobotTetra::nanoRobot(){
-	printf("Nainification du robot\n");
+	//printf("Nainification du robot\n");
 	PhysicPiston* pistonTMP;
 
 	// Tous les pistons a la taille minimale
@@ -197,7 +197,7 @@ void RobotTetra::nanoRobot(){
 }
 
 void RobotTetra::maxiRobot(){
-	printf("Nainification du robot\n");
+	//printf("Maximisation du robot\n");
 	// Tous les pistons a la taille maximale
 	PhysicPiston* pistonTMP;
 	btScalar tailleTmp;
