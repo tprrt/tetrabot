@@ -10,20 +10,7 @@ void RobotTetra::Deplacement(unsigned char key)
 	taille=0.;
 	tailleTmp=0.;
 	Step = 1.F;
-	//PhysicNoeud* noeudTMP;
 	
-	// Calcul de la position du piston voulu
-/*	noeudTMP = (PhysicNoeud*) robot->Sommets[0];
-	const btVector3& b0 =  noeudTMP->getBody()->getCenterOfMassPosition();
-	noeudTMP = (PhysicNoeud*) robot->Sommets[1];
-	const btVector3& b1 =  noeudTMP->getBody()->getCenterOfMassPosition();
-	noeudTMP = (PhysicNoeud*) robot->Sommets[2];
-	const btVector3& b2 =  noeudTMP->getBody()->getCenterOfMassPosition();
-	noeudTMP = (PhysicNoeud*) robot->Sommets[3];
-	const btVector3& b3 =  noeudTMP->getBody()->getCenterOfMassPosition();
-	const btVector3& b4 =  this->bodyPave->getCenterOfMassPosition();
-	btVector3 Gravity = btVector3(0.,0.,0.);
-*/
 	switch (key) 
 	{
 		case 'A':
@@ -146,6 +133,50 @@ void RobotTetra::Deplacement(unsigned char key)
 				pistonTMP = (PhysicPiston*)this->Arcs[Num_Piston];
 				this->action[Num_Piston] = new ActionPiston(pistonTMP, (btScalar) (taille/1));
 				// lancement du thread
+				// JAZZ 4 JUIN 2009 : 21h21 -- ajout d une subtilite pour le deplacement manuel du robot
+				btScalar G = this->getCenterOfMassPosition().getY();
+				btScalar max = G;
+				btScalar Gs = G;
+				int Som = 0;
+				for(int t=0;t<4;t++){
+					Gs = this->Sommets[t]->getCenterOfMassPosition().getY();
+					if((Gs >= G) &&(Gs >= max))
+					{
+						Som = t;
+					}
+				}
+				switch(Som)
+				{
+				case 0 :	if((Num_Piston==0)||(Num_Piston==1)||(Num_Piston==2))
+						{
+							this->Arcs[0]->unlock();
+							this->Arcs[1]->unlock();
+							this->Arcs[2]->unlock();
+						}
+				break;
+				case 1 :	if((Num_Piston==1)||(Num_Piston==3)||(Num_Piston==4))
+						{
+							this->Arcs[1]->unlock();
+							this->Arcs[3]->unlock();
+							this->Arcs[4]->unlock();
+						}
+				break;
+				case 2 :	if((Num_Piston==0)||(Num_Piston==3)||(Num_Piston==5))
+						{
+							this->Arcs[0]->unlock();
+							this->Arcs[3]->unlock();
+							this->Arcs[5]->unlock();
+						}
+				break;
+				case 3 :	if((Num_Piston==2)||(Num_Piston==4)||(Num_Piston==5))
+						{
+							this->Arcs[2]->unlock();
+							this->Arcs[4]->unlock();
+							this->Arcs[5]->unlock();
+						}
+				break;
+				default : break;
+				}
 				Thread((void*)this->action[Num_Piston],actionThread);
 			}
 			else{
