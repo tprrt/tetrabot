@@ -1,7 +1,7 @@
 material PM001
 {
 	receive_shadows on
-	technique
+	technique GLSL
 	{
 		pass
 		{
