@@ -20,7 +20,7 @@
 #define EDGE_WEIGHT 0.1
 
 #define EDGE_VELOCITY 2.5
-#define EDGE_STRENGTH 0.01
+#define EDGE_STRENGTH 1
 
 #define EDGE_WAIT 10
 
