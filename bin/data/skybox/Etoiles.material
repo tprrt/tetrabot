@@ -17,7 +17,7 @@ material Etoiles
 			texture_unit SkyTex
 			{
 				cubic_texture Etoiles.jpg separateUV
-				tex_address_mode clamp
+				//tex_address_mode clamp
 				filtering anisotropic
 				//scale 100 100
 			}
