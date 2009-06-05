@@ -10,8 +10,8 @@ void RobotTetra::Deplacement(unsigned char key)
 	taille=0.;
 	tailleTmp=0.;
 	Step = 1.F;
-	
-	switch (key) 
+
+	switch (key)
 	{
 		case 'A':
 		{	sensMouvement =1;
@@ -128,7 +128,7 @@ void RobotTetra::Deplacement(unsigned char key)
 			}
 			if(tailleTmp< 0) tailleTmp= -tailleTmp;
 			if(tailleTmp> btScalar(0.1))
-			{	
+			{
 				// configuration de la nouvelle action
 				pistonTMP = (PhysicPiston*)this->Arcs[Num_Piston];
 				this->action[Num_Piston] = new ActionPiston(pistonTMP, (btScalar) (taille/1));
@@ -180,7 +180,7 @@ void RobotTetra::Deplacement(unsigned char key)
 				Thread((void*)this->action[Num_Piston],actionThread);
 			}
 			else{
-				printf("Taille invalide\n");				
+				printf("Taille invalide\n");
 			}
 		}
 		else {
@@ -285,7 +285,7 @@ void* RobotTetra::marcherRobot(void *demo)
 			printf("end3 %f %f %f\n",end.getX(),end.getY(),end.getZ());
 		}
 	}
-	
+
 	//printf("Test 2 : end.setY(btScalar(robot->getCenterOfMassPosition().getY()));\n");
 	end.setY(btScalar(robot->getCenterOfMassPosition().getY()));
 	printf("end4 %f %f %f\n",end.getX(),end.getY(),end.getZ());
@@ -293,7 +293,7 @@ void* RobotTetra::marcherRobot(void *demo)
 	// Pour faire simple, on va creer la matrice de liaison des noeuds (matrice d'identificateurs)
 	//printf("Test 3 : Suite \n");
 	int matLiaison[4][4];
-	// initialisation de matLiaison à -1
+	// initialisation de matLiaison ï¿½ -1
 	for( i=0;i<4;i++)
 	{
 		for(j=0;j<4;j++)
@@ -315,9 +315,9 @@ void* RobotTetra::marcherRobot(void *demo)
 	matLiaison[3][2] = 5;
 	// Tant que le robot n'est pas assez proche du point end, on fait avancer le robot (de maniere simple)
 	// Le point end est assez proche si la distance entre ce dernier et le centre de gravite du robot
-	// est inferieure à 6.
+	// est inferieure ï¿½ 6.
 	// test anti-pointeur null
-	
+
 	for(int i=0;i<6;i++){
 	//printf(" Test 4 : if(robot->action[i]==NULL)\n");
 		if(robot->action[i]==NULL){
@@ -326,14 +326,14 @@ void* RobotTetra::marcherRobot(void *demo)
 		//printf("Test 5 : robot->action[i] = new ActionPiston(robot->Arcs[i],robot->Arcs[i]->getTailleMax()/2); \n");
 			pistonTMP = (PhysicPiston*)robot->Arcs[i];
 			robot->action[i] = new ActionPiston(pistonTMP,pistonTMP->getTailleMax()/2);
-		
+
 	}
 	//printf("Test 6 : while(robot->IsNotInArea(robot->getCenterOfMassPosition(),end)) \n");
 	while(((TimeOut--) != 0)&&(robot->IsNotInArea(robot->getCenterOfMassPosition(),end)))
 	{ printf("TimeOut %d\n",TimeOut);
-		// Mettre le robot à l'etat initial (pistons au minimum de leur taille)
+		// Mettre le robot ï¿½ l'etat initial (pistons au minimum de leur taille)
 		for(i=0;i<6;i++)
-		{	
+		{
 			pistonTMP = (PhysicPiston*) robot->Arcs[i];
 			robot->action[i]->setPiston(pistonTMP);
 			robot->action[i]->setTailleVoulue(pistonTMP->getTailleMin());
@@ -341,7 +341,7 @@ void* RobotTetra::marcherRobot(void *demo)
 		}
 		// On attends 8 secondes que l'initialisation ce termine
 		// MODIF JAZZ : 31 / 05 /09 : 23h50 : 10 => 3
-		sleep(3);
+		sleep(8);
 		NHaut = 0;
 		// On cherche le noeud NHaut le plus haut.
 		for(i=1;i<4;i++)
@@ -351,7 +351,7 @@ void* RobotTetra::marcherRobot(void *demo)
 			if((vectTMP[0].y()) < (vectTMP[1].y()))
 				NHaut = i;
 		}
-		// On cherche maintenant les 2 noeuds de la base les plus proches du point d'arrivé end.
+		// On cherche maintenant les 2 noeuds de la base les plus proches du point d'arrivï¿½ end.
 		j=0;
 		for(i=0;i<4;i++)
 		{
@@ -390,11 +390,11 @@ void* RobotTetra::marcherRobot(void *demo)
 				NRestant = noeuds[0]->getID();
 			}
 		}
-		// On cherche les pistons liant N1 et N2 (PBas), et celui liant NRestant à NHaut(PHaut).
+		// On cherche les pistons liant N1 et N2 (PBas), et celui liant NRestant ï¿½ NHaut(PHaut).
 		PBas = matLiaison[N1][N2];
 		PHaut = matLiaison[NRestant][NHaut];
 
-		// On mets le piston d'identificateur PBas à 8
+		// On mets le piston d'identificateur PBas ï¿½ 8
 		printf("NHaut: %d, N1: %d,N2: %d,NRestant: %d\n",NHaut,N1,N2,NRestant);
 		printf("PHaut: %d, PBas: %d\n",PHaut,PBas);
 		pistonTMP = (PhysicPiston*) robot->Arcs[PBas];
@@ -413,27 +413,27 @@ void* RobotTetra::marcherRobot(void *demo)
 		pistonTMP->unlock();
 
 
-		// On mets le piston d'identificateur PHaut à sa taille maximale
+		// On mets le piston d'identificateur PHaut ï¿½ sa taille maximale
 		pistonTMP = (PhysicPiston*) robot->Arcs[PHaut];
 		robot->action[PHaut]->setPiston(pistonTMP);
 		robot->action[PHaut]->setTailleVoulue(pistonTMP->getTailleMax());
 		Thread((void*)robot->action[PHaut],actionThread);
 		// On attends 12 secondes
 		// MODIF JAZZ : 31 / 05 /09 : 23h55 12 => 4
-		sleep(4);
+		sleep(10);
 		// On bloque les pistons liant le noeuds NHaut precedement debloques
 		pistonTMP = (PhysicPiston*) robot->Arcs[P1];
 		pistonTMP->lock();
 		pistonTMP = (PhysicPiston*) robot->Arcs[P2];
 		pistonTMP->lock();
 		// On debloque les contraintes coniques des deux precedents pistons
-	
+
 	// MODIF JAZZ : 31 / 05 /09 : 23h54
 	end.setY(btScalar(robot->getCenterOfMassPosition().getY()));
 	printf("end5 %f %f %f\n",end.getX(),end.getY(),end.getZ());
 	}// Fin WHILE
-	// La marche du robot est terminée.
-	// Mettre le robot à l'etat final (pistons au minimum de leur taille)
+	// La marche du robot est terminï¿½e.
+	// Mettre le robot ï¿½ l'etat final (pistons au minimum de leur taille)
 	for(i=0;i<6;i++)
 	{
 		pistonTMP = (PhysicPiston*) robot->Arcs[i];
@@ -443,7 +443,7 @@ void* RobotTetra::marcherRobot(void *demo)
 	}
 	// Attendre que les pistons soient arretes
 	// MODIF JAZZ : 31 / 05 /09 : 23h53  8 => 3
-	sleep(3);
+	sleep(8);
 
 	printf("Arret du robot!\n");
 
@@ -455,12 +455,12 @@ RobotTetra::RobotTetra(btDynamicsWorld* world,Ogre::SceneManager * scene,const b
 	PhysicPiston* pistonTMP;
 
 	PhysicNoeud* bouleTMP;
-	// le vecteur decalage sert à espacer les objets
+	// le vecteur decalage sert ï¿½ espacer les objets
 	// pour eviter d'eventuelles erreurs de collisions
 
 	btVector3 decalage;
-	
-	// Création des boules
+
+	// Crï¿½ation des boules
 	for(int i=0;i<4;i++) {
 
 		decalage = btVector3(NODE_RADIUS*i*2,0,0);
@@ -469,7 +469,7 @@ RobotTetra::RobotTetra(btDynamicsWorld* world,Ogre::SceneManager * scene,const b
 		bouleTMP = new PhysicNoeud(world,scene->getSceneNode(nom),new btSphereShape(NODE_RADIUS),posInit+decalage,NODE_WEIGHT);
 		this->Sommets.expand(bouleTMP);
 	}
-	// Création des pistons
+	// Crï¿½ation des pistons
 	for(int i=0;i<6;i++)
 	{
 		decalage = btVector3(0,0,5*i+15);
@@ -494,7 +494,7 @@ RobotTetra::RobotTetra(btDynamicsWorld* world,Ogre::SceneManager * scene,const b
 	this->Sommets[3]->linkEdge(Arcs[2],'B',angle1,(0*2*M_PI)/3);
 	this->Sommets[3]->linkEdge(Arcs[4],'B',angle1,(1*2*M_PI)/3);
 	this->Sommets[3]->linkEdge(Arcs[5],'A',angle1,(2*2*M_PI)/3);
-	
+
 	for(int k=0;k<6;k++){
 		this->action[k]=NULL;
 	}
@@ -507,17 +507,17 @@ RobotTetra::RobotTetra(btDynamicsWorld* world,const btVector3& posInit)
 {
 	PhysicNoeud* bouleTMP;
 	PhysicPiston* pistonTMP;
-	// le vecteur decalage sert à espacer les objets
+	// le vecteur decalage sert ï¿½ espacer les objets
 	// pour eviter d'eventuelles erreurs de collisions
-	btVector3 decalage; 
-	// Création des boules
+	btVector3 decalage;
+	// Crï¿½ation des boules
 	for(int i=0;i<4;i++)
 	{
 		decalage = btVector3(NODE_RADIUS*i*2,0,0);
 		bouleTMP = new PhysicNoeud(world,new btSphereShape(NODE_RADIUS),posInit+decalage,NODE_WEIGHT);
 		this->Sommets.expand(bouleTMP);
 	}
-	// Création des pistons
+	// Crï¿½ation des pistons
 	for(int i=0;i<6;i++)
 	{
 		decalage = btVector3(0,0,5*i+15);
@@ -542,7 +542,7 @@ RobotTetra::RobotTetra(btDynamicsWorld* world,const btVector3& posInit)
 	this->Sommets[3]->linkEdge(Arcs[2],'B',angle1,(0*2*M_PI)/3);
 	this->Sommets[3]->linkEdge(Arcs[4],'B',angle1,(1*2*M_PI)/3);
 	this->Sommets[3]->linkEdge(Arcs[5],'A',angle1,(2*2*M_PI)/3);
-	
+
 	for(int k=0;k<6;k++){
 		this->action[k]=NULL;
 	}
