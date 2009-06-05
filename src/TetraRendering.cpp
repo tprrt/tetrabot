@@ -44,7 +44,7 @@ bool TetraRendering::mouseMoved (const OIS::MouseEvent &evt) {
 	if(this->leftMousePressed) {
 
 		Ogre::Ray mouseRay;
-		//Ogre::RaySceneQueryResult queryResult;
+		Ogre::RaySceneQueryResult queryResult;
 		Ogre::RaySceneQueryResult::iterator itr;
 
 		//CEGUI::Point mousePos = CEGUI::MouseCursor::getSingleton().getPosition();
@@ -57,7 +57,7 @@ bool TetraRendering::mouseMoved (const OIS::MouseEvent &evt) {
 	
 		if(this->pRaySceneQuery->execute().size() > 0) {
 			std::cout << "Ray positive result" << std::endl;
-			Ogre::RaySceneQueryResult &queryResult = this->pRaySceneQuery->getLastResults();
+			/*Ogre::RaySceneQueryResult &*/queryResult = this->pRaySceneQuery->getLastResults();
 
 			itr = queryResult.begin();
 
