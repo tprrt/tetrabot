@@ -12,6 +12,8 @@ SET(CMAKE_VERBOSE_MAKEFILE 0)
 
 SET(CMAKE_COLOR_MAKEFILE ON)
 
+SET(CMAKE_C_FLAGS -W -Wall -ansi -pedantic -O3 -pipe -fomit-frame-pointer -msse -msse2 -msse3 -mmmx -m3dnow)
+
 #FIND_PACKAGE(OGRE REQUIRED)
 
 #FIND_PACKAGE(CEGUI REQUIRED)
