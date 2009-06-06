@@ -226,9 +226,9 @@ void RobotTetra::nanoRobot(){
 		}
 	}
 	// MODIF JAZZ : 07 / 06 /09 : 00/31 
-	for(i=0;i<6;i++){
+	for(int qs=0;qs<6;qs++){
 	
-		this->action[i]==NULL;	
+		this->action[qs]==NULL;	
 		
 	}
 }
@@ -253,9 +253,9 @@ void RobotTetra::maxiRobot(){
 		}
 	}
 	// MODIF JAZZ : 07 / 06 /09 : 00/31 
-	for(i=0;i<6;i++){
+	for(int h=0;h<6;h++){
 	
-		this->action[i]==NULL;	
+		this->action[h]==NULL;	
 		
 	}
 }
