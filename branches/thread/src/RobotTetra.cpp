@@ -228,7 +228,7 @@ void RobotTetra::nanoRobot(){
 	// MODIF JAZZ : 07 / 06 /09 : 00/31 
 	for(i=0;i<6;i++){
 	
-		robot->action[i]==NULL;	
+		this->action[i]==NULL;	
 		
 	}
 }
@@ -255,7 +255,7 @@ void RobotTetra::maxiRobot(){
 	// MODIF JAZZ : 07 / 06 /09 : 00/31 
 	for(i=0;i<6;i++){
 	
-		robot->action[i]==NULL;	
+		this->action[i]==NULL;	
 		
 	}
 }
