@@ -1,0 +1,9 @@
+
+			Readme Tetrabot
+			===============
+
+ - You can compile Tetrabot with cmake and make on GNU/Linux for GNU/Linux.
+
+ - You can compile Tetrabot with cmake and mingw32 on GNU/Linux for Windows.
+
+ - You can generate documentation with doxygen.
