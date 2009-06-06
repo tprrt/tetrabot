@@ -84,13 +84,13 @@ bool TetraRendering::keyPressed(const OIS::KeyEvent &evt) {
 
 	} else if(evt.key == OIS::KC_UP) {
 		std::cout << "UP pressed" << std::endl;
-		//this->pSceneManager->getSceneNode("NodeCamera")->;
 
 	} else if(evt.key == OIS::KC_DOWN) {
 		std::cout << "DOWN pressed" << std::endl;
 
 	} else if(evt.key == OIS::KC_LEFT) {
 		std::cout << "LEFT pressed" << std::endl;
+		//this->pSceneManager->getSceneNode("NodeCamera")->yaw(Ogre::Radian(deltaT));
 
 	} else if(evt.key == OIS::KC_RIGHT) {
 		std::cout << "RIGHT pressed" << std::endl;
@@ -270,14 +270,19 @@ void TetraRendering::createScene() {
 	//init sceneNode for camera 3rd.
 	this->pSceneManager->getSceneNode("NodeCenterOfMass")->createChild("NodeCamera");
 	this->pSceneManager->getSceneNode("NodeCamera")->attachObject(this->pCamera);
-	this->pSceneManager->getSceneNode("NodeCamera")->setPosition(50, 50, 50);
+	this->pSceneManager->getSceneNode("NodeCamera")->setPosition(50, 50, -50);
 	this->pCamera->lookAt(this->pSceneManager->getSceneNode("NodeCenterOfMass")->getPosition());
+
+	//this->pSceneManager->getSceneNode("NodeCamera")->setAutoTracking (true, this->pSceneManager->getSceneNode("NodeCenterOfMass"));
+	//this->pSceneManager->getSceneNode("NodeCamera")->setFixedYawAxis (true);
+
+
 
 	//init sceneNode for target.
 	this->pSceneManager->getRootSceneNode()->createChild("NodeTarget");
 	this->pSceneManager->getSceneNode("NodeTarget")->attachObject(pEntity->clone("Target"));
 	this->pSceneManager->getSceneNode("NodeTarget")->scale(1, 1, 1);
-	this->pSceneManager->getSceneNode("NodeTarget")->setPosition(Ogre::Vector3(300, 300, 300));
+	this->pSceneManager->getSceneNode("NodeTarget")->setPosition(Ogre::Vector3(300, 300, -300));
 	this->pSceneManager->getSceneNode("NodeTarget")->setVisible(false,true);
 
 }
