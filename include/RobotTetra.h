@@ -21,6 +21,7 @@ class RobotTetra: public PhysicRobot
 protected:
 
 	ActionPiston*	action[6];
+	ActionPiston*	actionFuture[6];
 
 public:	
 	btRigidBody* bodyCube;

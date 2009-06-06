@@ -444,7 +444,11 @@ void* RobotTetra::marcherRobot(void *demo)
 	// Attendre que les pistons soient arretes
 	// MODIF JAZZ : 31 / 05 /09 : 23h53  8 => 3
 	sleep(8);
-
+	for(i=0;i<6;i++){
+	
+		robot->action[i]==NULL;	
+		
+	}
 	printf("Arret du robot!\n");
 
 	return NULL;
