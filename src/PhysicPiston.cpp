@@ -255,6 +255,7 @@ void PhysicPiston::lock()
 		this->estBloque = true;
 	}
 }
+
 void PhysicPiston::unlock()
 {
 	if(this->getEstBloque())

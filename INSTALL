@@ -1,0 +1,7 @@
+
+			How to install Tetrabot
+			=======================
+
+cmake .
+
+make

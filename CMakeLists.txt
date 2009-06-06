@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.6)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 PROJECT(TetraBot)
 
@@ -8,11 +8,23 @@ SET(LIBRARY_OUTPUT_PATH bin)
 
 SET(EXECUTABLE_OUTPUT_PATH bin)
 
-SET(CMAKE_VERBOSE_MAKEFILE 0)
+SET(CMAKE_VERBOSE_MAKEFILE OFF)
 
 SET(CMAKE_COLOR_MAKEFILE ON)
 
-SET(CMAKE_C_FLAGS -W -Wall -ansi -pedantic -O3 -pipe -fomit-frame-pointer -msse -msse2 -msse3 -mmmx -m3dnow)
+#SET(CMAKE_SYSTEM_NAME Linux)
+
+#IF(WIN32 AND NOT UNIX)
+
+#ELSE
+
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -pipe -fomit-frame-pointer -msse -msse2 -msse3 -mmmx -m3dnow")
+
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -pipe -fomit-frame-pointer -msse -msse2 -msse3 -mmmx -m3dnow")
+
+#SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -W -Wall -ansi -pedantic -O3 -pipe -fomit-frame-pointer -msse -msse2 -msse3 -mmmx -m3dnow")
+
+#SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -W -Wall -ansi -pedantic -O3 -pipe -fomit-frame-pointer -msse -msse2 -msse3 -mmmx -m3dnow")
 
 #FIND_PACKAGE(OGRE REQUIRED)
 
@@ -25,6 +37,22 @@ SET(CMAKE_C_FLAGS -W -Wall -ansi -pedantic -O3 -pipe -fomit-frame-pointer -msse 
 #FIND_PACKAGE(GL REQUIRED)
 
 #FIND_PACKAGE(glut REQUIRED)
+
+ADD_SUBDIRECTORY(
+	include
+)
+
+ADD_SUBDIRECTORY(
+	src
+)
+
+ADD_SUBDIRECTORY(
+	ConvexDecomposition
+)
+
+ADD_SUBDIRECTORY(
+	BulletGL
+)
 
 INCLUDE_DIRECTORIES(
 	include
