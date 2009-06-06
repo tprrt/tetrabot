@@ -210,6 +210,17 @@ void RobotTetra::nanoRobot(){
 
 	// Tous les pistons a la taille minimale
 	btScalar tailleTmp;
+	
+	bool permission = true;
+	for(int ok1=0;ok1<6;ok1++)
+	{
+		if(this->action[ok1]!=NULL)
+			{	
+				permission=false;
+				break;
+			}
+	}
+
 	for(int i=0;i<6;i++)
 	{
 		if(this->Arcs[i]!=NULL)
@@ -219,25 +230,45 @@ void RobotTetra::nanoRobot(){
 			if(tailleTmp< 0)tailleTmp= -tailleTmp;
 			if(tailleTmp> btScalar(0.1))
 			{
+				if(permission){
 				this->action[i] = new ActionPiston(pistonTMP,pistonTMP->getTailleMin());
 				//CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)actionThread,action[i], 0, &threadID);
 				Thread((void*)this->action[i],actionThread);
+				} else {
+					this->actionFuture[i] = NULL;
+					this->actionFuture[i] = new ActionPiston(pistonTMP,pistonTMP->getTailleMin());
+				}
 			}
 		}
 	}
-	// MODIF JAZZ : 07 / 06 /09 : 00/31 
+	// MODIF JAZZ : 07 / 06 /09 : 00/31
+	if(permission){
 	for(int qs=0;qs<6;qs++){
-	
+
 		this->action[qs]==NULL;	
-		
+	
 	}
+	}
+	
+	
 }
 
 void RobotTetra::maxiRobot(){
-	//printf("Maximisation du robot\n");
+	// printf("Maximisation du robot\n");
 	// Tous les pistons a la taille maximale
 	PhysicPiston* pistonTMP;
 	btScalar tailleTmp;
+	
+	bool permission = true;
+	for(int ok1=0;ok1<6;ok1++)
+	{
+		if(this->action[ok1]!=NULL)
+			{	
+				permission=false;
+				break;
+			}
+	}
+	
 	for(int i=0;i<6;i++)
 	{
 		if(this->Arcs[i]!=NULL)
@@ -247,16 +278,24 @@ void RobotTetra::maxiRobot(){
 			if(tailleTmp< 0)tailleTmp= -tailleTmp;
 			if(tailleTmp> btScalar(0.1))
 			{
-				this->action[i] = new ActionPiston(pistonTMP,pistonTMP->getTailleMax());
-				Thread((void*)this->action[i],actionThread);
+				if(permission){
+					this->action[i] = new ActionPiston(pistonTMP,pistonTMP->getTailleMax());
+					//CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)actionThread,action[i], 0, &threadID);
+					Thread((void*)this->action[i],actionThread);
+					} else {
+						this->actionFuture[i] = NULL;
+						this->actionFuture[i] = new ActionPiston(pistonTMP,pistonTMP->getTailleMax());
+					}
 			}
 		}
 	}
-	// MODIF JAZZ : 07 / 06 /09 : 00/31 
-	for(int h=0;h<6;h++){
+	// MODIF JAZZ : 07 / 06 /09 : 00/31
+	if(permission){
+	for(int qs=0;qs<6;qs++){
+
+		this->action[qs]==NULL;	
 	
-		this->action[h]==NULL;	
-		
+	}
 	}
 }
 
