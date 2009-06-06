@@ -1,0 +1,25 @@
+material Material/SOLID/TEX/Ground.jpg
+{
+	receive_shadows on
+	technique GLSL
+	{
+		pass
+		{
+			//ambient 0.500000 0.500000 0.500000 1.000000
+			diffuse 0.800000 0.800000 0.800000
+			specular 0.500000 0.500000 0.500000 12.500000
+			//emissive 0.000000 0.000000 0.000000 1.000000
+
+			lighting on
+			depth_write on
+
+			texture_unit GroundTex
+			{
+				texture Ground.jpg separateUV
+				//tex_address_mode clam
+				filtering anisotropic
+				scale 0.05 0.05
+			}
+		}
+	}
+}
