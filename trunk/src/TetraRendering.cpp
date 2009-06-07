@@ -90,14 +90,14 @@ bool TetraRendering::keyPressed(const OIS::KeyEvent &evt) {
 
 	} else if(evt.key == OIS::KC_LEFT) {
 		std::cout << "LEFT pressed" << std::endl;
-		//this->pSceneManager->getSceneNode("NodeCamera")->yaw(Ogre::Radian(deltaT));
+
 
 	} else if(evt.key == OIS::KC_RIGHT) {
 		std::cout << "RIGHT pressed" << std::endl;
 
 	} else if(evt.key == OIS::KC_F1) {
 		std::cout << "F1 pressed" << std::endl;
-		this->robot->StartThread(btVector3(30., 5., 0.));
+		this->robot->StartThread(btVector3(0, 0, 500));
 		
 
 	} else if(evt.key == OIS::KC_F2) {
@@ -217,14 +217,6 @@ void TetraRendering::createScene() {
 	this->initGround("Ground.mesh", false, GROUND_SCALE);
 	this->initSkyBox(true, "Etoiles");
 
-	//light
-	pLight = this->pSceneManager->createLight("Light");
-	pLight->setType(Ogre::Light::LT_POINT);
-	pLight->setPosition(Ogre::Vector3(0, 400, 0));
-	pLight->setDiffuseColour(1.0, 1.0, 1.0);
-	pLight->setSpecularColour(1.0, 1.0, 1.0);
-
-
 	//sceneNode for nodes of robot.
 	this->pSceneManager->getRootSceneNode()->createChild("NodeNoeud1");
 	this->pSceneManager->getSceneNode("NodeNoeud1")->attachObject(pEntity);
@@ -273,16 +265,22 @@ void TetraRendering::createScene() {
 	this->pSceneManager->getSceneNode("NodeCamera")->setPosition(50, 50, -50);
 	this->pCamera->lookAt(this->pSceneManager->getSceneNode("NodeCenterOfMass")->getPosition());
 
-	//this->pSceneManager->getSceneNode("NodeCamera")->setAutoTracking (true, this->pSceneManager->getSceneNode("NodeCenterOfMass"));
-	//this->pSceneManager->getSceneNode("NodeCamera")->setFixedYawAxis (true);
+	//light 
+	pLight = this->pSceneManager->createLight("Light");
+	pLight->setType(Ogre::Light::LT_POINT);
+	//pLight->setPosition(Ogre::Vector3(0, 400, 0));
+	pLight->setDiffuseColour(0.5, 0.5, 0.5);
+	pLight->setSpecularColour(0.5, 0.5, 0.5);
 
-
+	this->pSceneManager->getSceneNode("NodeCenterOfMass")->createChild("NodeLight");
+	this->pSceneManager->getSceneNode("NodeLight")->attachObject(pLight);
+	this->pSceneManager->getSceneNode("NodeLight")->setPosition(0, 200, 0);
 
 	//init sceneNode for target.
 	this->pSceneManager->getRootSceneNode()->createChild("NodeTarget");
 	this->pSceneManager->getSceneNode("NodeTarget")->attachObject(pEntity->clone("Target"));
 	this->pSceneManager->getSceneNode("NodeTarget")->scale(1, 1, 1);
-	this->pSceneManager->getSceneNode("NodeTarget")->setPosition(Ogre::Vector3(300, 300, -300));
+	this->pSceneManager->getSceneNode("NodeTarget")->setPosition(Ogre::Vector3(500, 0, -500));
 	this->pSceneManager->getSceneNode("NodeTarget")->setVisible(false,true);
 
 }

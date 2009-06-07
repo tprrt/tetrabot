@@ -1,4 +1,4 @@
-material PM002/SOLID
+material PM002
 {
 	receive_shadows on
 	technique GLSL

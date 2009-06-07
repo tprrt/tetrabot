@@ -22,6 +22,6 @@ void TetraMotionState::setWorldTransform(const btTransform &worldTrans)
 	btQuaternion rot = worldTrans.getRotation();
 	mVisibleobj->setOrientation(rot.w(), rot.x(), rot.y(), rot.z());
 	btVector3 pos = worldTrans.getOrigin();
-	mVisibleobj->setPosition(pos.x(), pos.y(), pos.z());
+	mVisibleobj->setPosition(pos.x(), pos.y()-2, pos.z());
 }
 
