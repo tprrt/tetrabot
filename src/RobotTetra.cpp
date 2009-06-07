@@ -2,17 +2,6 @@
 
 //JAZZ MODIF : 7 JUIN 2009 : 12h39
 
-// Methode pour purger les threads
-void RobotTetra::purgeThread(void){
-	// attente de la fin des threads en cours
-	int tmp = 8;
-	printf("Purge en cours ...\n veuiller patienter %d sec, merci de votre comprehension.\n",tmp);
-	sleep(tmp);
-	for(int qd=0;qd<6;qd++){
-	this->action[qd]=NULL;
-	}
-}
-
 // Permet de verifier s'il y a des actions prevues et de les commencer s'il n'y a pas de d'action en cours
 // True : on remplit le tableau Action
 // False : on remplit le tableau ActionFuture
@@ -64,11 +53,12 @@ bool RobotTetra::gestionAction(void){
 					printf(" chargement de l'actionfuture [%d]...\n",ok2);
 					// on remplit le tableau d'action par les actions prévues
 					this->action[ok2] = new ActionPiston(pistonTMP,this->actionFuture[ok2]->getTailleVoulue());
-					Thread((void*)this->action[ok2],actionThread);
 					this->actionFuture[ok2]=NULL;
 				}
 			}
+		
 		}
+	Thread(this,RobotTetra::lanceThreadPiston);
 	// on signale qu'il y a des actions en cours
 	permission = false;
 	// on signale qu'il n'y a plus d'action de prévue
@@ -81,6 +71,31 @@ bool RobotTetra::gestionAction(void){
 }
 
 // JAZZ MODIF : 1 JUIN 2009 : 11h39
+void* RobotTetra::lanceThreadPiston(void * demo){
+	RobotTetra* robot = (RobotTetra*) demo;
+	for(int ok5=0;ok5<6;ok5++){
+		if(robot->action[ok5]!=NULL){
+			Thread((void*)robot->action[ok5],actionThread);
+		}
+	}
+	// attente de la fin des threads en cours
+	int tmp = 8;
+	printf("Purge en cours ...\n veuiller patienter %d sec, merci de votre comprehension.\n",tmp);
+	sleep(tmp);
+	for(int qd=0;qd<6;qd++){
+	robot->action[qd]=NULL;
+	}
+	if(robot->end == NULL){
+		if(robot->endFuture != NULL ){
+			robot->StartThread((btVector3&) *robot->endFuture);
+			robot->endFuture = NULL;
+		}
+	} else {
+			robot->StartThread((btVector3&) *robot->end);
+	}
+	return NULL;
+}
+
 void RobotTetra::Deplacement(unsigned char key)
 {
 	btScalar taille, tailleTmp,Step;
@@ -213,6 +228,10 @@ void RobotTetra::Deplacement(unsigned char key)
 				pistonTMP = (PhysicPiston*)this->Arcs[Num_Piston];
 				bool test = gestionAction();
 				if(test){
+					for(int ok4=0;ok4<6;ok4++)
+					{
+						this->action[ok4] =NULL;
+					}
 					this->action[Num_Piston] = new ActionPiston(pistonTMP, (btScalar) (taille/1));
 					// lancement du thread
 					// JAZZ 4 JUIN 2009 : 21h21 -- ajout d une subtilite pour le deplacement manuel du robot
@@ -260,7 +279,7 @@ void RobotTetra::Deplacement(unsigned char key)
 					default : break;
 					}
 					printf("Execution d' une action unique courante sur le piston %d\n",Num_Piston);
-					Thread((void*)this->action[Num_Piston],actionThread);
+					Thread(this,RobotTetra::lanceThreadPiston);
 				} else {
 					for(int qd=0;qd<6;qd++){
 						this->actionFuture[qd]=NULL;
@@ -269,7 +288,6 @@ void RobotTetra::Deplacement(unsigned char key)
 					printf("Parametrage d une action unique future sur le piston %d \n",Num_Piston);
 ;
 				}
-			//purgeThread();
 			}
 			else{
 				printf("Taille invalide\n");
@@ -291,7 +309,7 @@ void RobotTetra::StartThread(btVector3 ending){
 		if(this->endFuture != NULL ){
 			printf(" Le robot va au point suivant indique\n");
 			this->end = this->endFuture;
-			this->endFuture = NULL;
+			this->endFuture = (btVector3*)&ending;
 		} else {
 			printf(" Le robot va au point indique\n");
 			this->end = (btVector3*)&ending;
@@ -342,7 +360,7 @@ void RobotTetra::nanoRobot(){
 					this->action[i]=NULL;
 					this->action[i] = new ActionPiston(pistonTMP,pistonTMP->getTailleMin());
 					//CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)actionThread,action[i], 0, &threadID);
-					Thread((void*)this->action[i],actionThread);
+					
 				} else {
 					this->actionFuture[i] = NULL;
 					this->actionFuture[i] = new ActionPiston(pistonTMP,pistonTMP->getTailleMin());
@@ -352,35 +370,34 @@ void RobotTetra::nanoRobot(){
 			}
 		}
 	}
-	if(!permission){
-	purgeThread();
+	if(permission){
+		Thread(this,RobotTetra::lanceThreadPiston);
 	}
 }
 
 void RobotTetra::maxiRobot(){
 	// printf("Maximisation du robot\n");
 	// Tous les pistons a la taille maximale
-		PhysicPiston* pistonTMP;
+	PhysicPiston* pistonTMP;
 	bool permission;
-
-	// Tous les pistons a la taille minimale
 	btScalar tailleTmp;
 	permission = gestionAction();
+
 	for(int i=0;i<6;i++)
 	{
 		if(this->Arcs[i]!=NULL)
-		{
+		{ 
 			pistonTMP = (PhysicPiston*) this->Arcs[i];
 			tailleTmp = pistonTMP->getTailleMin()- pistonTMP->getLength();
 			if(tailleTmp< 0)tailleTmp= -tailleTmp;
 			if(tailleTmp> btScalar(0.1))
-			{
+			{ 
 				if(permission){
 					printf("Parametrage d une action courante %d \n",i);
 					this->action[i]=NULL;
 					this->action[i] = new ActionPiston(pistonTMP,pistonTMP->getTailleMax());
 					//CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)actionThread,action[i], 0, &threadID);
-					Thread((void*)this->action[i],actionThread);
+					
 				} else {
 					this->actionFuture[i] = NULL;
 					this->actionFuture[i] = new ActionPiston(pistonTMP,pistonTMP->getTailleMax());
@@ -390,8 +407,8 @@ void RobotTetra::maxiRobot(){
 			}
 		}
 	}
-	if(!permission){
-	purgeThread();
+	if(permission){
+		Thread(this,RobotTetra::lanceThreadPiston);
 	}
 }
 
@@ -590,6 +607,7 @@ void* RobotTetra::marcherRobot(void *demo)
 	}
 	// Attendre que les pistons soient arretes
 	// MODIF JAZZ : 31 / 05 /09 : 23h53  8 => 3
+	
 	// attente de la fin des threads en cours
 	sleep(8);
 	for(int qd=0;qd<6;qd++){

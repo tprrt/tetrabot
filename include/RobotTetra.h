@@ -40,10 +40,13 @@ public:
 	bool IsNotInArea(const btVector3 &G,const btVector3 &end2);
 	// methode pour faire marcher le robot
 	static void* marcherRobot(void* demo);
+	// methode pour faire bouger le robot piston par piston
+	static void* lanceThreadPiston(void* demo);
 	// Taille mini piston 
 	void nanoRobot();
 	// Taille maxi piston 
 	void maxiRobot();
+
 
 	// Deplacer le robot
 	void translate(const btVector3& to);
@@ -54,15 +57,13 @@ public:
 	
 	// JAZZ MODIF : 1 JUIN 2009 : 11h52
 	void Deplacement(unsigned char key);
+
 	
 	//JAZZ MODIF : 7 JUIN 2009 : 12H37
 	// Permet de verifier s'il y a des actions prevues et de les commencer s'il n'y a pas de d'action en cours
 	// True : on remplit le tableau Action
 	// False : on remplit le tableau ActionFuture
 	bool gestionAction(void);
-	
-	// Methode pour purger les threads
-	void purgeThread(void);
 };
 
 #endif /* ROBOT_TETRA */
