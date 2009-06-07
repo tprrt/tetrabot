@@ -193,9 +193,37 @@ void RobotTetra::Deplacement(unsigned char key)
 // JAZZ MODIF :  1 JUIN 2009 : 2h50
 void RobotTetra::StartThread(btVector3 ending){
 	printf("StartThread used\n");
+	bool permission = true;
+	bool permissionFuture = false;
+	for(int ok1=0;ok1<6;ok1++)
+	{
+		if(this->action[ok1]!=NULL)
+			{	
+				permission=false;
+				break;
+			}
+		if(this->actionFuture[ok1]!=NULL)
+			{	
+				permissionFuture=true;
+				break;
+			}
+	}
+	if(permission&&permissionFuture){
+		for(int ok2=0; ok2<6; ok2++){
+			if(this->Arcs[ok2]!=NULL)
+			{
+			pistonTMPP = (PhysicPiston*) this->Arcs[ok2];
+			this->action[ok2] = new ActionPiston(pistonTMPP,pistonTMPP->this->actionFuture[ok2]->getTailleVoulue());
+			this->actionFuture[ok2]=NULL;
+			}
+		}
+	permission = false;
+	}
+	if(permission){
 	this->end = new btVector3;
 	this->end = (btVector3*)&ending;
 	Thread(this,RobotTetra::marcherRobot);
+	}
 }
 
 bool RobotTetra::IsNotInArea(const btVector3 &G,const btVector3 &end2){
@@ -212,6 +240,7 @@ void RobotTetra::nanoRobot(){
 	btScalar tailleTmp;
 	
 	bool permission = true;
+	bool permissionFuture = false;
 	for(int ok1=0;ok1<6;ok1++)
 	{
 		if(this->action[ok1]!=NULL)
@@ -219,8 +248,23 @@ void RobotTetra::nanoRobot(){
 				permission=false;
 				break;
 			}
+		if(this->actionFuture[ok1]!=NULL)
+			{	
+				permissionFuture=true;
+				break;
+			}
 	}
-
+	if(permission&&permissionFuture){
+		for(int ok2=0; ok2<6; ok2++){
+			if(this->Arcs[ok2]!=NULL)
+			{
+			pistonTMPP = (PhysicPiston*) this->Arcs[ok2];
+			this->action[ok2] = new ActionPiston(pistonTMPP,pistonTMPP->this->actionFuture[ok2]->getTailleVoulue());
+			this->actionFuture[ok2]=NULL;
+			}
+		}
+	permission = false;
+	}
 	for(int i=0;i<6;i++)
 	{
 		if(this->Arcs[i]!=NULL)
@@ -237,20 +281,17 @@ void RobotTetra::nanoRobot(){
 				} else {
 					this->actionFuture[i] = NULL;
 					this->actionFuture[i] = new ActionPiston(pistonTMP,pistonTMP->getTailleMin());
+				  Thread((void*)this->action[i],actionThread);
 				}
 			}
 		}
 	}
 	// MODIF JAZZ : 07 / 06 /09 : 00/31
-	if(permission){
 	for(int qs=0;qs<6;qs++){
 
 		this->action[qs]==NULL;	
 	
 	}
-	}
-	
-	
 }
 
 void RobotTetra::maxiRobot(){
@@ -260,6 +301,7 @@ void RobotTetra::maxiRobot(){
 	btScalar tailleTmp;
 	
 	bool permission = true;
+	bool permissionFuture = false;
 	for(int ok1=0;ok1<6;ok1++)
 	{
 		if(this->action[ok1]!=NULL)
@@ -267,6 +309,22 @@ void RobotTetra::maxiRobot(){
 				permission=false;
 				break;
 			}
+		if(this->actionFuture[ok1]!=NULL)
+			{	
+				permissionFuture=true;
+				break;
+			}
+	}
+	if(permission&&permissionFuture){
+		for(int ok2=0; ok2<6; ok2++){
+			if(this->Arcs[ok2]!=NULL)
+			{
+			pistonTMPP = (PhysicPiston*) this->Arcs[ok2];
+			this->action[ok2] = new ActionPiston(pistonTMPP,pistonTMPP->this->actionFuture[ok2]->getTailleVoulue());
+			this->actionFuture[ok2]=NULL;
+			}
+		}
+	permission = false;
 	}
 	
 	for(int i=0;i<6;i++)
@@ -279,23 +337,20 @@ void RobotTetra::maxiRobot(){
 			if(tailleTmp> btScalar(0.1))
 			{
 				if(permission){
-					this->action[i] = new ActionPiston(pistonTMP,pistonTMP->getTailleMax());
-					//CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)actionThread,action[i], 0, &threadID);
-					Thread((void*)this->action[i],actionThread);
-					} else {
-						this->actionFuture[i] = NULL;
-						this->actionFuture[i] = new ActionPiston(pistonTMP,pistonTMP->getTailleMax());
-					}
+				this->action[i] = new ActionPiston(pistonTMP,pistonTMP->getTailleMax());
+				//CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)actionThread,action[i], 0, &threadID);
+				Thread((void*)this->action[i],actionThread);
+				} else {
+					this->actionFuture[i] = NULL;
+					this->actionFuture[i] = new ActionPiston(pistonTMP,pistonTMP->getTailleMax());
+				  Thread((void*)this->action[i],actionThread);
+				}
 			}
 		}
 	}
 	// MODIF JAZZ : 07 / 06 /09 : 00/31
-	if(permission){
 	for(int qs=0;qs<6;qs++){
-
 		this->action[qs]==NULL;	
-	
-	}
 	}
 }
 
