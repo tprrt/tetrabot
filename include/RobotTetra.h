@@ -26,6 +26,7 @@ protected:
 public:	
 	btRigidBody* bodyCube;
 	btVector3* end;
+	btVector3* endFuture;
 	
 public:
 	// Test avec GL
@@ -53,6 +54,15 @@ public:
 	
 	// JAZZ MODIF : 1 JUIN 2009 : 11h52
 	void Deplacement(unsigned char key);
+	
+	//JAZZ MODIF : 7 JUIN 2009 : 12H37
+	// Permet de verifier s'il y a des actions prevues et de les commencer s'il n'y a pas de d'action en cours
+	// True : on remplit le tableau Action
+	// False : on remplit le tableau ActionFuture
+	bool gestionAction(void);
+	
+	// Methode pour purger les threads
+	void purgeThread(void);
 };
 
 #endif /* ROBOT_TETRA */
