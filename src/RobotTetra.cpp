@@ -26,7 +26,6 @@ bool RobotTetra::gestionAction(void){
 	//			          false= Non, il n'y en a pas du tout
 	bool permissionFuture = false;
 	
-	if(this->end == NULL){
 	printf("Analyse des tableau d'action 1 = true, 0 = false\n");
 	// regarde s'il y a des actions en cours et prevues
 	for(int ok1=0;ok1<6;ok1++)
@@ -75,12 +74,9 @@ bool RobotTetra::gestionAction(void){
 	// on signale qu'il n'y a plus d'action de prévue
 	permissionFuture=false;
 	}
-	} // fin this->end == NULL
-	else {
-		printf("il y a un deplacement en cours,\n aucune autre action ne sera entreprise\n");
-	}
 	printf("Fin de la gestions des Actions\n");
-	// autorise la mise en memoire des actions suivantes
+	// permission == True  autorise l execution des actions courantes suivante 
+	// permission == False autorise la mise en memoire des actions suivantes ( donc se seront des actions futures)
 	return (permission);
 }
 
@@ -216,7 +212,6 @@ void RobotTetra::Deplacement(unsigned char key)
 				// configuration de la nouvelle action
 				pistonTMP = (PhysicPiston*)this->Arcs[Num_Piston];
 				bool test = gestionAction();
-				printf("Test = %d = 1 => on remplit le tableau Action\n",test);
 				if(test){
 					this->action[Num_Piston] = new ActionPiston(pistonTMP, (btScalar) (taille/1));
 					// lancement du thread
@@ -264,13 +259,14 @@ void RobotTetra::Deplacement(unsigned char key)
 					break;
 					default : break;
 					}
+					printf("Execution d' une action unique courante sur le piston %d\n",Num_Piston);
 					Thread((void*)this->action[Num_Piston],actionThread);
 				} else {
 					for(int qd=0;qd<6;qd++){
 						this->actionFuture[qd]=NULL;
 					}
 					this->actionFuture[Num_Piston] = new ActionPiston(pistonTMP, (btScalar) (taille/1));
-					printf("Parametrage d une action future %d \n",Num_Piston);
+					printf("Parametrage d une action unique future sur le piston %d \n",Num_Piston);
 ;
 				}
 			//purgeThread();
@@ -289,7 +285,7 @@ void RobotTetra::Deplacement(unsigned char key)
 // JAZZ MODIF :  1 JUIN 2009 : 2h50
 void RobotTetra::StartThread(btVector3 ending){
 	printf("StartThread used\n");
-	if(gestionAction()){
+	
 	if(this->end == NULL){
 	this->end = new btVector3;
 		if(this->endFuture != NULL ){
@@ -300,15 +296,21 @@ void RobotTetra::StartThread(btVector3 ending){
 			printf(" Le robot va au point indique\n");
 			this->end = (btVector3*)&ending;
 		}
-	Thread(this,RobotTetra::marcherRobot);
 	} else {
 		printf("Mise en memoire du chekpoint suivant\n");
+		this->endFuture = NULL;
 		this->endFuture = new btVector3;
 		this->endFuture = (btVector3*)&ending;
 	}
-	
-	 } else {
-		printf(" Il y a une action local en cours, ce mouvement necessitant un certain temps,\nle programe attendra une totale liberte de mouvement\nANNULATION DE LA COMMANDE ...\n");
+	if(gestionAction()){
+		printf("Execution de la commande\n");
+		Thread(this,RobotTetra::marcherRobot);
+	} else {
+		printf(" Il y a une action local en cours, ce mouvement necessitant un certain temps,\nle programe attendra une totale liberte de mouvement\nMise en attendte de la commande ...\n");
+		// ecrasement de la valeur precedante
+		this->endFuture = NULL;
+		this->endFuture = new btVector3;
+		this->endFuture = (btVector3*)&ending;
 	}
 }
 
