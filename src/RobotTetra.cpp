@@ -193,6 +193,7 @@ void RobotTetra::Deplacement(unsigned char key)
 // JAZZ MODIF :  1 JUIN 2009 : 2h50
 void RobotTetra::StartThread(btVector3 ending){
 	printf("StartThread used\n");
+	PhysicPiston* pistonTMPP;
 	bool permission = true;
 	bool permissionFuture = false;
 	for(int ok1=0;ok1<6;ok1++)
@@ -213,7 +214,7 @@ void RobotTetra::StartThread(btVector3 ending){
 			if(this->Arcs[ok2]!=NULL)
 			{
 			pistonTMPP = (PhysicPiston*) this->Arcs[ok2];
-			this->action[ok2] = new ActionPiston(pistonTMPP,pistonTMPP->this->actionFuture[ok2]->getTailleVoulue());
+			this->action[ok2] = new ActionPiston(pistonTMPP,this->actionFuture[ok2]->getTailleVoulue());
 			this->actionFuture[ok2]=NULL;
 			}
 		}
@@ -234,6 +235,7 @@ bool RobotTetra::IsNotInArea(const btVector3 &G,const btVector3 &end2){
 
 void RobotTetra::nanoRobot(){
 	//printf("Nainification du robot\n");
+	PhysicPiston* pistonTMPP;
 	PhysicPiston* pistonTMP;
 
 	// Tous les pistons a la taille minimale
@@ -259,7 +261,7 @@ void RobotTetra::nanoRobot(){
 			if(this->Arcs[ok2]!=NULL)
 			{
 			pistonTMPP = (PhysicPiston*) this->Arcs[ok2];
-			this->action[ok2] = new ActionPiston(pistonTMPP,pistonTMPP->this->actionFuture[ok2]->getTailleVoulue());
+			this->action[ok2] = new ActionPiston(pistonTMPP,this->actionFuture[ok2]->getTailleVoulue());
 			this->actionFuture[ok2]=NULL;
 			}
 		}
@@ -297,6 +299,7 @@ void RobotTetra::nanoRobot(){
 void RobotTetra::maxiRobot(){
 	// printf("Maximisation du robot\n");
 	// Tous les pistons a la taille maximale
+	PhysicPiston* pistonTMPP;
 	PhysicPiston* pistonTMP;
 	btScalar tailleTmp;
 	
@@ -320,7 +323,7 @@ void RobotTetra::maxiRobot(){
 			if(this->Arcs[ok2]!=NULL)
 			{
 			pistonTMPP = (PhysicPiston*) this->Arcs[ok2];
-			this->action[ok2] = new ActionPiston(pistonTMPP,pistonTMPP->this->actionFuture[ok2]->getTailleVoulue());
+			this->action[ok2] = new ActionPiston(pistonTMPP,this->actionFuture[ok2]->getTailleVoulue());
 			this->actionFuture[ok2]=NULL;
 			}
 		}
