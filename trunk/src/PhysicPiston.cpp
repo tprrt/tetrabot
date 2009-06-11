@@ -5,9 +5,6 @@
 
 #include "PhysicPiston.h"
 
-#ifndef TAILLE_CUBE
-#define TAILLE_CUBE 1.F
-#endif
 
 PhysicPiston::PhysicPiston(btDynamicsWorld* ownerWorld,Ogre::SceneNode* nodeOgre, const btVector3& positionOffset,btScalar min,btScalar max,btScalar vitesse)
 :PhysicEdge(ownerWorld),PhysicComponent(ownerWorld),tailleMin(min),tailleMax(max),velocite(vitesse),estBloque(false),coneA(0),coneB(0)
@@ -31,7 +28,7 @@ PhysicPiston::PhysicPiston(btDynamicsWorld* ownerWorld,Ogre::SceneNode* nodeOgre
 
 	// add dynamic rigid body B1
 	// mettre bodyB tel que le piston soit a sa longueur maximale sur l'axe X
-	trans.setOrigin(positionOffset+btVector3(max,0.F,0.F));
+	trans.setOrigin(positionOffset+btVector3(max-CUBE_SIZE,0.F,0.F));
 	bodyB = localCreateRigidBody(EDGE_WEIGHT, trans, shapeB,nodeOgre);
 	bodyB->setActivationState(DISABLE_DEACTIVATION);
 
@@ -43,7 +40,7 @@ PhysicPiston::PhysicPiston(btDynamicsWorld* ownerWorld,Ogre::SceneNode* nodeOgre
 	frameInB.getBasis().setEulerZYX(0,0,0);
 	contrainte = new btSliderConstraint(*bodyA, *bodyB, frameInA, frameInB, true);
 	contrainte->setLowerLinLimit(min);
-	contrainte->setUpperLinLimit(max);
+	contrainte->setUpperLinLimit(max-CUBE_SIZE*2);
 	// Pas d'angle de rotation des bodies
 	contrainte->setLowerAngLimit(0.F);
 	contrainte->setUpperAngLimit(0.F);
@@ -54,7 +51,7 @@ PhysicPiston::PhysicPiston(btDynamicsWorld* ownerWorld,Ogre::SceneNode* nodeOgre
 	// On desactive les contacts entres les cubes (s'il y a plusieurs pistons par exemple)
 	// Les cubes peuvent donc se rentrer dedans
 	bodyA->setCollisionFlags(4/*CF_NO_CONTACT_RESPONSE*/);
-	bodyB->setCollisionFlags(4); 
+	bodyB->setCollisionFlags(4);
 }
 
 
@@ -67,8 +64,8 @@ PhysicPiston::PhysicPiston(btDynamicsWorld* ownerWorld,const btVector3& position
 	ID++;
 	this->World = ownerWorld;
 	// ajouter les formes des Objets A et B
-	shapeA = new btBoxShape(btVector3(TAILLE_CUBE,TAILLE_CUBE,TAILLE_CUBE));
-	shapeB = new btBoxShape(btVector3(TAILLE_CUBE,TAILLE_CUBE,TAILLE_CUBE));
+	shapeA = new btBoxShape(btVector3(CUBE_SIZE,CUBE_SIZE,CUBE_SIZE));
+	shapeB = new btBoxShape(btVector3(CUBE_SIZE,CUBE_SIZE,CUBE_SIZE));
 
 	// add dynamic rigid body A1
 	btTransform trans;
@@ -80,7 +77,7 @@ PhysicPiston::PhysicPiston(btDynamicsWorld* ownerWorld,const btVector3& position
 
 	// add dynamic rigid body B1
 	// mettre bodyB tel que le piston soit a sa longueur maximale sur l'axe X
-	trans.setOrigin(positionOffset+btVector3(max,0.F,0.F));
+	trans.setOrigin(positionOffset+btVector3(max-CUBE_SIZE,0.F,0.F));
 	bodyB = localCreateRigidBody(EDGE_WEIGHT, trans, shapeB);
 	bodyB->setActivationState(DISABLE_DEACTIVATION);
 
@@ -91,8 +88,8 @@ PhysicPiston::PhysicPiston(btDynamicsWorld* ownerWorld,const btVector3& position
 	frameInA.getBasis().setEulerZYX(0,0,0);
 	frameInB.getBasis().setEulerZYX(0,0,0);
 	contrainte = new btSliderConstraint(*bodyA, *bodyB, frameInA, frameInB, true);
-	contrainte->setLowerLinLimit(min);
-	contrainte->setUpperLinLimit(max);
+	contrainte->setLowerLinLimit(min-CUBE_SIZE*2);
+	contrainte->setUpperLinLimit(max-CUBE_SIZE*2);
 	// Pas d'angle de rotation des bodies
 	contrainte->setLowerAngLimit(0.F);
 	contrainte->setUpperAngLimit(0.F);
@@ -104,17 +101,17 @@ PhysicPiston::PhysicPiston(btDynamicsWorld* ownerWorld,const btVector3& position
 	// On desactive les contacts entres les cubes (s'il y a plusieurs pistons par exemple)
 	// Les cubes peuvent donc se rentrer dedans
 	bodyA->setCollisionFlags(4/*CF_NO_CONTACT_RESPONSE*/);
-	bodyB->setCollisionFlags(4); 
+	bodyB->setCollisionFlags(4);
 }
 
 PhysicPiston::~PhysicPiston()
 {
-	// Détruire la contrainte
+	// Dï¿½truire la contrainte
 	delete this->contrainte;
-	// Détruire les shapes
+	// Dï¿½truire les shapes
 	delete this->shapeA;
 	delete this->shapeB;
-	// Détruire les objets
+	// Dï¿½truire les objets
 	delete this->bodyA;
 	delete this->bodyB;
 }
@@ -125,27 +122,27 @@ btVector3 PhysicPiston::getCenterOfMassPosition()
 }
 
 btRigidBody* PhysicPiston::getBodyA()
-{ 
+{
 	return this->bodyA;
 }
 btRigidBody* PhysicPiston::getBodyB()
-{ 
+{
 	return this->bodyB;
 }
 void PhysicPiston::setBodyA(btRigidBody *body)
-{ 
+{
 	this->bodyA = body;
 }
 void PhysicPiston::setBodyB(btRigidBody *body)
-{ 
+{
 	this->bodyB = body;
 }
 btBoxShape* PhysicPiston::getShapeA()
-{ 
+{
 	return this->shapeA;
 }
 btBoxShape* PhysicPiston::getShapeB()
-{ 
+{
 	return this->shapeB;
 }
 void PhysicPiston::setShapeA(btBoxShape* newShape)
@@ -157,29 +154,29 @@ void PhysicPiston::setShapeB(btBoxShape* newShape)
 	this->shapeB = newShape;
 }
 btSliderConstraint* PhysicPiston::getContrainte()
-{ 
+{
 	return this->contrainte;
 }
 void PhysicPiston::setContrainte(btSliderConstraint *constraint)
-{ 
+{
 	this->contrainte = constraint;
 }
 btScalar PhysicPiston::getTailleMin()
-{ 
+{
 	return this->tailleMin;
 }
 btScalar PhysicPiston::getTailleMax()
-{ 
+{
 	return this->tailleMax;
 }
 void PhysicPiston::setTailleMin(btScalar tailleVoulu)
-{ 
+{
 	this->tailleMin = tailleVoulu;
 	if((this->contrainte->getLowerLinLimit())!=(this->contrainte->getLowerLinLimit()))
 		this->contrainte->setLowerLinLimit(tailleVoulu);
 }
 void PhysicPiston::setTailleMax(btScalar tailleVoulu)
-{ 
+{
 	this->tailleMax = tailleVoulu;
 	if((this->contrainte->getUpperLinLimit())!=(this->contrainte->getUpperLinLimit()))
 		this->contrainte->setUpperLinLimit(tailleVoulu);
@@ -241,7 +238,7 @@ int Piston::lierNoeud(Noeud* boule, char extremitee)
 	// troisieme param: rotation de l'extremite du piston suivant l'axe X (cf localA et localB)
 	// quatrieme param: "soft limit == hard limit" -> contrainte rigide?
 	coneC->setLimit(M_PI_4,M_PI_4,0.01F,1.F);
-	this->World->addConstraint(coneC, false); 
+	this->World->addConstraint(coneC, false);
 	return 0;
 } */
 
@@ -261,7 +258,7 @@ void PhysicPiston::unlock()
 	if(this->getEstBloque())
 	{
 		//printf("Piston [%d]: deblocage en cours...\n",this->id);
-		// Pour débloquer le Piston, il suffit de lui attribuer les memes caracteristiques que contrainte
+		// Pour dï¿½bloquer le Piston, il suffit de lui attribuer les memes caracteristiques que contrainte
 		this->contrainte->setLowerLinLimit(this->tailleMin);
 		this->contrainte->setUpperLinLimit(this->tailleMax);
 		this->estBloque = false;
@@ -297,7 +294,7 @@ int PhysicPiston::actionnerEdge(btScalar tailleVoulu)
 		sens = btScalar(-1.F);
 	}
 	this->unlock();
-	// velocité du piston
+	// velocitï¿½ du piston
 	this->contrainte->setTargetLinMotorVelocity(this->velocite*sens);
 	do
 	{
@@ -305,8 +302,8 @@ int PhysicPiston::actionnerEdge(btScalar tailleVoulu)
 		ecart = btScalar(tailleVoulu - this->getLength());
 		if(ecart<0) ecart = -ecart;
 		arreterPiston = (ecart-margeErreur<=0)
-		||(sens==1&& (this->getLength()>=tailleVoulu)) // On a depassé la taille voulu pour sens à 1
-		||(sens==-1 && (this->getLength()<=tailleVoulu)); // On a depassé la taille voulu pour sens à -1
+		||(sens==1&& (this->getLength()>=tailleVoulu)) // On a depassï¿½ la taille voulu pour sens ï¿½ 1
+		||(sens==-1 && (this->getLength()<=tailleVoulu)); // On a depassï¿½ la taille voulu pour sens ï¿½ -1
 		msleep(25);
 
 	}
@@ -330,19 +327,19 @@ int PhysicPiston::actionnerEdge(btScalar tailleVoulu)
 }
 
 btConeTwistConstraint* PhysicPiston::getConeA()
-{ 
+{
 	return this->coneA;
 }
 btConeTwistConstraint* PhysicPiston::getConeB()
-{ 
+{
 	return this->coneB;
 }
 void PhysicPiston::setConeA(btConeTwistConstraint *contrainteConique)
-{ 
+{
 	this->coneA = contrainteConique;
 }
 void PhysicPiston::setConeB(btConeTwistConstraint *contrainteConique)
-{ 
+{
 	this->coneB = contrainteConique;
 }
 
