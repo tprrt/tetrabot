@@ -18,6 +18,8 @@ SET(CMAKE_COLOR_MAKEFILE ON)
 
 #ELSE
 
+SET(CMAKE_LINK_LIBRARY_FLAG "${CMAKE_LINK_LIBRARY_FLAG} -fPIC ")
+
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -pipe -fomit-frame-pointer -msse -msse2 -msse3 -mmmx -m3dnow")
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -pipe -fomit-frame-pointer -msse -msse2 -msse3 -mmmx -m3dnow")
