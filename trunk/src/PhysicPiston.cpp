@@ -52,6 +52,9 @@ PhysicPiston::PhysicPiston(btDynamicsWorld* ownerWorld,Ogre::SceneNode* nodeOgre
 	// Les cubes peuvent donc se rentrer dedans
 	bodyA->setCollisionFlags(4/*CF_NO_CONTACT_RESPONSE*/);
 	bodyB->setCollisionFlags(4);
+	
+	this->coneA = NULL;
+	this->coneB = NULL;
 }
 
 
@@ -102,6 +105,9 @@ PhysicPiston::PhysicPiston(btDynamicsWorld* ownerWorld,const btVector3& position
 	// Les cubes peuvent donc se rentrer dedans
 	bodyA->setCollisionFlags(4/*CF_NO_CONTACT_RESPONSE*/);
 	bodyB->setCollisionFlags(4);
+	
+	this->coneA = NULL;
+	this->coneB = NULL;
 }
 
 PhysicPiston::~PhysicPiston()

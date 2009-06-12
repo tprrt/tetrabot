@@ -16,7 +16,6 @@
 #include "PhysicVertex.h"
 #include "BulletCollision/CollisionShapes/btConvexInternalShape.h"
 
-/// Piston shows how to create a slider constraint
 class PhysicNoeud: public PhysicVertex
 {
 protected:

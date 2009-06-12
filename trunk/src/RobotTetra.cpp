@@ -191,10 +191,10 @@ void RobotTetra::Deplacement(unsigned char key)
 }
 
 // JAZZ MODIF :  1 JUIN 2009 : 2h50
-void RobotTetra::StartThread(btVector3 ending){
+void RobotTetra::StartThread(const btVector3 &ending){
 	printf("StartThread used\n");
-	this->end = new btVector3;
-	this->end = (btVector3*)&ending;
+	//this->end = new btVector3();
+	this->end = (btVector3*)ending;
 	Thread(this,RobotTetra::marcherRobot);
 }
 
