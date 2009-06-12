@@ -27,6 +27,9 @@ protected:
 
 	std::vector<PistonRendering *> pistons;
 
+	Ogre::Real pitchValue;
+	Ogre::Real yawValue;
+
 	bool leftMousePressed;
 	bool rightMousePressed;
 

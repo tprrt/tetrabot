@@ -1,41 +1,58 @@
 #ifndef PISTON_RENDERING
 #define PISTON_RENDERING
 
+/**
+ * \file PistonRendering.h
+ * \brief Gere l'affichage des pistons
+ * \author Frozen Brains
+ * \version 0.1
+ */
+
 #include "Ogre.h"
 #include "characteristics.h"
 
-
+/**
+ * \class PistonRendering
+ * \brief Classe gérant l'affichage d'un piston entre deux nœuds
+ */
 class PistonRendering {
 
 private :
-	int nbC; 	// nombre de cylindres
+	//ATTRIBUTS
+	int nbC; 	/**< Nombre de cylindres */
 
-	Ogre::Real lC; 	// longueur d'un cylindre
+	Ogre::Real lC; 	/**< Longueur d'un cylindre */
 
-	Ogre::Real lMax; 	// longueur maximale du piston
+	Ogre::Real lMax; 	/**< Longueur maximale du piston */
 
-	Ogre::Real lMin; 	// longueur minimale du piston
+	Ogre::Real lMin; 	/**< Longueur minimale du piston */
 
-	Ogre::SceneManager *scene;
+	Ogre::SceneManager *scene; /**< La scene dans laquelle on affiche le piston */
 
-	int num; // le numero du piston
+	int num; /**< Le numero du piston */
 
 public :
+	//METHODES
+
 	/**
-	 * @param lMin : longueur minimum du piston
-	 * @param lMax : longueur maximale du piston
-	 * @param scene : le scenemanager de Ogre
-	 * @param numPis : le numero du piston
-	 **/
+	 * \fn PistonRendering(Ogre::Real lMin, Ogre::Real lMax, Ogre::SceneManager *scene, int numPis)
+	 * \brief Constructeur
+	 * \param lMin Longueur minimum du piston
+	 * \param lMax Longueur maximale du piston
+	 * \param scene  Le scenemanager de Ogre
+	 * \param numPis Le numero du piston
+	 */
 	PistonRendering(Ogre::Real lMin, Ogre::Real lMax, Ogre::SceneManager *scene, int numPis) ;
 
 
 	virtual ~PistonRendering();
 
 	/**
-	 * @param b1 : la boule à une extrémité du piston, à partir de laquelle on calcule la position des cylindre
-	 * @param b2 : la boule à l'autre extrémité du piston
-	**/
+	 * \fn void afficherPiston(Ogre::SceneNode *b1, Ogre::SceneNode *b2) ;
+	 * \brief Fonction permettant d'afficher le piston entre deux nœuds
+	 * \param b1 Le nœud à une extrémité du piston, à partir duquel on calcule la position des cylindres
+	 * \param b2 Le nœud à l'autre extrémité du piston
+	 */
 	void afficherPiston(Ogre::SceneNode *b1, Ogre::SceneNode *b2) ;
 
 };
