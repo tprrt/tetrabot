@@ -11,34 +11,64 @@
 #include "PhysicPiston.h"
 #include "Action.h"
 
+/**
+ * \class ActionPiston
+ * \brief parametre l'action d'un piston 
+ */
 class ActionPiston: public Action
 {
 protected:
-	// piston : c'est le piston auquel est associe l'action
+	// ATTRIBUTS
+	/**< piston : c'est le piston auquel est associe l'action */
 	PhysicPiston* piston;
-	// tailleVoulue : nouvelle taille du piston
+	/**< tailleVoulue : nouvelle taille du piston */
 	btScalar tailleVoulue;
 
 public:
-
-	//Constructeur de la classe ActionPiston
+	// METHODES
+	
+	/**
+	 * \fn ActionPiston(PhysicPiston*,btScalar);
+	 * \brief Constructeur de la classe ActionPiston
+	 * \param PhysicPiston*  
+	 * \param btScalar	
+	 */
 	ActionPiston(PhysicPiston*,btScalar);
-
 
 	//virtual ~ActionPiston();
 
-	// Retourne la taille voulue pour cette action
+	/**
+	 * \fn btScalar getTailleVoulue();
+	 * \brief getter
+	 * \return la taille voulue pour cette action
+	 */
 	btScalar getTailleVoulue();
 	
-	//Retourne l'objet de l'action : piston
+	/**
+	 * \fn PhysicPiston* getPiston();
+	 * \brief getter
+	 * \return l'objet de l'action : piston
+	 */
 	PhysicPiston* getPiston();
 
-	// Parametre la taille voulue pour cette action 
+	/**
+	 * \fn PhysicPiston* getPiston();
+	 * \brief setter Parametre la taille voulue pour cette action 
+	 * \param taille
+	 */
 	void setTailleVoulue(btScalar taille);
 
-	//Parametre le piston pour cette action
+	/**
+	 * \fn void setPiston(PhysicPiston* p);
+	 * \brief setter Parametre le piston pour cette action
+	 * \param p 
+	 */
 	void setPiston(PhysicPiston* p);
-	// Methode permettant un changement de la taille (voulue) d'un piston
+	
+	/**
+	 * \fn void execute();
+	 * \brief Methode permettant un changement de la taille (voulue) d'un piston
+	 */
 	void execute();
 };
 #endif /* ACTIONPISTON_H */

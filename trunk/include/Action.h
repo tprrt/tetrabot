@@ -16,10 +16,11 @@
 class Action
 {
 protected:
-
-	int id;
+	// ATTRIBUTS
+	int id; /**< Identifieur d'une action */
 
 public:
+	// METHODES
 	/**
 	 * \fn Action(void)
 	 * \brief Constructeur
