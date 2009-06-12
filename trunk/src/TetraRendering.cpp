@@ -11,6 +11,8 @@ TetraRendering::TetraRendering() : Rendering("tetrabot", Ogre::ST_EXTERIOR_CLOSE
 
 	this->leftMousePressed = false;
 	this->rightMousePressed = false;
+	this->yawValue = 0;
+	this->pitchValue = 0;
 }
 
 bool TetraRendering::mousePressed(const OIS::MouseEvent &evt, const OIS::MouseButtonID id) {
@@ -44,7 +46,7 @@ bool TetraRendering::mouseMoved (const OIS::MouseEvent &evt) {
 	if(this->leftMousePressed) {
 
 		Ogre::Ray mouseRay;
-		Ogre::RaySceneQueryResult queryResult;
+		//Ogre::RaySceneQueryResult queryResult;
 		Ogre::RaySceneQueryResult::iterator itr;
 
 		//CEGUI::Point mousePos = CEGUI::MouseCursor::getSingleton().getPosition();
@@ -52,12 +54,15 @@ bool TetraRendering::mouseMoved (const OIS::MouseEvent &evt) {
 		mouseRay = this->pCamera->getCameraToViewportRay(evt.state.X.abs/float(evt.state.width), evt.state.Y.abs/float(evt.state.height));
 		//std::cout << "X:" << evt.state.X.abs/float(evt.state.width) << std::endl;
 		//std::cout << "Y:" << evt.state.Y.abs/float(evt.state.height) << std::endl;
+		this->pRaySceneQuery = this->pSceneManager->createRayQuery(mouseRay);
+		this->pRaySceneQuery->setQueryTypeMask(Ogre::SceneQuery::WFT_SINGLE_INTERSECTION);
+		this->pRaySceneQuery->setSortByDistance(true);
 
-		this->pRaySceneQuery->setRay(mouseRay);
-	
-		if(this->pRaySceneQuery->execute().size() > 0) {
+		Ogre::RaySceneQueryResult & queryResult = this->pRaySceneQuery->execute() ;
+
+		if(queryResult.size() > 0) {
 			std::cout << "Ray positive result" << std::endl;
-			/*Ogre::RaySceneQueryResult &*/queryResult = this->pRaySceneQuery->getLastResults();
+			//Ogre::RaySceneQueryResult & queryResult = this->pRaySceneQuery->getLastResults();
 
 			itr = queryResult.begin();
 
@@ -98,7 +103,7 @@ bool TetraRendering::keyPressed(const OIS::KeyEvent &evt) {
 	} else if(evt.key == OIS::KC_F1) {
 		std::cout << "F1 pressed" << std::endl;
 		this->robot->StartThread(btVector3(0, 0, 500));
-		
+
 
 	} else if(evt.key == OIS::KC_F2) {
 		std::cout << "F2 pressed" << std::endl;
@@ -265,7 +270,7 @@ void TetraRendering::createScene() {
 	this->pSceneManager->getSceneNode("NodeCamera")->setPosition(50, 50, -50);
 	this->pCamera->lookAt(this->pSceneManager->getSceneNode("NodeCenterOfMass")->getPosition());
 
-	//light 
+	//light
 	pLight = this->pSceneManager->createLight("Light");
 	pLight->setType(Ogre::Light::LT_POINT);
 	//pLight->setPosition(Ogre::Vector3(0, 400, 0));

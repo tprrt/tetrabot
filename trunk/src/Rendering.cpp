@@ -39,7 +39,7 @@ void Rendering::initSkyBox(const bool enable, const std::string& SkyName) {
 	this->pSceneManager->setSkyBox(enable, SkyName);
 }
 
-bool Rendering::keyPressed(const OIS::KeyEvent &evt) { 
+bool Rendering::keyPressed(const OIS::KeyEvent &evt) {
 
 	CEGUI::System::getSingleton().injectKeyDown(evt.key);
 
@@ -169,9 +169,7 @@ void Rendering::initRendering(const std::string &name, const Ogre::SceneTypeMask
 	this->pRoot->addFrameListener(this);
 	Ogre::WindowEventUtilities::addWindowEventListener(this->pRenderWindow, this);
 
-	this->pRaySceneQuery = this->pSceneManager->createRayQuery(Ogre::Ray());
-	this->pRaySceneQuery->setQueryTypeMask(Ogre::SceneManager::WORLD_GEOMETRY_TYPE_MASK );
-	this->pRaySceneQuery->setSortByDistance(true);
+
 	//this->pRaySceneQuery->setWorldFragmentType(Ogre::SceneQuery::WFT_SINGLE_INTERSECTION);
 }
 
@@ -230,7 +228,7 @@ void Rendering::initGUI() {
 
 	//center cursor
 	const OIS::MouseState &state = this->pMouse->getMouseState();
-	//CEGUI::Point mousePos = CEGUI::MouseCursor::getSingleton().getPosition();  
+	//CEGUI::Point mousePos = CEGUI::MouseCursor::getSingleton().getPosition();
 	CEGUI::System::getSingleton().injectMouseMove(state.X.abs/*-mousePos.d_x*/,state.Y.abs/*-mousePos.d_y*/);
 
 	//CEGUI::SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"skin.scheme");
