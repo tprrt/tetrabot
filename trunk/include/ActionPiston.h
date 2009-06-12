@@ -19,10 +19,10 @@ class ActionPiston: public Action
 {
 protected:
 	// ATTRIBUTS
-	/**< piston : c'est le piston auquel est associe l'action */
-	PhysicPiston* piston;
-	/**< tailleVoulue : nouvelle taille du piston */
-	btScalar tailleVoulue;
+	
+	PhysicPiston* piston; /**< piston : c'est le piston auquel est associe l'action */
+	
+	btScalar tailleVoulue; /**< tailleVoulue : nouvelle taille du piston */
 
 public:
 	// METHODES

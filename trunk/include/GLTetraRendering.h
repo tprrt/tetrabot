@@ -1,7 +1,9 @@
-//  @ Project : Tetrabot
-//  @ File Name : GLTetraRendering.h
-//  @ Date : 01/06/2009
-//  @ Author : Frozen Brains
+/**
+ * \file GLTetraRendering.h
+ * \brief Gere le mode debug ( OpenGL )
+ * \author Frozen Brains
+ * \version 0.1
+ */
 
 //-----------------------------------------------------------------------------
 
@@ -36,51 +38,86 @@
 
 
 /// SliderConstraintDemo shows how to create a slider constraint
+/**
+ * \class GLTetraRendering
+ * \brief Gere le mode debug ( OpenGL )
+ */
 class GLTetraRendering : public Application
 {
 public:
+	//ATTRIBUTS
 	//keep track of variables to delete memory at the end
 	btAlignedObjectArray<btCollisionShape*> m_collisionShapes;
-
-	class btBroadphaseInterface*	m_overlappingPairCache;
-
-	class btCollisionDispatcher*	m_dispatcher;
-
-	class btConstraintSolver*	m_constraintSolver;
-
-	class btDefaultCollisionConfiguration* m_collisionConfiguration;
 	
-	// action : tableau des actions des pistons
-	ActionPiston *action[6];
+	class btBroadphaseInterface*	m_overlappingPairCache; /**< m_overlappingPairCache : */
+	
+	class btCollisionDispatcher*	m_dispatcher; /**<  m_dispatcher : */
+	
+	class btConstraintSolver*	m_constraintSolver; /**< m_constraintSolver : */
+	
+	class btDefaultCollisionConfiguration* m_collisionConfiguration; /**< m_collisionConfiguration : */
+	
+	ActionPiston *action[6]; /**< tableau des actions des pistons */
 
-	PhysicWorld * world;
-	// robot : robot qui est dans le monde bullet
-	RobotTetra * robot;
+	PhysicWorld * world; /**< le monde physique */
 	
-	// bodyCube : indicateur de la position cible
-	btRigidBody* bodyCube;
+	RobotTetra * robot; /**< robot qui est dans le monde bullet*/
 	
-	// bodyPave : indicateur de piston
-	btRigidBody* bodyPave;
+	btRigidBody* bodyCube; /**< bodyCube : indicateur de la position cible*/
+	
+	btRigidBody* bodyPave; /**< bodyPave : indicateur de piston*/
 
 public:
-	// Constructeur de la classe GLTetraRendering pour initialiser les Actions des pistons d un robot 
+	//METHODE
+	/**
+	* \fn GLTetraRendering();
+	* \brief Constructeur de la classe GLTetraRendering pour initialiser les Actions des pistons d un robot
+	*/
 	GLTetraRendering();
-	// Destructeur de la classe GLTetraRendering
+	
+	/**
+	* \fn GLTetraRendering();
+	* \brief Destructeur de la classe GLTetraRendering
+	*/
 	virtual ~GLTetraRendering();
-	// Methode pour initialiser le monde bullet et pour creer un robot
-	void	initPhysics();
 
+	/**
+	* \fn void	initPhysics();
+	* \brief Methode pour initialiser le monde bullet et pour creer un robot
+	*/
+	void	initPhysics();
+	
+	/**
+	* \fn void	initModel();
+	* \brief Methode pour initialiser le model
+	*/
 	void	initModel();
 
+	/**
+	* \fn void	drawSliders();
+	* \brief 
+	*/
 	void	drawSliders();
 
+	/**
+	* \fn void	drawSliderConstraint(btSliderConstraint* constraint);
+	* \brief 
+	* \param constraint
+	*/
 	void	drawSliderConstraint(btSliderConstraint* constraint);
 
 	virtual void clientMoveAndDisplay();
-	// Methode pour dessiner les contraintes lienaires des pistons du robot
+	
+	/**
+	* \fn virtual void displayCallback();
+	* \brief Methode pour dessiner les contraintes lienaires des pistons du robot
+	*/
 	virtual void displayCallback();
 
+	/**
+	* \fn static Application* Create()
+	* \brief Methode pour lancer l'appli
+	*/
 	static Application* Create()
 	{
 		GLTetraRendering* demo = new GLTetraRendering();
@@ -88,12 +125,29 @@ public:
 		demo->initPhysics();
 		return demo;
 	}
-	// Methode pour interagir avec bullet ( touches clavier Fn )
+	
+	/**
+	* \fn void specialKeyboard(int key, int x, int y);
+	* \brief Methode pour interagir avec bullet ( touches clavier Fn )
+	* \param key : touche du clavier
+	* \param x : position x
+	* \param y : position y
+	*/
 	void specialKeyboard(int key, int x, int y);
-	// Methode pour interagir avec bullet ( touches clavier )
+	
+	/**
+	* \fn void keyboardCallback(unsigned char key, int x, int y);
+	* \brief Methode pour interagir avec bullet ( touches clavier )
+	* \param key : touche du clavier
+	* \param x : position x
+	* \param y : position y
+	*/
 	void keyboardCallback(unsigned char key, int x, int y);
 
-	//Methode pour configuer l affichage de ecran
+	/**
+	* \fn void renderme();
+	* \brief Methode pour configuer l affichage de ecran
+	*/
 	void renderme();
 };
 

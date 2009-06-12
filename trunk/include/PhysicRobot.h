@@ -1,13 +1,12 @@
-//  @ Project : Tetrabot
-//  @ File Name : EdgeInfo.h
-//  @ Date : 01/06/2009
-//  @ Author : Frozen Brains
+/**
+ * \file ActionPiston.h
+ * \brief Définition de la classe abstraite Robot.
+ *Cette classe contiendra tout les éléments du robot ainsi que les actions associes au robot.
+ *Comme les robots peuvent etre differents, les actions sont des methodes VIRTUELLES PURES
+ * \author Frozen Brains
+ * \version 0.1
+ */
 
-/*
-	Définition de la classe abstraite Robot.
-Cette classe contiendra tout les éléments du robot ainsi que les actions associes au robot.
-Comme les robots peuvent etre differents, les actions sont des methodes VIRTUELLES PURES
-*/
 #ifndef PHYSICROBOT_H
 #define PHYSICROBOT_H
 
@@ -17,6 +16,10 @@ Comme les robots peuvent etre differents, les actions sont des methodes VIRTUELL
 #include "PhysicEdge.h"
 #include "PhysicVertex.h"
 
+/**
+ * \class PhysicRobot
+ * \brief composition du robot 
+ */
 class PhysicRobot{
 
 public:

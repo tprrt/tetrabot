@@ -19,11 +19,9 @@ class ActionControleurRobot: public Action
 	// Les Attributs
 protected:
 
-	/**< ctrlRobot : Controleur du Robot */
-	ControleurRobot* ctrlRobot;
+	ControleurRobot* ctrlRobot; /**< ctrlRobot : Controleur du Robot */
 	
-	/**< etape : nombre d'etape a effectuer par l'algorithme genetique*/
-	int etape;
+	int etape; /**< etape : nombre d'etape a effectuer par l'algorithme genetique*/
 
 public:
 	// Methodes
