@@ -1,7 +1,9 @@
-//  @ Project : Tetrabot
-//  @ File Name : ActionPiston.h
-//  @ Date : 01/06/2009
-//  @ Author : Frozen Brains
+/**
+ * \file ActionPiston.h
+ * \brief Gere les action des pistons
+ * \author Frozen Brains
+ * \version 0.1
+ */
 
 #ifndef ACTIONPISTON_H
 #define ACTIONPISTON_H
