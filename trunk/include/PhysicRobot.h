@@ -23,34 +23,71 @@
 class PhysicRobot{
 
 public:
-	btAlignedObjectArray<PhysicVertex *> Sommets;
+	// ATTRIBUTS
+	btAlignedObjectArray<PhysicVertex *> Sommets; /**< Sommets du robots */
 
-	btAlignedObjectArray<PhysicEdge *> Arcs;
+	btAlignedObjectArray<PhysicEdge *> Arcs; /**< Arcs du robots */
 
-	/*btScalar incremente;*/
-
-	int id;
+	int id; /**< identifieur du robot */
 
 public:	
-
+	// METHODE
+	/**
+	* \fn PhysicRobot();
+	* \brief Constructeur de la classe PhysicRobot
+	*/
 	PhysicRobot();
-
+	/**
+	* \fn virtual ~PhysicRobot();
+	* \brief Destructeur de la classe PhysicRobot
+	*/
 	virtual ~PhysicRobot();
 
+	/**
+	* \fn int getID();
+	* \brief getter
+	* \return id
+	*/
 	int getID();
  
+ 	/**
+	* \fn btAlignedObjectArray<PhysicVertex *> getSommets();
+	* \brief getter
+	* \return Sommets
+	*/
 	btAlignedObjectArray<PhysicVertex *> getSommets();
 
+ 	/**
+	* \fn PhysicVertex *getSommet(int i);
+	* \brief getter
+	* \return Sommets[i]
+	*/
 	PhysicVertex *getSommet(int i);
-
+ 	/**
+	* \fn btAlignedObjectArray<PhysicEdge *> getArcs();
+	* \brief getter
+	* \return Arcs
+	*/
 	btAlignedObjectArray<PhysicEdge *> getArcs();
 
+ 	/**
+	* \fn PhysicEdge *getArc(int i);
+	* \brief getter
+	* \return Arcs[i]
+	*/
 	PhysicEdge *getArc(int i);
 
-	/*btScalar getIncremente();*/
-
+ 	/**
+	* \fn virtual void translate(const btVector3& to) = 0;
+	* \brief pour translater la position du robot
+	*/
 	virtual void translate(const btVector3& to) = 0;
 
+ 	/**
+	* \fn virtual btVector3 getCenterOfMassPosition()
+	* \brief getter
+	* \return le centre de gravité du robot
+	*/
 	virtual btVector3 getCenterOfMassPosition() = 0;
 };
 
