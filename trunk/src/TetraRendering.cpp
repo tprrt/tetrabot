@@ -4,8 +4,6 @@ TetraRendering::TetraRendering() : Rendering("tetrabot", Ogre::ST_EXTERIOR_CLOSE
 
 	this->leftMousePressed = false;
 	this->rightMousePressed = false;
-	this->yawValue = 0;
-	this->pitchValue = 0;
 }
 
 bool TetraRendering::mousePressed(const OIS::MouseEvent &evt, const OIS::MouseButtonID id) {
@@ -35,6 +33,8 @@ bool TetraRendering::mouseReleased(const OIS::MouseEvent &evt, const OIS::MouseB
 }
 
 bool TetraRendering::mouseMoved (const OIS::MouseEvent &evt) {
+
+	std::cout << "Mouse moved" << std::endl;
 
 	if(this->leftMousePressed) {
 
@@ -67,9 +67,13 @@ bool TetraRendering::mouseMoved (const OIS::MouseEvent &evt) {
 		}
 
 	} else if(this->rightMousePressed) {
+		std::cout << "right mouse pressed" << std::endl;
+
 		//move camera around the robot.
-		//this->pSceneManager->getSceneNode("NodeCamera")->yaw(Ogre::Degree(-evt.state.X.rel));
-		//this->pSceneManager->getSceneNode("NodeCamera")->pitch(Ogre::Degree(-evt.state.Y.rel));
+		this->pSceneManager->getSceneNode("NodeCamera")->translate(0.0,evt.state.Y.rel*this->deltaT*400,evt.state.X.rel*this->deltaT*400);
+		//this->pSceneManager->getSceneNode("NodeCamera")->yaw(Ogre::Degree(-evt.state.X.rel*10),Ogre::Node::TS_PARENT);
+		//this->pSceneManager->getSceneNode("NodeCamera")->pitch(Ogre::Degree(-evt.state.Y.rel*10),Ogre::Node::TS_PARENT);
+		//this->pCamera->lookAt(this->pSceneManager->getSceneNode("NodeCenterOfMass")->getPosition());
 	}
 	return Rendering::mouseMoved(evt);
 }
@@ -258,11 +262,12 @@ void TetraRendering::createScene() {
 	this->pSceneManager->getSceneNode("NodeCenterOfMass")->setVisible(false,true);
 
 	//init sceneNode for camera 3rd.
-	this->pSceneManager->getSceneNode("NodeCenterOfMass")->createChild("NodeCamera");
+	this->pCamera->setAutoTracking(true, this->pSceneManager->getSceneNode("NodeCenterOfMass")) ;
+	//this->pSceneManager->getSceneNode("NodeCenterOfMass")->createChild("NodeCamera");
+	this->pSceneManager->getRootSceneNode()->createChild("NodeCamera");
 	this->pSceneManager->getSceneNode("NodeCamera")->attachObject(this->pCamera);
 	this->pSceneManager->getSceneNode("NodeCamera")->setPosition(50, 50, -50);
-	this->pCamera->lookAt(this->pSceneManager->getSceneNode("NodeCenterOfMass")->getPosition());
-
+	//this->pCamera->lookAt(this->pSceneManager->getSceneNode("NodeCenterOfMass")->getPosition());
 	//light
 	pLight = this->pSceneManager->createLight("Light");
 	pLight->setType(Ogre::Light::LT_POINT);

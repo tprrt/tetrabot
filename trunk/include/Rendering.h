@@ -29,7 +29,6 @@
 /**
  * \class Rendering
  * \brief Classe gérant l'affichage sous ogre
- *
  */
 class Rendering : public Ogre::FrameListener, public Ogre::WindowEventListener,
 	public OIS::MouseListener, public OIS::KeyListener {
