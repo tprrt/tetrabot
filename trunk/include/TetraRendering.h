@@ -1,12 +1,12 @@
-/*
- * Test.h
- *
- *  Created on: 24 févr. 2009
- *      Author: Thomas Perrot
- */
-
 #ifndef TETRA_RENDERING_H_
 #define TETRA_RENDERING_H_
+
+/**
+ * \file TetraRendering.h
+ * \author Frozen Brains
+ * \brief Gestion de l'affichage d'un robot tétraédrique sous Ogre
+ * \version 0.1
+ */
 
 #include "characteristics.h"
 #include "Vector3Gen.h"
@@ -18,6 +18,10 @@
 #include "PhysicWorld.h"
 #include "WorldInfo.h"
 
+/**
+ * \class TetraRendering
+ * \brief Classe gérant l'affichage d'un robot tétraédrique sous ogre
+ */
 class TetraRendering : public Rendering {
 
 protected:

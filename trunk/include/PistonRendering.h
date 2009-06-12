@@ -3,7 +3,7 @@
 
 /**
  * \file PistonRendering.h
- * \brief Gere l'affichage des pistons
+ * \brief Gère l'affichage des pistons
  * \author Frozen Brains
  * \version 0.1
  */
@@ -27,9 +27,9 @@ private :
 
 	Ogre::Real lMin; 	/**< Longueur minimale du piston */
 
-	Ogre::SceneManager *scene; /**< La scene dans laquelle on affiche le piston */
+	Ogre::SceneManager *scene; /**< La scène dans laquelle on affiche le piston */
 
-	int num; /**< Le numero du piston */
+	int num; /**< Le numéro du piston */
 
 public :
 	//METHODES
@@ -40,7 +40,7 @@ public :
 	 * \param lMin Longueur minimum du piston
 	 * \param lMax Longueur maximale du piston
 	 * \param scene  Le scenemanager de Ogre
-	 * \param numPis Le numero du piston
+	 * \param numPis Le numéro du piston
 	 */
 	PistonRendering(Ogre::Real lMin, Ogre::Real lMax, Ogre::SceneManager *scene, int numPis) ;
 

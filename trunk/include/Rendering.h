@@ -1,12 +1,12 @@
-/*
- * Rendering.h
- *
- *  Created on: 17 févr. 2009
- *      Author: pantoufle
- */
-
 #ifndef RENDERING_H_
 #define RENDERING_H_
+
+/**
+ * \file Rendering.h
+ * \author Frozen Brains
+ * \brief Gestion de l'affichage générique sous Ogre
+ * \version 0.1
+ */
 
 #include <cstdio>
 #include <cstdlib>
@@ -26,6 +26,11 @@
 	#include <OIS/OIS.h>
 #endif
 
+/**
+ * \class Rendering
+ * \brief Classe gérant l'affichage sous ogre
+ *
+ */
 class Rendering : public Ogre::FrameListener, public Ogre::WindowEventListener,
 	public OIS::MouseListener, public OIS::KeyListener {
 

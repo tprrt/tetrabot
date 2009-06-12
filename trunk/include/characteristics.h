@@ -13,13 +13,13 @@
 //-------------------------CARACTERISTIQUES PHYSIQUES--------------------------
 //-----------------------------------------------------------------------------
 #define NODE_NUMBER 4 /**< Nombre de nœuds composant le piston */
-#define NODE_WEIGHT 1.80 /**< Poid de chaque nœud */
+#define NODE_WEIGHT 1.80 /**< Poids de chaque nœud */
 #define NODE_RADIUS 2.0 /**< Rayon de chaque nœud */
 
-#define EDGE_NUMBER 6 /**< Nombre d'aretes */
-#define EDGE_MIN_SIZE 3.0 /**< Taille minimum d'une arete */
-#define EDGE_MAX_SIZE 10.0 /**< Taille maximum d'une arete */
-#define EDGE_WEIGHT 0.1 /**< Poids d'une arete */
+#define EDGE_NUMBER 6 /**< Nombre d'arêtes */
+#define EDGE_MIN_SIZE 3.0 /**< Taille minimum d'une arête */
+#define EDGE_MAX_SIZE 10.0 /**< Taille maximum d'une arête */
+#define EDGE_WEIGHT 0.1 /**< Poids d'une arête */
 
 #define EDGE_VELOCITY 2.5 /**<  */
 #define EDGE_STRENGTH 1 /**<  */
@@ -35,7 +35,7 @@
 #define RUBDOWN 4.0 /**<  */
 #define CONE_ANGLE M_PI_4/1.5 /**<  */
 
-#define WORLD_GRAVITY -9.8 /**< Gravite du monde */
+#define WORLD_GRAVITY -9.8 /**< Gravité du monde */
 #define WORLD_MIN -1000 /**<  */
 #define WORLD_MAX 1000 /**<  */
 

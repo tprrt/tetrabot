@@ -1,10 +1,3 @@
-/*
- * Test.cpp
- *
- *  Created on: 24 févr. 2009
- *      Author: thomas
- */
-
 #include "TetraRendering.h"
 
 TetraRendering::TetraRendering() : Rendering("tetrabot", Ogre::ST_EXTERIOR_CLOSE) {
