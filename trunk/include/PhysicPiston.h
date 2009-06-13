@@ -111,6 +111,7 @@ public:
 	 * \fn void setContrainte(btSliderConstraint* constraint);
 	 * \brief setter
 	* \param [constraint] : nouvelle contrainte à appliquer sur le piston.
+	* \deprecated La contrainte linéaire du piston est créée dans le constructeur.
 	 */
 	void setContrainte(btSliderConstraint* constraint);
 
@@ -125,6 +126,7 @@ public:
 	 * \fn void setBodyA(btRigidBody* body);
 	 * \brief setter
 	* \param [body] : nouvel objet rigide pour définir l'extrémitée A du piston.
+	* \deprecated L'objet rigide se crée dans le constructeur.
 	 */
 	void setBodyA(btRigidBody* body);
 
@@ -139,6 +141,7 @@ public:
 	 * \fn void setBodyB(btRigidBody* body);
 	 * \brief setter
 	* \param [body] :  nouvel objet rigide pour définir l'extrémitée B du piston.
+	* \deprecated L'objet rigide se crée dans le constructeur.
 	 */
 	void setBodyB(btRigidBody* body);
 
@@ -153,6 +156,7 @@ public:
 	 * \fn void setShapeA(btBoxShape* newShape);
 	 * \brief setter
 	* \param [newShape] : nouvelle forme de l'objet représentant l'extrémitée A du piston.
+	* \deprecated La forme de l'extrémitée A du piston est créée dans le constructeur.
 	 */
 	void setShapeA(btBoxShape* newShape);
 
@@ -167,6 +171,7 @@ public:
 	 * \fn void setShapeB(btBoxShape* newShape);
 	 * \brief setter
 	* \param [newShape] : nouvelle forme de l'objet représentant l'extrémitée B du piston.
+	* \deprecated La forme de l'extrémitée B du piston est créée dans le constructeur.
 	 */
 	void setShapeB(btBoxShape* newShape);
 

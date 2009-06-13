@@ -1,8 +1,5 @@
 #ifndef ROBOTWHELLS_H
 #define ROBOTWHELLS_H
-/* Created by GONZALEZ 
-  june 3rd 2009
-*/
 
 #include "PhysicRobot.h"
 #include "PhysicNoeud.h"
