@@ -1,6 +1,6 @@
 /**
  * \file GLTetraRendering.h
- * \brief Gere le mode debug ( OpenGL )
+ * \brief Gere le rendu graphique en mode debug ( OpenGL ).
  * \author Frozen Brains
  * \version 0.1
  */
@@ -37,10 +37,9 @@
 //-----------------------------------------------------------------------------
 
 
-/// SliderConstraintDemo shows how to create a slider constraint
 /**
  * \class GLTetraRendering
- * \brief Gere le mode debug ( OpenGL )
+ * \brief Gere le rendu graphique en mode debug ( OpenGL ).
  */
 class GLTetraRendering : public Application
 {
@@ -49,13 +48,13 @@ public:
 	//keep track of variables to delete memory at the end
 	btAlignedObjectArray<btCollisionShape*> m_collisionShapes;
 	
-	class btBroadphaseInterface*	m_overlappingPairCache; /**< m_overlappingPairCache : */
+	class btBroadphaseInterface*	m_overlappingPairCache;
 	
-	class btCollisionDispatcher*	m_dispatcher; /**<  m_dispatcher : */
+	class btCollisionDispatcher*	m_dispatcher;
 	
-	class btConstraintSolver*	m_constraintSolver; /**< m_constraintSolver : */
+	class btConstraintSolver*	m_constraintSolver;
 	
-	class btDefaultCollisionConfiguration* m_collisionConfiguration; /**< m_collisionConfiguration : */
+	class btDefaultCollisionConfiguration* m_collisionConfiguration;
 	
 	ActionPiston *action[6]; /**< tableau des actions des pistons */
 
@@ -71,7 +70,7 @@ public:
 	//METHODE
 	/**
 	* \fn GLTetraRendering();
-	* \brief Constructeur de la classe GLTetraRendering pour initialiser les Actions des pistons d un robot
+	* \brief Constructeur de la classe GLTetraRendering pour initialiser le rendu.
 	*/
 	GLTetraRendering();
 	
@@ -95,28 +94,32 @@ public:
 
 	/**
 	* \fn void	drawSliders();
-	* \brief 
+	* \brief Méthode permettant d'afficher à l'écran les repères internes des objets Bullet (rigidBody). Les repères sont en bleu/vert/rouge.
 	*/
 	void	drawSliders();
 
 	/**
 	* \fn void	drawSliderConstraint(btSliderConstraint* constraint);
-	* \brief 
-	* \param constraint
+	* \brief Méthode permettant d'afficher en blanc la contrainte linéaire passée en paramètre.
+	* \param [constraint] : Contrainte linéaire à afficher.
 	*/
 	void	drawSliderConstraint(btSliderConstraint* constraint);
 
+	/**
+	* \fn virtual void clientMoveAndDisplay();
+	* \brief Méthode effectuant le rendu de l'application.
+	*/
 	virtual void clientMoveAndDisplay();
 	
 	/**
 	* \fn virtual void displayCallback();
-	* \brief Methode pour dessiner les contraintes lienaires des pistons du robot
+	* \brief Methode affichant les contraintes linéaires des pistons du robot
 	*/
 	virtual void displayCallback();
 
 	/**
 	* \fn static Application* Create()
-	* \brief Methode pour lancer l'appli
+	* \brief Methode créant l'application de manière statique.
 	*/
 	static Application* Create()
 	{
@@ -146,7 +149,7 @@ public:
 
 	/**
 	* \fn void renderme();
-	* \brief Methode pour configuer l affichage de ecran
+	* \brief Methode de rendu pour l'affichage de l'application.
 	*/
 	void renderme();
 };

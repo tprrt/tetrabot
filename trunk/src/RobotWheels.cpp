@@ -1,6 +1,6 @@
-#include "RobotWhells.h"
+#include "RobotWheels.h"
 
-RobotWhells::RobotWhells(btDynamicsWorld* world,const btVector3& posInit)
+RobotWheels::RobotWheels(btDynamicsWorld* world,const btVector3& posInit)
 {
 	PhysicNoeud* bouleTMP;
 	PhysicPiston* pistonTMP;
@@ -84,7 +84,7 @@ RobotWhells::RobotWhells(btDynamicsWorld* world,const btVector3& posInit)
 
 }
 
-btVector3 RobotWhells::getCenterOfMassPosition()
+btVector3 RobotWheels::getCenterOfMassPosition()
 {
 	btVector3 centre = btVector3(0,0,0);
 	int nbNoeuds = this->Sommets.size();
@@ -97,7 +97,7 @@ btVector3 RobotWhells::getCenterOfMassPosition()
 
 }
 
-void RobotWhells::translate(const btVector3& to) {
+void RobotWheels::translate(const btVector3& to) {
 
 	btVector3 translation = (to - this->getCenterOfMassPosition());
 	int nbSommets = this->Sommets.size();

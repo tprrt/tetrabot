@@ -106,8 +106,7 @@ public:
 	/**
 	* \fn virtual void translate(const btVector3& to) = 0;
 	* \brief Méthode virtuelle pure effectuant une translation du composant.
-	* \param [to] : point représentant la destination du composant.
-		Une fois la méthode exécutée, le centre de masse du composant sera situé au point [to].
+	* \param [to] : point représentant la destination du composant. Une fois la méthode exécutée, le centre de masse du composant sera situé au point [to].
 	*/
 	virtual void translate(const btVector3& to) = 0;
 };

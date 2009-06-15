@@ -11,7 +11,7 @@
 #include "Threads.h"
 /**
  * \class Action
- * \brief Classe executant les actions avec un thread
+ * \brief Classe executant les actions par le biais d'un thread
  */
 class Action
 {
@@ -32,12 +32,12 @@ public:
 	/**
 	 * \fn int getID();
 	 * \brief getter
-	 * \return l'identifieur de la classe
+	 * \return Identifieur de la classe.
 	 */
 	int getID();
 
 	/**
-	 * \fn void execute(Ogre::SceneNode *b1, Ogre::SceneNode *b2) ;
+	 * \fn void execute() ;
 	 * \brief Méthode permettant d'executer un action avec un thread
 	 */
 	virtual void execute() = 0;
@@ -45,8 +45,8 @@ public:
 
 	/**
 	 * \fn void actionThread(void* p_data) ;
-	 * \brief Fonction permettant de convertir du void* en action* et d'executer un action avec un thread
-	 * \param p_data une actionPiston caster en void *
+	 * \brief Fonction utilisée par un thread et permettant d'executer un action avec un thread.
+	 * \param p_data une action ( de la classe Action ou dérivée ) castée en void *.
 	 */
 void * actionThread (void* p_data );
 

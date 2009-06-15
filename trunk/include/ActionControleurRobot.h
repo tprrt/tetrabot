@@ -13,7 +13,7 @@
 /**
  * \class ActionControleurRobot
  * \brief Gère une action d'un controleur de robot (classe controleuRobot). 
-	Cette classe est utilisée par  l'algorithme genetique en vue de faire effectuer un mouvement à un robot.
+	Cette classe est utilisée par  l'algorithme genetique en vue de faire effectuer un mouvement à un robot par le biais d'un controleur de robot.
  */
 class ActionControleurRobot: public Action
 {
