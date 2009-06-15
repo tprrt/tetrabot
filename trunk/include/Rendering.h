@@ -28,7 +28,7 @@
 
 /**
  * \class Rendering
- * \brief Classe gérant l'affichage sous ogre
+ * \brief Permet de construire un fenetre de rendu utilisant Ogre3d, OIS et CEGUI.
  */
 class Rendering : public Ogre::FrameListener, public Ogre::WindowEventListener,
 	public OIS::MouseListener, public OIS::KeyListener {
@@ -53,6 +53,13 @@ protected:
 	bool finish;
 
 public:
+
+	/**
+	 * \fn Rendering(const std::string &name = "Rendering", const Ogre::SceneTypeMask typeMask = Ogre::ST_GENERIC)
+	 * \brief Constructeur
+	 * \param name Nom de l'application
+	 * \param typeMask Type de scene
+	 */
 	Rendering(const std::string &name = "Rendering", const Ogre::SceneTypeMask typeMask = Ogre::ST_GENERIC);
 
 	void initGround(const std::string& fileMesh, const bool shadows, const int scale);
