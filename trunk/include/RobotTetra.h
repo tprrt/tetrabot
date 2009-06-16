@@ -33,7 +33,7 @@ protected:
 
 public:	
 	btRigidBody* bodyCube;
-	btVector3 end;/** < end : Point d'intéraction avec le robot. */
+	btVector3* end;/** < end : Point d'intéraction avec le robot. */
 	
 public:
 	// Test avec GL
