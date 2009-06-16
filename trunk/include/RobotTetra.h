@@ -108,8 +108,8 @@ public:
 	* \brief Méthode générant un thread pour déplacer le robot à un point donné.
 	* \param [ending] : Point d'arrivé. Le robot se dirige vers ce dernier.
 	*/
-	void StartThread(const btVector3 &ending);
-	
+	void StartThread(btVector3 ending);
+
 	// JAZZ MODIF : 1 JUIN 2009 : 11h52
 	/**
 	* \fn void Deplacement(unsigned char key);
