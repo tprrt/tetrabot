@@ -276,7 +276,7 @@ void* RobotTetra::marcherRobot(void *demo)
 	else{
 		if(robot->end != NULL){
 		//	printf("Test 1Bis: btVector3 end = robot->end;\n");
-			 end = *robot->end;
+			 end = robot->end;
 			printf("end2 %f %f %f\n",end.getX(),end.getY(),end.getZ());
 		}
 		else{
