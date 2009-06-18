@@ -1,10 +1,6 @@
-//  @ Project : Tetrabot
-//  @ File Name : AlgoGenTetra.h
-//  @ Date : 01/06/2009
-//  @ Author : Frozen Brains
-/**
+Ôªø/**
  * \file AlgoGenTetra.h
- * \brief Algorithme gÈnÈtique spÈcifique au robot tetrahÈdrique.
+ * \brief Algorithme g√©n√©tique sp√©cifique au robot tetra√©drique.
  * \author Frozen Brains
  * \version 0.1
  */
@@ -16,7 +12,7 @@
 
 /**
  * \class AlgoGenTetra
- * \brief Cette classe defini l'algorithme gÈnÈtique utilisant un robot tÈtrahÈdrique. Elle implÈmente la classe AlgoGen.
+ * \brief Cette classe definit l'algorithme g√©n√©tique utilisant un robot t√©tra√©drique. Elle impl√©mente la classe AlgoGen.
  */
 class AlgoGenTetra: public AlgoGen
 {
@@ -24,41 +20,40 @@ class AlgoGenTetra: public AlgoGen
 public:
 	// Le Constructeur
 	/**
-	 * \fn AlgoGenTetra(btDynamicsWorld* monde,PhysicRobot* robot,const btVector3& startPoint,btScalar mutation,int nbRobotsActifs,int nbEtapes,int nbCroisements);
+	 * \fn AlgoGenTetra(btDynamicsWorld* monde,PhysicRobot* robot,const btVector3& startPoint,btScalar mutation,int nbRobotsActifs,int nbEtapes,int nbCroisements)
 	 * \brief Constructeur de la classe AlgoGen
-	 * \param [monde] : monde virtuel dÈcrivant la physique selon le moteur bullet.
-	 * \param [robot] : Robot ‡ tester.
-	 * \param [pointDepart] : point de dÈpart du robot.
-	 * \param [mutation] : pourcentage de la population de controleurs qui subira une mutation alÈatoire lors du croisement.
-	 * \param [nbRobotsActifs] : nombre de controleur de robot souhaitÈ.
-	 * \param [nbEtapes] : nombre d'Ètapes que chaque controleur devra rÈaliser.
-	 * \param [nbCroisements] : nombre de croisements souhaitÈ.
+	 * \param monde monde virtuel d√©crivant la physique selon le moteur bullet.
+	 * \param robot Robot √† tester.
+	 * \param pointDepart point de d√©part du robot.
+	 * \param mutation pourcentage de la population de contr√¥leurs qui subira une mutation al√©atoire lors du croisement.
+	 * \param nbRobotsActifs nombre de contr√¥leur de robot souhait√©.
+	 * \param nbEtapes nombre d'√©tapes que chaque contr√¥leur devra r√©aliser.
+	 * \param nbCroisements nombre de croisements souhait√©.
 	 */
 	AlgoGenTetra(btDynamicsWorld* monde,PhysicRobot* robot,const btVector3& startPoint,btScalar mutation,int nbRobotsActifs,int nbEtapes,int nbCroisements);
 
 	//virtual ~AlgoGenTetra();
 	// Methode permettant de lancer l' algoGen
 	/**
-	* \fn void run();
-	* \brief MÈthode dÈroulant l'algorithme gÈnÈtique.
-	*/
+	 * \fn void run();
+	 * \brief M√©thode d√©roulant l'algorithme g√©n√©tique.
+	 */
 	void run();
 
 private:
 	// Methode creant les Controleurs
 	/**
-	* \fn void creerControleurs(btDynamicsWorld* monde,int nbRobots);
-	* \brief MÈthode initialisant les controleurs du robot tÈtrahÈdrique ‡ tester.
-	*/
+	 * \fn void creerControleurs(btDynamicsWorld* monde,int nbRobots);
+	 * \brief M√©thode initialisant les contr√¥leurs du robot t√©tra√©drique √† tester.
+	 */
 	void creerControleurs(btDynamicsWorld* monde,int nbRobots);
-	
+
 	// Methode permettant de derouler l' algoGen
 	/**
-	* \fn static void* execute(void* algoGen);
-	* \brief MÈthode statique permettant de faire tourner l'algorithme dans un thread.
-	* \param [algoGen_Tetra] : instance de l'algorithme gÈnÈtique pour un robot tÈtrahÈdrique.
-	* \return NULL : ne retourne rien.
-	*/
+	 * \fn static void* execute(void* algoGen);
+	 * \brief M√©thode statique permettant de faire tourner l'algorithme dans un thread.
+	 * \param algoGen_Tetra instance de l'algorithme g√©n√©tique pour un robot t√©trah√©drique.
+	 */
 	static void* execute(void* algoGen_Tetra);
 };
 #endif /* ALGOGENTETRA_H */

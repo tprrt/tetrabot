@@ -1,10 +1,6 @@
-//  @ Project : Tetrabot
-//  @ File Name : PhysicPiston.h
-//  @ Date : 01/06/2009
-//  @ Author : Frozen Brains
-/**
+ï»¿/**
  * \file PhysicPiston.h
- * \brief Définition d'un piston.
+ * \brief DÃ©finition d'un piston.
  * \author Frozen Brains
  * \version 0.1
  */
@@ -23,8 +19,8 @@
 
 /**
  * \class PhysicPiston
- * \brief Cette classe représente un piston définit par deux extrémitées liées entre eux par une contrainte linéaire. 
-	Le piston modifie son étirement par le biais d'un moteur.
+ * \brief Cette classe reprÃ©sente un piston dÃ©finit par deux extrÃ©mitÃ©es liÃ©es entre eux par une contrainte linÃ©aire. 
+	Le piston modifie son Ã©tirement par le biais d'un moteur.
  */
 class PhysicPiston: public PhysicEdge
 {
@@ -36,22 +32,22 @@ protected:
 
 	btScalar velocite;/**< velocite : vitesse du piston. */
 
-	bool estBloque;/**< estBloque : booléen indicant si le piston est bloqué ou non.*/
+	bool estBloque;/**< estBloque : boolÃ©en indicant si le piston est bloquÃ© ou non.*/
 
-	// Forme des deux objets aux extrémitées du piston
-	btBoxShape* shapeA;/**< shapeA : forme de l'extrémitée A du piston. */
-	btBoxShape* shapeB;/**< shapeB : forme de l'extrémitée B du piston. */
+	// Forme des deux objets aux extrÃ©mitÃ©es du piston
+	btBoxShape* shapeA;/**< shapeA : forme de l'extrÃ©mitÃ©e A du piston. */
+	btBoxShape* shapeB;/**< shapeB : forme de l'extrÃ©mitÃ©e B du piston. */
 
-	// Corps des deux objets aux extrémitées du piston
-	btRigidBody* bodyA;/**< bodyA : objet rigide représentant l'extrémitée A du piston. */
-	btRigidBody* bodyB;/**< bodyB : objet rigide représentant l'extrémitée B du piston. */
+	// Corps des deux objets aux extrÃ©mitÃ©es du piston
+	btRigidBody* bodyA;/**< bodyA : objet rigide reprÃ©sentant l'extrÃ©mitÃ©e A du piston. */
+	btRigidBody* bodyB;/**< bodyB : objet rigide reprÃ©sentant l'extrÃ©mitÃ©e B du piston. */
 
-	// Contraintes liant les deux extrémitées du piston
-	btSliderConstraint* contrainte;/**< contrainte : contrainte liant les deux extrémitées du piston. */
+	// Contraintes liant les deux extrÃ©mitÃ©es du piston
+	btSliderConstraint* contrainte;/**< contrainte : contrainte liant les deux extrÃ©mitÃ©es du piston. */
 
 	// Contraintes coniques liant une boule a une extremite de piston
-	btConeTwistConstraint* coneA;/**< coneA : contrainte conique liant l'extrémitée A du piston à un sommet (classe Vertex). */
-	btConeTwistConstraint* coneB;/**< coneB : contrainte conique liant l'extrémitée B du piston à un sommet (classe Vertex). */
+	btConeTwistConstraint* coneA;/**< coneA : contrainte conique liant l'extrÃ©mitÃ©e A du piston Ã  un sommet (classe Vertex). */
+	btConeTwistConstraint* coneB;/**< coneB : contrainte conique liant l'extrÃ©mitÃ©e B du piston Ã  un sommet (classe Vertex). */
 
 public:
 	// Les Constructeurs
@@ -63,7 +59,7 @@ public:
 	 * \fn PhysicPiston(btDynamicsWorld* ownerWorld,Ogre::SceneNode* nodeOgre, const btVector3& positionOffset,btScalar min,btScalar max,btScalar vitesse);
 	 * \brief Constructeur de la classe PhysicPiston en relation avec le moteur graphique Ogre.
 	 * \param [ownerWorld] :  description du monde physique selon le moteur Bullet auquel le composant sera soumis.
-	 * \param [nodeOgre] : noeud de scène d'Ogre représentant grapghiquement le piston.
+	 * \param [nodeOgre] : noeud de scÃ¨ne d'Ogre reprÃ©sentant grapghiquement le piston.
 	 * \param [positionOffset] : position initiale du piston.
 	 * \param [min] : longueur minimale du piston.
 	 * \param [max] : longueur maximale du piston.
@@ -93,8 +89,8 @@ public:
 	// methode retournant le centre de gravite
 	/**
 	* \fn btVector3 getCenterOfMassPosition();
-	* \brief Méthode calculant le centre de masse du piston (surcharge de la classe Composant).
-		Le centre de masse est le milieu des centres de masses des extrémitées du piston.
+	* \brief MÃ©thode calculant le centre de masse du piston (surcharge de la classe Composant).
+		Le centre de masse est le milieu des centres de masses des extrÃ©mitÃ©es du piston.
 	* \return Centre de masse du piston.
 	*/
 	btVector3 getCenterOfMassPosition();
@@ -103,75 +99,75 @@ public:
 	/**
 	 * \fn btSliderConstraint* getContrainte();
 	 * \brief getter
-	* \return Contrainte linéaire liant les deux extrémitées du piston.
+	* \return Contrainte linÃ©aire liant les deux extrÃ©mitÃ©es du piston.
 	 */
 	btSliderConstraint* getContrainte();
 
 	/**
 	 * \fn void setContrainte(btSliderConstraint* constraint);
 	 * \brief setter
-	* \param [constraint] : nouvelle contrainte à appliquer sur le piston.
-	* \deprecated La contrainte linéaire du piston est créée dans le constructeur.
+	* \param [constraint] : nouvelle contrainte Ã  appliquer sur le piston.
+	* \deprecated La contrainte linÃ©aire du piston est crÃ©Ã©e dans le constructeur.
 	 */
 	void setContrainte(btSliderConstraint* constraint);
 
 	/**
 	 * \fn btRigidBody* getBodyA();
 	 * \brief getter
-	* \return Objet rigide représentant l'extrémitée A du piston.
+	* \return Objet rigide reprÃ©sentant l'extrÃ©mitÃ©e A du piston.
 	 */
 	btRigidBody* getBodyA();
 
 	/**
 	 * \fn void setBodyA(btRigidBody* body);
 	 * \brief setter
-	* \param [body] : nouvel objet rigide pour définir l'extrémitée A du piston.
-	* \deprecated L'objet rigide se crée dans le constructeur.
+	* \param [body] : nouvel objet rigide pour dÃ©finir l'extrÃ©mitÃ©e A du piston.
+	* \deprecated L'objet rigide se crÃ©e dans le constructeur.
 	 */
 	void setBodyA(btRigidBody* body);
 
 	/**
 	 * \fn btRigidBody* getBodyB();
 	 * \brief getter
-	* \return Objet rigide représentant l'extrémitée B du piston.
+	* \return Objet rigide reprÃ©sentant l'extrÃ©mitÃ©e B du piston.
 	 */
 	btRigidBody* getBodyB();
 
 	/**
 	 * \fn void setBodyB(btRigidBody* body);
 	 * \brief setter
-	* \param [body] :  nouvel objet rigide pour définir l'extrémitée B du piston.
-	* \deprecated L'objet rigide se crée dans le constructeur.
+	* \param [body] :  nouvel objet rigide pour dÃ©finir l'extrÃ©mitÃ©e B du piston.
+	* \deprecated L'objet rigide se crÃ©e dans le constructeur.
 	 */
 	void setBodyB(btRigidBody* body);
 
 	/**
 	 * \fn btBoxShape* getShapeA();
 	 * \brief getter
-	* \return Forme de l'extrémitée A du piston.
+	* \return Forme de l'extrÃ©mitÃ©e A du piston.
 	 */
 	btBoxShape* getShapeA();
 
 	/**
 	 * \fn void setShapeA(btBoxShape* newShape);
 	 * \brief setter
-	* \param [newShape] : nouvelle forme de l'objet représentant l'extrémitée A du piston.
-	* \deprecated La forme de l'extrémitée A du piston est créée dans le constructeur.
+	* \param [newShape] : nouvelle forme de l'objet reprÃ©sentant l'extrÃ©mitÃ©e A du piston.
+	* \deprecated La forme de l'extrÃ©mitÃ©e A du piston est crÃ©Ã©e dans le constructeur.
 	 */
 	void setShapeA(btBoxShape* newShape);
 
 	/**
 	 * \fn btBoxShape* getShapeB();
 	 * \brief getter
-	* \return Forme de l'extrémitée A du piston.
+	* \return Forme de l'extrÃ©mitÃ©e A du piston.
 	 */
 	btBoxShape* getShapeB();
 
 	/**
 	 * \fn void setShapeB(btBoxShape* newShape);
 	 * \brief setter
-	* \param [newShape] : nouvelle forme de l'objet représentant l'extrémitée B du piston.
-	* \deprecated La forme de l'extrémitée B du piston est créée dans le constructeur.
+	* \param [newShape] : nouvelle forme de l'objet reprÃ©sentant l'extrÃ©mitÃ©e B du piston.
+	* \deprecated La forme de l'extrÃ©mitÃ©e B du piston est crÃ©Ã©e dans le constructeur.
 	 */
 	void setShapeB(btBoxShape* newShape);
 
@@ -206,75 +202,75 @@ public:
 	/**
 	 * \fn btConeTwistConstraint* getConeA();
 	 * \brief getter
-	* \return contrainte conique liant l'extrémitée A du piston à un sommet (classe Vertex) ou NULL si la liaison n'a pas encore été effectuée.
+	* \return contrainte conique liant l'extrÃ©mitÃ©e A du piston Ã  un sommet (classe Vertex) ou NULL si la liaison n'a pas encore Ã©tÃ© effectuÃ©e.
 	 */
 	btConeTwistConstraint* getConeA();
 
 	/**
 	 * \fn btConeTwistConstraint* getConeB();
 	 * \brief getter
-	* \return contrainte conique liant l'extrémitée B du piston à un sommet (classe Vertex) ou NULL si la liaison n'a pas encore été effectuée.
+	* \return contrainte conique liant l'extrÃ©mitÃ©e B du piston Ã  un sommet (classe Vertex) ou NULL si la liaison n'a pas encore Ã©tÃ© effectuÃ©e.
 	 */
 	btConeTwistConstraint* getConeB();
 
 	/**
 	 * \fn void setConeA(btConeTwistConstraint* contrainteConique);
 	 * \brief setter
-	* \param [contrainteConique] : contrainte conique liant l'extrémitée A du piston à un sommet (classe Vertex). 
+	* \param [contrainteConique] : contrainte conique liant l'extrÃ©mitÃ©e A du piston Ã  un sommet (classe Vertex). 
 	 */
 	void setConeA(btConeTwistConstraint* contrainteConique);
 
 	/**
 	 * \fn void setConeB(btConeTwistConstraint* contrainteConique);
 	 * \brief setter
-	* \param [contrainteConique] : contrainte conique liant l'extrémitée B du piston à un sommet (classe Vertex). 
+	* \param [contrainteConique] : contrainte conique liant l'extrÃ©mitÃ©e B du piston Ã  un sommet (classe Vertex). 
 	 */
 	void setConeB(btConeTwistConstraint* contrainteConique);
 
 	// methode permettant de connaitre la taille du piston
 	/**
 	 * \fn btScalar getLength();
-	 * \brief Méthode calculant la taille courante du piston.
+	 * \brief MÃ©thode calculant la taille courante du piston.
 	* \return taille courante du piston.
 	 */
 	btScalar getLength();
 
-	// methode permettant de faire bouger un piston à la taille voulu
+	// methode permettant de faire bouger un piston Ã  la taille voulu
 	/**
 	 * \fn int actionnerEdge(btScalar tailleVoulu);
-	 * \brief Méthode permettant de changer la taille du piston.
-	 * \param [tailleVoulu] :  taille souhaitée.
-	 * \return Une valeur différente de zéro signifie un disfonctionnement du piston.
+	 * \brief MÃ©thode permettant de changer la taille du piston.
+	 * \param [tailleVoulu] :  taille souhaitÃ©e.
+	 * \return Une valeur diffÃ©rente de zÃ©ro signifie un disfonctionnement du piston.
 	 */
 	int actionnerEdge(btScalar tailleVoulu);
 
 	// methode permettant de bloquer le piston
 	/**
 	* \fn void lock();
-	* \brief Méthode  blocquant le piston à sa taille courante.
+	* \brief MÃ©thode  blocquant le piston Ã  sa taille courante.
 	*/
 	void lock();
 
 	// methode permettant de debloquer le piston
 	/**
 	* \fn void unlock();
-	* \brief Méthode  déblocquant le piston.
+	* \brief MÃ©thode  dÃ©blocquant le piston.
 	*/
 	void unlock();
 
-	// methode permettant connaitre le statut du piston (bloqué ou non)
+	// methode permettant connaitre le statut du piston (bloquÃ© ou non)
 	/**
 	 * \fn btScalar getLength();
-	 * \brief Méthode retournant le statut du piston
-	* \return True si le piston est bloqué, False dans le cas contraire.
+	 * \brief MÃ©thode retournant le statut du piston
+	* \return True si le piston est bloquÃ©, False dans le cas contraire.
 	 */
 	bool getEstBloque();
 
 	/**
 	* \fn void translate(const btVector3& to);
-	* \brief Méthode effectuant une translation du piston (translation effectuée sur chacune des deux extrémitées). 
-	* \param [to] : point représentant la destination du centre de masse du piston.
-		Une fois la méthode exécutée, le centre de masse du piston sera situé au point [to].
+	* \brief MÃ©thode effectuant une translation du piston (translation effectuÃ©e sur chacune des deux extrÃ©mitÃ©es). 
+	* \param [to] : point reprÃ©sentant la destination du centre de masse du piston.
+		Une fois la mÃ©thode exÃ©cutÃ©e, le centre de masse du piston sera situÃ© au point [to].
 	*/
 	void translate(const btVector3 &to);
 };

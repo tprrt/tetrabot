@@ -1,6 +1,6 @@
-/**
+Ôªø/**
  * \file ActionPiston.h
- * \brief Gere un Ètirement d'un piston
+ * \brief G√®re un √©tirement d'un piston
  * \author Frozen Brains
  * \version 0.1
  */
@@ -13,25 +13,25 @@
 
 /**
  * \class ActionPiston
- * \brief parametre l'action ‡ effectuer sur un piston. 
+ * \brief param√®tre l'action √† effectuer sur un piston.
  */
 class ActionPiston: public Action
 {
 protected:
 	// ATTRIBUTS
-	
-	PhysicPiston* piston; /**< piston : c'est le piston auquel est associe l'action */
-	
-	btScalar tailleVoulue; /**< tailleVoulue : nouvelle taille du piston */
+
+	PhysicPiston* piston; /**< c'est le piston auquel est associ√© l'action */
+
+	btScalar tailleVoulue; /**< nouvelle taille du piston */
 
 public:
 	// METHODES
-	
+
 	/**
 	 * \fn ActionPiston(PhysicPiston* piston, btScalar taille);
 	 * \brief Constructeur de la classe ActionPiston
-	 * \param [piston] :  piston sur lequel l'action s'effectue.
-	 * \param [taille] : taille souhaitÈe du piston.
+	 * \param piston piston sur lequel l'action s'effectue.
+	 * \param taille taille souhait√©e du piston.
 	 */
 	ActionPiston(PhysicPiston*,btScalar);
 
@@ -43,10 +43,10 @@ public:
 	 * \return taille du piston voulue pour cette action.
 	 */
 	btScalar getTailleVoulue();
-	
+
 	/**
 	 * \fn PhysicPiston* getPiston();
-	 * \brief getter 
+	 * \brief getter
 	 * \return Piston sur lequel l'action s'effectue.
 	 */
 	PhysicPiston* getPiston();
@@ -54,20 +54,20 @@ public:
 	/**
 	 * \fn void setTailleVoulue(btScalar taille);
 	 * \brief setter
-	 * \param [taille] : longueur du piston voulue pour cette action. 
+	 * \param taille longueur du piston voulue pour cette action.
 	 */
 	void setTailleVoulue(btScalar taille);
 
 	/**
 	 * \fn void setPiston(PhysicPiston* p);
-	 * \brief setter 
-	 * \param [p] : piston ‡ associer ‡ cette action.
+	 * \brief setter
+	 * \param p piston √† associer √† cette action.
 	 */
 	void setPiston(PhysicPiston* p);
-	
+
 	/**
 	 * \fn void execute();
-	 * \brief MÈthode effectuant un changement de la taille (voulue) d'un piston.
+	 * \brief M√©thode effectuant un changement de la taille (voulue) d'un piston.
 	 */
 	void execute();
 };

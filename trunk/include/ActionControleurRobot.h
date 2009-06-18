@@ -1,6 +1,6 @@
-/**
+Ôªø/**
  * \file ActionControleurRobot.h
- * \brief Gere une action pour un controleur de robot.
+ * \brief G√®re une action pour un contr√¥leur de robot.
  * \author Frozen Brains
  * \version 0.1
  */
@@ -12,24 +12,24 @@
 #include "ControleurRobot.h"
 /**
  * \class ActionControleurRobot
- * \brief GËre une action d'un controleur de robot (classe controleuRobot). 
-	Cette classe est utilisÈe par  l'algorithme genetique en vue de faire effectuer un mouvement ‡ un robot par le biais d'un controleur de robot.
+ * \brief G√®re une action d'un contr√¥leur de robot (classe controleurRobot).
+ * Cette classe est utilis√©e par  l'algorithme g√©n√©tique en vue de faire effectuer un mouvement √† un robot par le biais d'un contr√¥leur de robot.
  */
 class ActionControleurRobot: public Action
 {
 	// Les Attributs
 protected:
 
-	ControleurRobot* ctrlRobot; /**< ctrlRobot : Controleur du Robot */
-	
-	int etape; /**< etape : numÈro de l'Ètape ‡ effectuer par l'algorithme genetique*/
+	ControleurRobot* ctrlRobot; /**< ctrlRobot : Contr√¥leur du Robot */
+
+	int etape; /**< etape : num√©ro de l'√©tape √† effectuer par l'algorithme g√©n√©tique*/
 
 public:
 	// Methodes
 	/**
 	 * \fn ActionControleurRobot(ControleurRobot* controleurRobot);
 	 * \brief Constructeur de la classe ActionControleurRobot.
-	 * \param [controleurRobot] :  Controleur du Robot.
+	 * \param [controleurRobot] :  Contr√¥leur du Robot.
 	 */
 	ActionControleurRobot(ControleurRobot* controleurRobot);
 
@@ -38,37 +38,34 @@ public:
 	/**
 	* \fn ControleurRobot* getControleurRobot()
 	* \brief getter
-	* \return l'attribut ctrlRobot ( Controleur du Robot ).
+	* \return l'attribut ctrlRobot (Contr√¥leur du Robot).
 	*/
 	ControleurRobot* getControleurRobot();
-	
+
 	/**
 	* \fn int getEtape()
 	* \brief getter
-	* \return numÈro de l'Ètape ‡ effectuer par l'algorithme gÈnÈtique.
+	* \return num√©ro de l'√©tape √† effectuer par l'algorithme g√©n√©tique.
 	*/
-	
 	int getEtape();
-	
+
 	/**
 	* \fn void setControleurRobot(ControleurRobot* controleurRobot);
-	* \brief setter parametre l'attribut ctrlRobot ( Controleur du Robot )
-	* \param [controleurRobot] : Controleur du Robot.
+	* \brief setter param√®tre l'attribut ctrlRobot (Controleur du Robot)
+	* \param [controleurRobot] : Contr√¥leur du Robot.
 	*/
-	
 	void setControleurRobot(ControleurRobot* controleurRobot);
-	
+
 	/**
 	* \fn void setEtape(int numEtape);
-	* \brief setter  Parametre l'attribut etape 
-	* \param [numEtape] : numÈro de l'Ètape ‡ effectuer par l'algorithme gÈnÈtique.
+	* \brief setter  Param√®tre l'attribut √©tape
+	* \param [numEtape] : num√©ro de l'√©tape √† effectuer par l'algorithme g√©n√©tique.
 	*/
-
 	void setEtape(int numEtape);
-	
+
 	/**
 	* \fn void execute();
-	* \brief MÈthode permettant d'exÈcuter un mouvement d'un controleur de robot.
+	* \brief M√©thode permettant d'ex√©cuter un mouvement d'un contr√¥leur de robot.
 	*/
 	void execute();
 

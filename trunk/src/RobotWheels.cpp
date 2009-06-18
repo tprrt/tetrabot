@@ -1,13 +1,13 @@
-#include "RobotWheels.h"
+ï»¿#include "RobotWheels.h"
 
 RobotWheels::RobotWheels(btDynamicsWorld* world,const btVector3& posInit)
 {
 	PhysicNoeud* bouleTMP;
 	PhysicPiston* pistonTMP;
-	// le vecteur decalage sert à espacer les objets
+	// le vecteur decalage sert Ã  espacer les objets
 	// pour eviter d'eventuelles erreurs de collisions
 	btVector3 decalage; 
-	// Création des 6 boules
+	// CrÃ©ation des 6 boules
 	for(int i=0;i<8;i++)
 	{
 		decalage = btVector3(NODE_RADIUS*i*2,0,0);
@@ -21,7 +21,7 @@ RobotWheels::RobotWheels(btDynamicsWorld* world,const btVector3& posInit)
 		bouleTMP = new PhysicNoeud(world,new btCylinderShapeZ(btVector3(3.F,5.F,3.F)),posInit+decalage,NODE_WEIGHT*0.5);
 		this->Sommets.expand(bouleTMP);
 	}
-	// Création des pistons liant les boules
+	// CrÃ©ation des pistons liant les boules
 	for(int i=0;i<8;i++)
 	{
 		decalage = btVector3(0,0,5*i+15);
@@ -46,7 +46,7 @@ RobotWheels::RobotWheels(btDynamicsWorld* world,const btVector3& posInit)
 	btScalar angle2 = btScalar(M_PI_2);
 	btScalar angle3 = btScalar(M_PI/3.F);
 	btScalar angle4 = btScalar(M_PI_4);
-	// Roue n°1
+	// Roue nÂ°1
 	for(int i=0;i<4;i++)
 	{
 		this->Sommets[i]->linkEdge(Arcs[i],'B',0,angle1);
@@ -54,7 +54,7 @@ RobotWheels::RobotWheels(btDynamicsWorld* world,const btVector3& posInit)
 		this->Sommets[i]->linkEdge(Arcs[(i+8)],'A',angle4,angle2);
 		this->Sommets[8]->linkEdge(Arcs[(i+8)],'B',2*angle3,angle2*i);
 	}
-	// Roue n°2
+	// Roue nÂ°2
 	for(int i=4;i<8;i++)
 	{
 		this->Sommets[i]->linkEdge(Arcs[i],'B',0,angle1);

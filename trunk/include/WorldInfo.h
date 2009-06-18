@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * \file WorldInfo.h
- * \brief Définition des caractéristiques du monde physique virtuel.
+ * \brief DÃ©finition des caractÃ©ristiques du monde physique virtuel.
  * \author Frozen Brains
  * \version 0.1
  */
@@ -10,23 +10,23 @@
 #include "Vector3Gen.h"
 /**
 * \class WorldInfo
-* \brief Classe décrivant les limites du monde dans lequel la physique s'applique ainsi que la gravité.
-	La zone où la physique est présente est définie par deux points.
+* \brief Classe dÃ©crivant les limites du monde dans lequel la physique s'applique ainsi que la gravitÃ©.
+	La zone oÃ¹ la physique est prÃ©sente est dÃ©finie par deux points.
 */
 class WorldInfo {
 
 protected:
-	Vector3Gen *min;/** < min : Point représentant la limite inférieur dans laquelle la physique doit s'appliquer.*/
-	Vector3Gen *max;/** < max : Point représentant la limite supérieur dans laquelle la physique doit s'appliquer.*/
-	Vector3Gen *gravity;/** < gravity : Vecteur définissant la gravité.*/
+	Vector3Gen *min;/** < min : Point reprÃ©sentant la limite infÃ©rieur dans laquelle la physique doit s'appliquer.*/
+	Vector3Gen *max;/** < max : Point reprÃ©sentant la limite supÃ©rieur dans laquelle la physique doit s'appliquer.*/
+	Vector3Gen *gravity;/** < gravity : Vecteur dÃ©finissant la gravitÃ©.*/
 
 public:
 	/**
 	* \fn WorldInfo(Vector3Gen *min, Vector3Gen *max, Vector3Gen *gravity);
-	* \brief Constructeur créant une définition du monde.
-	* \param [min] : Point représentant la limite inférieur du monde dans lequel la physique doit s'appliquer.
-	* \param [max] : Point représentant la limite supérieur du monde dans lequel la physique doit s'appliquer.
-	* \param [gravity] : Vecteur définissant la gravité du monde.
+	* \brief Constructeur crÃ©ant une dÃ©finition du monde.
+	* \param [min] : Point reprÃ©sentant la limite infÃ©rieur du monde dans lequel la physique doit s'appliquer.
+	* \param [max] : Point reprÃ©sentant la limite supÃ©rieur du monde dans lequel la physique doit s'appliquer.
+	* \param [gravity] : Vecteur dÃ©finissant la gravitÃ© du monde.
 	*/
 	WorldInfo(Vector3Gen *min, Vector3Gen *max, Vector3Gen *gravity);
 
@@ -34,21 +34,21 @@ public:
 	/**
 	* \fn const Vector3Gen *getMin() const;
 	* \brief getter
-	* \return Borne inférieur du monde.
+	* \return Borne infÃ©rieur du monde.
 	*/
 	const Vector3Gen *getMin() const;
 
 	/**
 	* \fn const Vector3Gen *getMax() const;
 	* \brief getter
-	* \return Borne supérieur du monde.
+	* \return Borne supÃ©rieur du monde.
 	*/
 	const Vector3Gen *getMax() const;
 
 	/**
 	* \fn const Vector3Gen *getGravity() const;
 	* \brief getter
-	* \return Retourne la gravité sous la forme d'un vecteur.
+	* \return Retourne la gravitÃ© sous la forme d'un vecteur.
 	*/
 	const Vector3Gen *getGravity() const;
 };

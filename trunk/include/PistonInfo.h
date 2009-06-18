@@ -1,4 +1,4 @@
-#ifndef PISTONINFO_H
+﻿#ifndef PISTONINFO_H
 #define PISTONINFO_H
 
 #include "EdgeInfo.h"

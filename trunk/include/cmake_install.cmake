@@ -1,4 +1,4 @@
-# Install script for directory: /home/xsharck/tetrabot/include
+# Install script for directory: /home/gilead/workspace/Fac/M1/Tetra/Tetrabot/include
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)

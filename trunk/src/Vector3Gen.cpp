@@ -1,4 +1,4 @@
-#include "Vector3Gen.h"
+﻿#include "Vector3Gen.h"
 
 Vector3Gen::Vector3Gen(const float x, const float y, const float z) {
 

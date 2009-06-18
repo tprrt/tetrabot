@@ -1,4 +1,4 @@
-#include "PistonInfo.h"
+﻿#include "PistonInfo.h"
 
 PistonInfo::PistonInfo(const float weight, const float minSize, const float maxSize, const float velocity, const float strength) : EdgeInfo(weight, minSize, maxSize) {
 

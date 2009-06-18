@@ -1,7 +1,7 @@
-/**
+ï»¿/**
  * \file Resultat.h
- * \brief Classe répertoriant différents résultats d'un sujet d'étude.
-	Dans notre cas, le sujet d'étude est un robot.
+ * \brief Classe rÃ©pertoriant diffÃ©rents rÃ©sultats d'un sujet d'Ã©tude.
+	Dans notre cas, le sujet d'Ã©tude est un robot.
  * \author Frozen Brains
  * \version 0.1
  */
@@ -11,21 +11,21 @@
 #include "btBulletDynamicsCommon.h"
 /**
 * \class Resultat
-* \brief Classe répertoriant différents résultats d'un robot. Pour l'instant, cette classe ne contient que la distance parcouru par un sujet d'étude.
+* \brief Classe rÃ©pertoriant diffÃ©rents rÃ©sultats d'un robot. Pour l'instant, cette classe ne contient que la distance parcouru par un sujet d'Ã©tude.
 */
 class Resultat {
 
 protected:
-	btScalar distance;/** < distance : distance parcouru par un sujet d'étude.*/
+	btScalar distance;/** < distance : distance parcouru par un sujet d'Ã©tude.*/
 
-	int id;/** < id : Identificateur d'un résultat. La valeur de l'identificateur est laissé au choix de l'utilisateur pour faire correspondre ses sujets d'étude aux résultats.*/
+	int id;/** < id : Identificateur d'un rÃ©sultat. La valeur de l'identificateur est laissÃ© au choix de l'utilisateur pour faire correspondre ses sujets d'Ã©tude aux rÃ©sultats.*/
 
 public:
 	/**
 	* \fn Resultat(int id,btScalar distanceParcouru);
 	* \brief  Constructeur
-	* \param [id] : Identificateur du résultat. Laissé au choix de l'utilisateur pour faire correspondre le sujet d'étude à ce résultat.
-	* \param [distanceParcouru] : distance déja parcouru par le sujet d'étude.
+	* \param [id] : Identificateur du rÃ©sultat. LaissÃ© au choix de l'utilisateur pour faire correspondre le sujet d'Ã©tude Ã  ce rÃ©sultat.
+	* \param [distanceParcouru] : distance dÃ©ja parcouru par le sujet d'Ã©tude.
 	*/
 	Resultat(int id,btScalar distanceParcouru);
 
@@ -34,21 +34,21 @@ public:
 	/**
 	* \fn btScalar getDistance();
 	* \brief getter
-	* \return Distance parcouru par le sujet d'étude.
+	* \return Distance parcouru par le sujet d'Ã©tude.
 	*/
 	btScalar getDistance();
 
 	/**
 	* \fn void setDistance(btScalar distance);
 	* \brief setter
-	* \param [distance] :  Distance parcouru par le sujet d'étude.
+	* \param [distance] :  Distance parcouru par le sujet d'Ã©tude.
 	*/
 	void setDistance(btScalar distance);
 
 	/**
 	* \fn int getID();
 	* \brief getter
-	* \return Identificateur du résultat.
+	* \return Identificateur du rÃ©sultat.
 	*/
 	int getID();
 };

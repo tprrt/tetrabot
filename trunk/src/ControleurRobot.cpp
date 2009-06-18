@@ -1,4 +1,4 @@
-//  @ Project : Tetrabot
+ï»¿//  @ Project : Tetrabot
 //  @ File Name : ControleurRobot.cpp
 //  @ Date : 01/06/2009
 //  @ Author : Frozen Brains
@@ -120,7 +120,7 @@ void ControleurRobot::execute(int numEtape)
 	this->etape = numEtape;
 	if(numEtape==0)
 	{
-		// etape 0: (ré)initialisation des stats
+		// etape 0: (rÃ©)initialisation des stats
 		this->posInitial = this->robot->getCenterOfMassPosition();
 	}
 	for(int i=0;i<nbSin;i++)
@@ -130,7 +130,7 @@ void ControleurRobot::execute(int numEtape)
 		longueurTMP = (pistonTMP->getTailleMax()+ pistonTMP->getTailleMin())/btScalar(2.F);
 		longueurTMP+= this->tabSin[i]->sinus(etape);
 
-		// On controle que la longueur calculée soit correcte
+		// On controle que la longueur calculÃ©e soit correcte
 		if(longueurTMP < pistonTMP->getTailleMin())
 		{
 			longueurTMP = pistonTMP->getTailleMin();

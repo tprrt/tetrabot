@@ -1,4 +1,4 @@
-#include "Threads.h"
+﻿#include "Threads.h"
 
 void* Thread(void* data,void* (*fct_exe)(void*))
 {

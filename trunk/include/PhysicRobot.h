@@ -1,7 +1,7 @@
-/**
+ï»¿/**
  * \file PhysicRobot.h
- * \brief Définition de la classe abstraite Robot.
-	Cette classe contiendra tout les éléments du robot ainsi que les actions associes au robot.
+ * \brief DÃ©finition de la classe abstraite Robot.
+	Cette classe contiendra tout les Ã©lÃ©ments du robot ainsi que les actions associes au robot.
 	Comme les robots peuvent etre differents, les actions sont des methodes VIRTUELLES PURES
  * \author Frozen Brains
  * \version 0.1
@@ -34,7 +34,7 @@ public:
 	// METHODE
 	/**
 	* \fn PhysicRobot();
-	* \brief Constructeur de la classe PhysicRobot. Attribut un identificateur unique de manière automatique.
+	* \brief Constructeur de la classe PhysicRobot. Attribut un identificateur unique de maniÃ¨re automatique.
 	*/
 	PhysicRobot();
 	/**
@@ -60,8 +60,8 @@ public:
  	/**
 	* \fn PhysicVertex *getSommet(int i);
 	* \brief getter
-	* \param [i] : ième sommet demandé.
-	* \return Retourne le ième sommet du tableau de sommets.
+	* \param [i] : iÃ¨me sommet demandÃ©.
+	* \return Retourne le iÃ¨me sommet du tableau de sommets.
 	*/
 	PhysicVertex *getSommet(int i);
  	/**
@@ -74,23 +74,23 @@ public:
  	/**
 	* \fn PhysicEdge *getArc(int i);
 	* \brief getter
-	* \param [i] : ième arc demandé.
-	* \return Ième arc composant le robot.
+	* \param [i] : iÃ¨me arc demandÃ©.
+	* \return IÃ¨me arc composant le robot.
 	*/
 	PhysicEdge *getArc(int i);
 
  	/**
 	* \fn virtual void translate(const btVector3& to) = 0;
 	* \brief Permet de faire une translation sur le robot. 
-		Cette méthode est laissé virtuelle pure car les robots peuvent être différents de par leurs composants.
-	* \param [to] : point représentant la destination du robot. Une fois la méthode exécutée, le centre de masse du robot sera situé au point [to].
+		Cette mÃ©thode est laissÃ© virtuelle pure car les robots peuvent Ãªtre diffÃ©rents de par leurs composants.
+	* \param [to] : point reprÃ©sentant la destination du robot. Une fois la mÃ©thode exÃ©cutÃ©e, le centre de masse du robot sera situÃ© au point [to].
 	*/
 	virtual void translate(const btVector3& to) = 0;
 
  	/**
 	* \fn virtual btVector3 getCenterOfMassPosition() = 0;
-	* \brief Méthode virtuelle pure calculant le centre de masse du robot.
-		Cette méthode est virtuelle pure car les composants des robots n'ont pas forcément la même dynamique.
+	* \brief MÃ©thode virtuelle pure calculant le centre de masse du robot.
+		Cette mÃ©thode est virtuelle pure car les composants des robots n'ont pas forcÃ©ment la mÃªme dynamique.
 	* \return Centre de masse du robot.
 	*/
 	virtual btVector3 getCenterOfMassPosition() = 0;

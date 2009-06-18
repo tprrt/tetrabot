@@ -1,4 +1,4 @@
-#ifndef SINUSOIDINFO_H
+﻿#ifndef SINUSOIDINFO_H
 #define SINUSOIDINFO_H
 
 #include <stdexcept>

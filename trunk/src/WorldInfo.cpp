@@ -1,4 +1,4 @@
-#include "WorldInfo.h"
+﻿#include "WorldInfo.h"
 
 WorldInfo::WorldInfo(Vector3Gen *min, Vector3Gen *max, Vector3Gen *gravity) {
 

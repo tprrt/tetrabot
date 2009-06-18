@@ -1,4 +1,4 @@
-#include "TetraRendering.h"
+﻿#include "TetraRendering.h"
 
 TetraRendering::TetraRendering() : Rendering("tetrabot", Ogre::ST_EXTERIOR_CLOSE) {
 

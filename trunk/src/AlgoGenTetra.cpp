@@ -1,4 +1,4 @@
-//  @ Project : Tetrabot
+ï»¿//  @ Project : Tetrabot
 //  @ File Name : AlgoGenTetra.cpp
 //  @ Date : 01/06/2009
 //  @ Author : Frozen Brains
@@ -113,7 +113,7 @@ void* AlgoGenTetra::execute(void *algoGenTetra)
 			{
 				tabTMP.expand(new ControleurRobot(algo->tabCtrl[i]->getRobot(),algo->tabCtrl[i]->getTabSin()));
 			}
-			// GENETIQUE: On garde 30% des nbRobotsActifs et on en crée 70%
+			// GENETIQUE: On garde 30% des nbRobotsActifs et on en crÃ©e 70%
 			for(int i=(algo->nbRobotsActifs*0.3);i<(algo->nbRobotsActifs);i++)
 			{	
 				random3 = rand()%algo->tabCtrl.size();
@@ -193,7 +193,7 @@ void* AlgoGenTetra::execute(void *algoGenTetra)
 				delete Rdelete;
 				
 			}
-			// Redéfinir la taille du tableau de controleur à 0
+			// RedÃ©finir la taille du tableau de controleur Ã  0
 			algo->tabCtrl.resize(0);
 			for( int sa=0;sa<tabTMP.size();sa++)
 			{
