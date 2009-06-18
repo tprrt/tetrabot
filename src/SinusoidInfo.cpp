@@ -1,4 +1,4 @@
-#include "SinusoidInfo.h"
+﻿#include "SinusoidInfo.h"
 
 SinusoidInfo::SinusoidInfo(const float period, const float scale, const float phase) {
 

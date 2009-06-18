@@ -1,7 +1,7 @@
-/**
+ï»¿/**
  * \file RobotWheels.h
- * \brief Robot bi-pyramidale dans lequel les deux pyramides sont liées entre elles par un piston.
-	Ce robot a la forme de deux roues d'où son nom.
+ * \brief Robot bi-pyramidale dans lequel les deux pyramides sont liÃ©es entre elles par un piston.
+	Ce robot a la forme de deux roues d'oÃ¹ son nom.
  * \author Frozen Brains
  * \version 0.1
  */
@@ -16,10 +16,10 @@
 
 /**
 * \class RobotWheels
-* \brief Robot bi-pyramidale dans lequel les deux pyramides sont liées entre elles par un piston.
-	Le robot est composé de pistons et de noeuds sphériques hormis pour les deux noeuds des sommets des piramides,
+* \brief Robot bi-pyramidale dans lequel les deux pyramides sont liÃ©es entre elles par un piston.
+	Le robot est composÃ© de pistons et de noeuds sphÃ©riques hormis pour les deux noeuds des sommets des piramides,
 	qui sont cylindriques.
-	Par ailleur, les pistons ont des caractéristiques différentes les uns des autres.
+	Par ailleur, les pistons ont des caractÃ©ristiques diffÃ©rentes les uns des autres.
 */
 class RobotWheels: public PhysicRobot
 {
@@ -33,14 +33,14 @@ public:
 	/**
 	* \fn RobotWheels(btDynamicsWorld* world,const btVector3& posInit);
 	* \brief Constructeur du robot.
-	* \param [world] : définition du monde selon le moteur physique Bullet.
-	* \param [posInit] : position initiale du robot: une translation est donc effectuée pour que le robot soit précisement à ce point.
+	* \param [world] : dÃ©finition du monde selon le moteur physique Bullet.
+	* \param [posInit] : position initiale du robot: une translation est donc effectuÃ©e pour que le robot soit prÃ©cisement Ã  ce point.
 	*/
 	RobotWheels(btDynamicsWorld* world,const btVector3& posInit);
 
 	/**
 	* \fn btVector3 getCenterOfMassPosition();
-	* \brief Méthode calculant le centre de masse du robot.
+	* \brief MÃ©thode calculant le centre de masse du robot.
 	* \return Centre de masse du robot.
 	*/
 	btVector3 getCenterOfMassPosition();
@@ -49,7 +49,7 @@ public:
 	/**
 	* \fn void translate(const btVector3& to);
 	* \brief Permet de faire une translation sur le robot. 
-	* \param [to] : point représentant la destination du robot. Une fois la méthode exécutée, le centre de masse du robot sera situé au point [to].
+	* \param [to] : point reprÃ©sentant la destination du robot. Une fois la mÃ©thode exÃ©cutÃ©e, le centre de masse du robot sera situÃ© au point [to].
 	*/
 	void translate(const btVector3& to);
 };

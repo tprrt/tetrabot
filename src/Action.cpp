@@ -1,4 +1,4 @@
-//  @ Project : Tetrabot
+ï»¿//  @ Project : Tetrabot
 //  @ File Name : Action.cpp
 //  @ Date : 01/06/2009
 //  @ Author : Frozen Brains
@@ -18,13 +18,13 @@ int Action::getID() {
 	return this->id;
 }
 
-// Permet l'exécution d'une action via un thread
+// Permet l'exÃ©cution d'une action via un thread
 void * actionThread ( void* p_data )
 {
-	// on recupère les donnees
+	// on recupÃ¨re les donnees
 	Action* a = (Action*) p_data ;
 
-	// on exécute l'action
+	// on exÃ©cute l'action
 	a->execute();
 
 	// on finit l'action 

@@ -1,14 +1,10 @@
-//  @ Project : Tetrabot
-//  @ File Name : AlgoGen.h
-//  @ Date : 01/06/2009
-//  @ Author : Frozen Brains
-/**
+Ôªø/**
  * \file AlgoGen.h
- * \brief Bases de notre algorithme gÈnÈtique.
+ * \brief Bases de notre algorithme g√©n√©tique.
  * \author Frozen Brains
  * \version 0.1
  */
- 
+
 #ifndef ALGOGEN_H
 #define ALGOGEN_H
 
@@ -20,51 +16,51 @@
 
 /**
  * \class AlgoGen
- * \brief Cette classe abstraite permet de dÈfinir les bases d'un algorithme gÈnÈtique utilisant un robot et des controleurs de robot.
+ * \brief Cette classe abstraite permet de d√©finir les bases d'un algorithme g√©n√©tique utilisant un robot et des contr√¥leurs de robot.
  */
 class AlgoGen
 {
 public:
 	// monde : monde Dynamique
-	btDynamicsWorld* monde;/**< monde : monde virtuel dÈcrivant la physique selon le moteur bullet. */
+	btDynamicsWorld* monde;/**< monde virtuel d√©crivant la physique selon le moteur bullet. */
 	// tabCtrl : un vecteur de Controleurs de Robot
-	btAlignedObjectArray<ControleurRobot*> tabCtrl;/**< tabCtrl : tableau regroupant les controleurs du robot.*/
+	btAlignedObjectArray<ControleurRobot*> tabCtrl;/**< tableau regroupant les contr√¥leurs du robot.*/
 	// tabAction : un vecteur d' Actions de Controleur de Robot
-	btAlignedObjectArray<ActionControleurRobot*> tabAction;/**< tabAction : tableau regroupant les actions qu'effectuerons les controleurs du robot.*/
+	btAlignedObjectArray<ActionControleurRobot*> tabAction;/**< tableau regroupant les actions qu'effectueront les contr√¥leurs du robot.*/
 	// robot : c'est l'objet sur lequel est applique l' algoGen
-	PhysicRobot* robot;/**< robot : Robot utilisÈ par l'algorithme gÈnÈtique.*/
+	PhysicRobot* robot;/**< Robot utilis√© par l'algorithme g√©n√©tique.*/
 	// pointDepart : point de depart
-	btVector3 pointDepart;/**< pointDepart : point de dÈpart du robot.*/
+	btVector3 pointDepart;/**< point de d√©part du robot.*/
 	// mutation : coefficient de mutation ( par defaut c'est 5% )
-	btScalar mutation;/**< mutation : pourcentage de la population de controleurs qui subira une mutation alÈatoire lors du croisement.*/
-	// nbEtapes : nombre d' etapes a effectuer par l' algoGen 
-	int nbEtapes;/**< nbEtapes : monbre d'Ètape ( mouvement ) que chaque controleur de robot devra rÈaliser.*/
-	// nbCroisements : nombre de croisements a effectuer par l' algoGen 
-	int nbCroisements;/**< nbCroisements : nombre de croisements.*/
-	// nbRobotsActifs : population de Robots pris en comtpe pour effectuer par l' algoGen 
-	int nbRobotsActifs;/**< nbRobotsActifs : nombre de controleurs du robots maximal.*/
+	btScalar mutation;/**< pourcentage de la population de contr√¥leurs qui subira une mutation al√©atoire lors du croisement.*/
+	// nbEtapes : nombre d' etapes a effectuer par l' algoGen
+	int nbEtapes;/**< nombre d'√©tape (mouvement) que chaque contr√¥leur de robot devra r√©aliser.*/
+	// nbCroisements : nombre de croisements a effectuer par l' algoGen
+	int nbCroisements;/**< nombre de croisements.*/
+	// nbRobotsActifs : population de Robots pris en comtpe pour effectuer par l' algoGen
+	int nbRobotsActifs;/**< nombre de contr√¥leurs du robots maximal.*/
 
 public:
 	// Constructeur de la classe AlgoGen
 	/**
 	 * \fn AlgoGen(btDynamicsWorld* monde,PhysicRobot* robot,const btVector3& startPoint,btScalar mutation,int nbRobotsActifs,int nbEtapes,int nbCroisements);
 	 * \brief Constructeur de la classe AlgoGen
-	 * \param [monde] : monde virtuel dÈcrivant la physique selon le moteur bullet.
-	 * \param [robot] : Robot ‡ tester.
-	 * \param [pointDepart] : point de dÈpart du robot.
-	 * \param [mutation] : pourcentage de la population de controleurs qui subira une mutation alÈatoire lors du croisement.
-	 * \param [nbRobotsActifs] : nombre de controleur de robot souhaitÈ.
-	 * \param [nbEtapes] : nombre d'Ètapes que chaque controleur devra rÈaliser.
-	 * \param [nbCroisements] : nombre de croisements souhaitÈ.
+	 * \param monde monde virtuel d√©crivant la physique selon le moteur bullet.
+	 * \param robot Robot √† tester.
+	 * \param startPoint point de d√©part du robot.
+	 * \param mutation pourcentage de la population de contr√¥leurs qui subira une mutation al√©atoire lors du croisement.
+	 * \param nbRobotsActifs nombre de contr√¥leur de robot souhait√©.
+	 * \param nbEtapes nombre d'√©tapes que chaque contr√¥leur devra r√©aliser.
+	 * \param nbCroisements nombre de croisements souhait√©s.
 	 */
 	AlgoGen(btDynamicsWorld* monde,PhysicRobot* robot,const btVector3& startPoint,btScalar mutation,int nbRobotsActifs,int nbEtapes,int nbCroisements);
-	
+
 	// Pour demarrer l' algoGen
 	/**
-	* \fn virtual void run() = 0;
-	* \brief MÈthode dÈroulant l'algorithme.
-		Cette mÈthode est virtuelle pure pour permettre d'implÈmenter son propre algorithme gÈnÈtique en fonction des attributs de la classe.
-	*/
+	 * \fn virtual void run() = 0;
+	 * \brief M√©thode d√©roulant l'algorithme.
+	 * Cette m√©thode est virtuelle pure pour permettre d'impl√©menter son propre algorithme g√©n√©tique en fonction des attributs de la classe.
+	 */
 	virtual void run() = 0;
 
 	//virtual ~AlgoGen();
@@ -72,19 +68,19 @@ public:
 private:
 	// Pour creer de Controleurs de Robots
 	/**
-	* \fn virtual void creerControleurs(btDynamicsWorld* monde,int nbRobots) = 0;
-	* \brief MÈthode initialisant les controleurs du robot ‡ tester.
-	*/
+	 * \fn virtual void creerControleurs(btDynamicsWorld* monde,int nbRobots) = 0;
+	 * \brief M√©thode initialisant les contr√¥leurs du robot √† tester.
+	 */
 	virtual void creerControleurs(btDynamicsWorld* monde,int nbRobots) = 0;
-	
+
 	// Methode executant l'algorithme Genetique
 	/**
-	* \fn static void* execute(void* algoGen);
-	* \brief MÈthode statique permettant de faire tourner l'algorithme dans un thread.
-		Cette mÈthode est ‡ surcharger dans votre classe implÈmentant AlgoGen.
-	* \param [algoGen] : instance de votre algorithme gÈnÈtique.
-	* \return NULL
-	*/
+	 * \fn static void* execute(void* algoGen);
+	 * \brief M√©thode statique permettant de faire tourner l'algorithme dans un thread.
+	 * Cette m√©thode est √† surcharger dans votre classe impl√©mentant AlgoGen.
+	 * \param algoGen instance de votre algorithme g√©n√©tique.
+	 * \return NULL
+	 */
 	static void* execute(void* algoGen)
 	{
 		//A IMPLEMENTER DANS VOTRE CLASSE DERIVEE

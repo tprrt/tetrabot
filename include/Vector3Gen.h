@@ -1,4 +1,4 @@
-#ifndef VECTOR3GEN_H
+﻿#ifndef VECTOR3GEN_H
 #define VECTOR3GEN_H
 
 #include "btBulletDynamicsCommon.h"

@@ -1,4 +1,4 @@
-#include "Resultat.h"
+﻿#include "Resultat.h"
 
 Resultat::Resultat(int id,btScalar distanceParcouru)
 :id(id),

@@ -1,21 +1,17 @@
-//  @ Project : Tetrabot
-//  @ File Name : PhysicEdge.h
-//  @ Date : 01/06/2009
-//  @ Author : Frozen Brains
-/**
+ï»¿/**
  * \file PhysicEdge.h
- * \brief Définition d'un arc de robot. Les arcs sont des composant capables de changer de taille.
+ * \brief DÃ©finition d'un arc de robot. Les arcs sont des composant capables de changer de taille.
  * \author Frozen Brains
  * \version 0.1
  */
- 
+
 #ifndef PHYSICEDGE_H
 #define PHYSICEDGE_H
 
 #include "PhysicComponent.h"
 /**
  * \class PhysicEdge
- * \brief Représentation, de manière abstraite, d'un arc de robot.  Un arc est un composant capable de changer de taille.
+ * \brief ReprÃ©sentation, de maniÃ¨re abstraite, d'un arc de robot.  Un arc est un composant capable de changer de taille.
  */
 class PhysicEdge : virtual public PhysicComponent
 {
@@ -24,39 +20,39 @@ public:
 	/**
 	 * \fn PhysicEdge(btDynamicsWorld *world);
 	 * \brief Constructeur de la classe PhysicEdge
-	 * \param [world] :  description du monde physique selon le moteur Bullet auquel le composant sera soumis.
+	 * \param world description du monde physique selon le moteur Bullet auquel le composant sera soumis.
 	 */
 	PhysicEdge(btDynamicsWorld *world): PhysicComponent(world)
 	{
 	}
-	
+
 	//Destructeur de la classe PhysicEdge
-	/** 
+	/**
 	* \fn virtual ~PhysicEdge();
 	* \brief Destructeur
 	*/
 	virtual ~PhysicEdge()
 	{
 	}
-	
+
 	// Methode pour actionner un edge
 	/**
-	 * \fn virtual int actionnerEdge(btScalar tailleVoulu) = 0;
-	 * \brief Méthode virtuelle pure permettant de changer la taille de l'arc.
-	 * \param [tailleVoulu] :  taille souhaitée.
-	 * \return Une valeur différente de zéro signifirai un disfonctionnement de l'arc.
+	 * \fn virtual int actionnerEdge(btScalar tailleVoulu) = 0
+	 * \brief MÃ©thode virtuelle pure permettant de changer la taille de l'arc.
+	 * \param tailleVoulu taille souhaitÃ©e.
+	 * \return Une valeur diffÃ©rente de zÃ©ro signifirait un disfonctionnement de l'arc.
 	 */
 	virtual int actionnerEdge(btScalar tailleVoulu) = 0;
-	
+
 	/**
-	* \fn virtual void lock() = 0;
-	* \brief Méthode virtuelle pure blocquant l'arc à sa taille courante. Cette méthode dépand de la représentation d'un arc de robot.
+	* \fn virtual void lock() = 0
+	* \brief MÃ©thode virtuelle pure bloquant l'arc Ã  sa taille courante. Cette mÃ©thode dÃ©pend de la reprÃ©sentation d'un arc de robot.
 	*/
 	virtual void lock() = 0;
-	
+
 	/**
-	* \fn virtual void unlock() = 0;
-	* \brief Méthode virtuelle pure déverouillant l'arc. Cette méthode dépand de la représentation d'un arc de robot.
+	* \fn virtual void unlock() = 0
+	* \brief MÃ©thode virtuelle pure dÃ©verouillant l'arc. Cette mÃ©thode dÃ©pend de la reprÃ©sentation d'un arc de robot.
 	*/
 	virtual void unlock() = 0;
 };

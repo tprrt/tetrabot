@@ -1,4 +1,4 @@
-#include "SignalInfo.h"
+﻿#include "SignalInfo.h"
 
 SignalInfo::SignalInfo() {
 

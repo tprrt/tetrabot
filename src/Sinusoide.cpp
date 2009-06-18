@@ -1,4 +1,4 @@
-#include "Sinusoide.h"
+﻿#include "Sinusoide.h"
 
 Sinusoide::Sinusoide(btScalar periode, btScalar amplitude, btScalar dephasage)
 {

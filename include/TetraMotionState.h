@@ -1,4 +1,4 @@
-/**
+ï»¿/**
  * \file TetraMotionState.h
  * \brief Assure la liaison entre Bullet et Ogre (Wrapper Bullet/Ogre).
  * \author Frozen Brains
@@ -17,15 +17,15 @@
 #endif
 /**
 * \class TetraMotionState
-* \brief Classe permettant la communication de la position d'un composant physiques à un noeud de scène du moteur graphique Ogre.
-	Cette classe est utilisée sous Bullet pour définir un objet rigide, un composant...
-	Les instances sont automatiquement mis à jour par le moteur physique.
+* \brief Classe permettant la communication de la position d'un composant physiques Ã  un noeud de scÃ¨ne du moteur graphique Ogre.
+	Cette classe est utilisÃ©e sous Bullet pour dÃ©finir un objet rigide, un composant...
+	Les instances sont automatiquement mis Ã  jour par le moteur physique.
 */
 class TetraMotionState : public btMotionState 
 {
 
 protected:
-	Ogre::SceneNode *mVisibleobj; /**< mVisibleobj : noeud de scène du moteur Ogre représentant un composant physique. */
+	Ogre::SceneNode *mVisibleobj; /**< mVisibleobj : noeud de scÃ¨ne du moteur Ogre reprÃ©sentant un composant physique. */
 	btTransform mPos1;/**< mPos1 : transformation ( rotation + translation ) du composant. */
 
 public:
@@ -33,29 +33,29 @@ public:
 	* \fn TetraMotionState(const btTransform &initialpos, Ogre::SceneNode *node);
 	* \brief Constructeur
 	* \param [initialpos] : transformation initiale du composant.
-	* \param [node] : pointeur de noeud de scène représentant le composant sous Ogre.
+	* \param [node] : pointeur de noeud de scÃ¨ne reprÃ©sentant le composant sous Ogre.
 	*/
 	TetraMotionState(const btTransform &initialpos, Ogre::SceneNode *node);
 	//virtual ~TetraMotionState();
 
 	/**
 	* \fn void setNode(Ogre::SceneNode *node);
-	* \brief setter : affecte un nouveau noeud de scène Ogre à l'objet, composant,etc... manipulé par Bullet.
-	* \param [node] : pointeur de noeud de scène représentant le composant sous Ogre.
+	* \brief setter : affecte un nouveau noeud de scÃ¨ne Ogre Ã  l'objet, composant,etc... manipulÃ© par Bullet.
+	* \param [node] : pointeur de noeud de scÃ¨ne reprÃ©sentant le composant sous Ogre.
 	*/
 	void setNode(Ogre::SceneNode *node);
 
 	/**
 	* \fn virtual void getWorldTransform(btTransform &worldTrans) const;
 	* \brief getter : affecte la transformation courante de l'objet dans la variable worldTrans
-	* \param [worldTrans] : variable permettant de récupérer la transformation courante.
+	* \param [worldTrans] : variable permettant de rÃ©cupÃ©rer la transformation courante.
 	*/
 	virtual void getWorldTransform(btTransform &worldTrans) const;
 
 	/**
 	* \fn virtual void setWorldTransform(const btTransform &worldTrans);
-	* \brief Mets à jours la position et l'orientation du noeud de scène Ogre.
-		Cette méthode est appellée de manière récursive et automatique par le moteur physique Bullet.
+	* \brief Mets Ã  jours la position et l'orientation du noeud de scÃ¨ne Ogre.
+		Cette mÃ©thode est appellÃ©e de maniÃ¨re rÃ©cursive et automatique par le moteur physique Bullet.
 	* \param [worldTrans] : transformation de l'objet du point de vue du monde physique virtuel de Bullet.
 	*/
 	virtual void setWorldTransform(const btTransform &worldTrans);

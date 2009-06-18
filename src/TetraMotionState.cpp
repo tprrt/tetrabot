@@ -1,4 +1,4 @@
-#include "TetraMotionState.h"
+﻿#include "TetraMotionState.h"
 
 TetraMotionState::TetraMotionState(const btTransform &initialpos, Ogre::SceneNode *node) 
 {

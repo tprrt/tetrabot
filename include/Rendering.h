@@ -1,4 +1,4 @@
-#ifndef RENDERING_H_
+﻿#ifndef RENDERING_H_
 #define RENDERING_H_
 
 /**

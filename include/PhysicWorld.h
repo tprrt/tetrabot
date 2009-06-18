@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * \file PhysicWorld.h
- * \brief Définition du monde englobant la définition du monde dynamique selon le moteur physique Bullet ainsi que la définition du terrain.
+ * \brief DÃ©finition du monde englobant la dÃ©finition du monde dynamique selon le moteur physique Bullet ainsi que la dÃ©finition du terrain.
  * \author Frozen Brains
  * \version 0.1
  */
@@ -22,7 +22,7 @@
 #include "WorldInfo.h"
 /**
  * \class PhysicWorld
- * \brief Représentation du monde et du terrain.
+ * \brief ReprÃ©sentation du monde et du terrain.
  */
 class PhysicWorld
 {
@@ -51,32 +51,32 @@ public:
 public:
 	/**
 	* \fn PhysicWorld(const WorldInfo info);
-	* \brief Constructeur définissant le monde selon le moteur physique Bullet sans terrain.
-		Pour ajouter un terrain dans le monde, utiliser la méthode initGround.
-	* \param [info] : classe contenant les informations necessaires à la création du monde à savoir la gravité et les limites du monde physique virtuel.
+	* \brief Constructeur dÃ©finissant le monde selon le moteur physique Bullet sans terrain.
+		Pour ajouter un terrain dans le monde, utiliser la mÃ©thode initGround.
+	* \param [info] : classe contenant les informations necessaires Ã  la crÃ©ation du monde Ã  savoir la gravitÃ© et les limites du monde physique virtuel.
 	*/
 	PhysicWorld(const WorldInfo info);
 
 	/**
 	* \fn void initGround(const char* filename);
-	* \brief Méthode permettant de créer un terrain ( objet rigide de masse nulle selon le moteur physique Bullet ) à partir d'une meshe WaveFrontObject ( .obj )
+	* \brief MÃ©thode permettant de crÃ©er un terrain ( objet rigide de masse nulle selon le moteur physique Bullet ) Ã  partir d'une meshe WaveFrontObject ( .obj )
 	* \param [filename] : Chemin absolu de la meshe.
 	* \bug Le moteur physique Bullet impose des objets rigides de moins de 50 faces. 
-		Le problème est au niveau de l'approximation de la meshe qui n'est pas satisfaisant.
+		Le problÃ¨me est au niveau de l'approximation de la meshe qui n'est pas satisfaisant.
 	*/
 	void initGround(const char* filename);
 
 	/**
 	* \fn void setGravite(const btVector3& newGravite);
-	* \brief setter permettant d'affecter au monde une nouvelle gravitée, remplacant l'ancienne.
-	* \param [newGravite] : vecteur définissant la nouvelle gravitée à appliquer.
+	* \brief setter permettant d'affecter au monde une nouvelle gravitÃ©e, remplacant l'ancienne.
+	* \param [newGravite] : vecteur dÃ©finissant la nouvelle gravitÃ©e Ã  appliquer.
 	*/
 	void setGravite(const btVector3& newGravite);
 
 	/**
 	* \fn btVector3 getGravite();
 	* \brief getter
-	* \return Gravité du monde.
+	* \return GravitÃ© du monde.
 	*/
 	btVector3 getGravite();
 };

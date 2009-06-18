@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * \file Sinusoide.h
- * \brief Définition d'une sinusoide.
+ * \brief DÃ©finition d'une sinusoide.
  * \author Frozen Brains
  * \version 0.1
  */
@@ -11,29 +11,29 @@
 #include "btBulletDynamicsCommon.h"
 /**
 * \class Sinusoide
-* \brief Permet de définir une sinusoide de par sa période, son amplitude et son déphasage.
+* \brief Permet de dÃ©finir une sinusoide de par sa pÃ©riode, son amplitude et son dÃ©phasage.
 */
 class Sinusoide
 {
 protected:
-	btScalar periode;/** < periode : Période de la sinusoide. */
+	btScalar periode;/** < periode : PÃ©riode de la sinusoide. */
 	btScalar amplitude;/** < amplitude : Amplitude de la sinusoide. */
-	btScalar dephasage;/** < dephasage : Déphasage de la sinusoide. */
+	btScalar dephasage;/** < dephasage : DÃ©phasage de la sinusoide. */
 public:
 
 	/**
 	* \fn Sinusoide(btScalar periode, btScalar amplitude, btScalar dephasage);
 	* \brief Constructeur.
-	* \param [periode] : Période de la sinusoide. 
+	* \param [periode] : PÃ©riode de la sinusoide. 
 	* \param [amplitude] : Amplitude de la sinusoide.
-	* \param [dephasage] : Déphasage de la sinusoide. 
+	* \param [dephasage] : DÃ©phasage de la sinusoide. 
 	*/
 	Sinusoide(btScalar periode, btScalar amplitude, btScalar dephasage);
 
 	/**
 	* \fn Sinusoide(const Sinusoide& s);
 	* \brief Constructeur par copie d'une sinusoide existante.
-	* \param [s] : Sinusoide à copier.
+	* \param [s] : Sinusoide Ã  copier.
 	*/
 	Sinusoide(const Sinusoide& s);
 
@@ -46,7 +46,7 @@ public:
 	/**
 	* \fn btScalar getPeriode();
 	* \brief getter
-	* \return Période de la sinusoide.
+	* \return PÃ©riode de la sinusoide.
 	*/
 	btScalar getPeriode();
 
@@ -60,14 +60,14 @@ public:
 	/**
 	* \fn btScalar getDephasage();
 	* \brief getter
-	* \return Déphasage de la sinusoide.
+	* \return DÃ©phasage de la sinusoide.
 	*/
 	btScalar getDephasage();
 
 	/**
 	* \fn void setPeriode(btScalar p);
 	* \brief setter
-	* \param [p] : Nouvelle période de la sinusoide.
+	* \param [p] : Nouvelle pÃ©riode de la sinusoide.
 	*/
 	void setPeriode(btScalar p);
 
@@ -81,15 +81,15 @@ public:
 	/**
 	* \fn void setDephasage(btScalar d);
 	* \brief setter
-	* \param [d] : Nouveau déphasage de la sinusoide.
+	* \param [d] : Nouveau dÃ©phasage de la sinusoide.
 	*/
 	void setDephasage(btScalar d);
 
 	/**
 	* \fn btScalar sinus(btScalar angle);
-	* \brief Méthode permettant de calculer le sinus de la sinusoide à partir d'un angle.
+	* \brief MÃ©thode permettant de calculer le sinus de la sinusoide Ã  partir d'un angle.
 	* \param [angle] : angle en radian.
-	* \return Sinus de l'angle passé en paramètre.
+	* \return Sinus de l'angle passÃ© en paramÃ¨tre.
 	*/
 	btScalar sinus(btScalar angle);
 

@@ -1,4 +1,4 @@
-#ifndef TETRA_RENDERING_H_
+﻿#ifndef TETRA_RENDERING_H_
 #define TETRA_RENDERING_H_
 
 /**

@@ -1,6 +1,6 @@
-/**
+﻿/**
  * \file Action.h
- * \brief Execute les actions avec un thread
+ * \brief Exécute les actions avec un thread
  * \author Frozen Brains
  * \version 0.1
  */
@@ -11,13 +11,13 @@
 #include "Threads.h"
 /**
  * \class Action
- * \brief Classe executant les actions par le biais d'un thread
+ * \brief Classe exécutant les actions par le biais d'un thread
  */
 class Action
 {
 protected:
 	// ATTRIBUTS
-	int id; /**< Identifieur d'une action */
+	int id; /**< Identifiant d'une action */
 
 public:
 	// METHODES
@@ -32,21 +32,21 @@ public:
 	/**
 	 * \fn int getID();
 	 * \brief getter
-	 * \return Identifieur de la classe.
+	 * \return Identifiant de la classe.
 	 */
 	int getID();
 
 	/**
 	 * \fn void execute() ;
-	 * \brief Méthode permettant d'executer un action avec un thread
+	 * \brief Méthode permettant d'exécuter une action avec un thread
 	 */
 	virtual void execute() = 0;
 };
 
 	/**
 	 * \fn void actionThread(void* p_data) ;
-	 * \brief Fonction utilisée par un thread et permettant d'executer un action avec un thread.
-	 * \param p_data une action ( de la classe Action ou dérivée ) castée en void *.
+	 * \brief Fonction utilisée par un thread et permettant d'exécuter une action avec un thread.
+	 * \param p_data une action (de la classe Action ou dérivée) castée en void *.
 	 */
 void * actionThread (void* p_data );
 

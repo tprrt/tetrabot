@@ -1,4 +1,4 @@
-#ifndef ROBOTINFO_H
+﻿#ifndef ROBOTINFO_H
 #define ROBOTINFO_H
 
 #include <set>
