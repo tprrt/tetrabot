@@ -3,97 +3,68 @@
 //JAZZ MODIF : 7 JUIN 2009 : 12h39
 
 // Permet de verifier s'il y a des actions prevues et de les commencer s'il n'y a pas de d'action en cours
-// True : on remplit le tableau Action
-// False : on remplit le tableau ActionFuture
-bool RobotTetra::gestionAction(void){
+void RobotTetra::gestionAction(void){
 	
 	PhysicPiston* pistonTMP;
-	// marqueur des actions en cours : true = Non, il n'y en a pas du tout : permission de faire les actions futures
-	//				   false= Oui, il y en a au moins une : on doit terminer cette/ces action(s)
-	bool permission = true;
-	// marqueur des actions prevues : true = oui, il y en a au moins une
-	//			          false= Non, il n'y en a pas du tout
-	bool permissionFuture = false;
-	
-//	printf("Analyse des tableau d'action 1 = true, 0 = false\n");
-	// regarde s'il y a des actions en cours et prevues
-	for(int ok1=0;ok1<6;ok1++)
-	{	// marqueur des actions en cours
-		if(this->action[ok1]!=NULL)
-			{	
-				permission=false;
-				break;
-			}
-		// marqueur des actions prevues
-		if(this->actionFuture[ok1]!=NULL)
-			{	
-				permissionFuture=true;
-				break;
-			}
-	}
-/*	if(permission){
-		printf(" permission de faire les actions futures \n");
-		if(permissionFuture){
-			printf(" il y a au moins une action future\n");
-		} else {
-			printf(" il n'y a aucune action future\n");
-		}
-	} else{
-		printf(" action(s) en cours on attend \n");
-	}*/
+
 	// Si il n'y a pas d'action a faire et qu'il y a des actions des prevues
-	if(permission&&permissionFuture){
+	
+	if((!(this->ActionEnCours[0]))&&this->ActionEnCours[1]){
 	// alors pour toutes les actions prevues faire 
 	//printf(" chargement des actions futures dans les actions courantes\n");
 		for(int ok2=0; ok2<6; ok2++){
-			if(this->Arcs[ok2]!=NULL)
-			{
+			//if(this->Arcs[ok2]!=NULL)
+			//{
 				pistonTMP = (PhysicPiston*) this->Arcs[ok2];
 				if(this->actionFuture[ok2]!=NULL){
 					printf(" chargement de l'actionfuture [%d]...\n",ok2);
 					// on remplit le tableau d'action par les actions prévues
 					this->action[ok2] = new ActionPiston(pistonTMP,this->actionFuture[ok2]->getTailleVoulue());
-					this->actionFuture[ok2]=NULL;
+					//this->actionFuture[ok2]=new ActionPiston(pistonTMP,this->actionFuture[ok2]->getTailleVoulue());
+	
+					// on signale qu'il y a des actions en cours
+					this->ActionEnCours[0]=true;
+					// on signale qu'il n'y a plus d'action de prévue
+					this->ActionEnCours[1]=false;
 				}
-			}
+			//}
 		
 		}
 	Thread(this,RobotTetra::lanceThreadPiston);
-	// on signale qu'il y a des actions en cours
-	permission = false;
-	// on signale qu'il n'y a plus d'action de prévue
-	permissionFuture=false;
+
 	}
 	//printf("Fin de la gestions des Actions\n");
-	// permission == True  autorise l execution des actions courantes suivante 
-	// permission == False autorise la mise en memoire des actions suivantes ( donc se seront des actions futures)
-	return (permission);
 }
 
 // JAZZ MODIF : 1 JUIN 2009 : 11h39
 void* RobotTetra::lanceThreadPiston(void * demo){
 	RobotTetra* robot = (RobotTetra*) demo;
+	// il y a des actions de prevue
+	if(robot->ActionEnCours[0]){
 	for(int ok5=0;ok5<6;ok5++){
 		if(robot->action[ok5]!=NULL){
 		//printf("===========Ordre sur le piston %d==========\n",ok5);
 			Thread((void*)robot->action[ok5],actionThread);
 		}
 	}
+	}
 	// attente de la fin des threads en cours
 	int tmp = 8;
 	printf("Purge en cours ...\n veuiller patienter %d sec, merci de votre comprehension.\n",tmp);
 	sleep(tmp);
-	for(int qd=0;qd<6;qd++){
-	robot->action[qd]=NULL;
-	}
-	if(robot->end == NULL){
-		if(robot->endFuture != NULL ){
+	robot->ActionEnCours[0]=false;
+	printf("Fin de la purge !\n");
+	// pas de position finale
+	if(!(robot->ActionEnCours[2])){
+		// il y a une position future
+		if(robot->ActionEnCours[3]){
 			robot->StartThread(*robot->endFuture);
-			robot->endFuture = NULL;
+			//robot->endFuture = NULL;
 		}
 	} else {
 			robot->StartThread(*robot->end);
 	}
+	printf("fin de tout\n");
 	return NULL;
 }
 
@@ -110,8 +81,25 @@ void RobotTetra::Deplacement(unsigned char key)
 	switch (key)
 	{
 		case 'A':
-		{	sensMouvement =1;
-			Num_Piston = 0;
+		{	//sensMouvement =1;
+			//Num_Piston = 0;
+			printf("\n this->action = ");
+			if(this->ActionEnCours[0]){
+			for(int b =0;b<6;b++){
+				if( this->action[b]!=NULL) printf("-(%d)%f",b,this->action[b]->getTailleVoulue());
+			}}
+			if(this->ActionEnCours[1]){
+			printf("\n this->actionFuture = ");
+			for(int bc =0;bc<6;bc++){
+				if( this->actionFuture[bc]!=NULL) printf("-(%d)%f",bc,this->actionFuture[bc]->getTailleVoulue());
+			}}
+			if(this->ActionEnCours[2]){
+			printf("\n end Position  %f %f %f\n",this->end->getX(),this->end->getY(),this->end->getZ());
+			}
+			if(this->ActionEnCours[3]){
+			printf("\n endFuture Position  %f %f %f\n",this->endFuture->getX(),this->endFuture->getY(),this->endFuture->getZ());
+			}
+			printf("\n");
 		break;
 		}
 		case 'Z':
@@ -212,8 +200,8 @@ void RobotTetra::Deplacement(unsigned char key)
 	if(Num_Piston != -1){
 		//printf("Piston %d : %f",Num_Piston,sensMouvement);
 		// verif piston existe
-		if(this->Arcs[Num_Piston]!=NULL)
-		{	// verif taille futur valide
+		//if(this->Arcs[Num_Piston]!=NULL)
+		//{	// verif taille futur valide
 			pistonTMP = (PhysicPiston*)this->Arcs[Num_Piston];
 			taille = pistonTMP->getLength() + sensMouvement*(Step);
 		//	printf(" ==> taille : %f\n",taille);
@@ -227,13 +215,15 @@ void RobotTetra::Deplacement(unsigned char key)
 			{
 				// configuration de la nouvelle action
 				pistonTMP = (PhysicPiston*)this->Arcs[Num_Piston];
-				bool test = gestionAction();
-				if(test){
-					for(int ok4=0;ok4<6;ok4++)
-					{
-						this->action[ok4] =NULL;
-					}
-					this->action[Num_Piston] = new ActionPiston(pistonTMP, (btScalar) (taille/1));
+				// pas d'action de prevue
+				gestionAction();
+				if(! (this->ActionEnCours[0])){
+					//for(int ok4=0;ok4<6;ok4++)
+					//{
+					//	this->action[ok4] =NULL;
+					//}
+					this->action[Num_Piston] = new ActionPiston(pistonTMP, (btScalar)(taille/1));
+					this->ActionEnCours[0]=true;
 					// lancement du thread
 					// JAZZ 4 JUIN 2009 : 21h21 -- ajout d une subtilite pour le deplacement manuel du robot
 					btScalar G = this->getCenterOfMassPosition().getY();
@@ -282,10 +272,11 @@ void RobotTetra::Deplacement(unsigned char key)
 				//	printf("Execution d' une action unique courante sur le piston %d\n",Num_Piston);
 					Thread(this,RobotTetra::lanceThreadPiston);
 				} else {
-					for(int qd=0;qd<6;qd++){
-						this->actionFuture[qd]=NULL;
-					}
+					//for(int qd=0;qd<6;qd++){
+					//	this->actionFuture[qd]=NULL;
+					//}
 					this->actionFuture[Num_Piston] = new ActionPiston(pistonTMP, (btScalar) (taille/1));
+					this->ActionEnCours[1]=true;
 				//	printf("Parametrage d une action unique future sur le piston %d \n",Num_Piston);
 ;
 				}
@@ -293,10 +284,10 @@ void RobotTetra::Deplacement(unsigned char key)
 			else{
 				printf("Taille invalide\n");
 			}
-		}
-		else {
-			printf("Le piston %d n'existe pas !!\n",Num_Piston);
-		}
+		//}
+		//else {
+		//	printf("Le piston %d n'existe pas !!\n",Num_Piston);
+		//}
 	}
 	//glutPostRedisplay();
 }
@@ -305,33 +296,41 @@ void RobotTetra::Deplacement(unsigned char key)
 void RobotTetra::StartThread(btVector3 ending){
 //	printf("StartThread used\n");
 	
-	if(this->end == NULL){
-		if(this->endFuture != NULL ){
+	if(!(this->ActionEnCours[2])){
+		if(this->ActionEnCours[3]){
 			printf(" Le robot va au point suivant indique\n");
 			this->end = this->endFuture;
 			this->endFuture = (btVector3*)&ending;
+			this->ActionEnCours[2]=true;
+			this->ActionEnCours[3]=true;
 		
 		} else {
 			printf(" Le robot va au point indique\n");
 			this->end = (btVector3*)&ending;
 			this->endFuture = (btVector3*)&ending;
+					
+			this->ActionEnCours[2]=true;
+			this->ActionEnCours[3]=false;
 		}
 	} else {
 		printf("Mise en memoire du chekpoint suivant\n");
-		this->endFuture = NULL;
+		//this->endFuture = NULL;
 		this->endFuture = (btVector3*)&ending;
+		this->ActionEnCours[3]=true;
 		
 	}
-	if(gestionAction()){
-		printf("Execution de la commande\n");
+	gestionAction();
+	printf("Execution de la commande\n");
 	//printf("end                            %f %f %f\n",this->end->getX(),this->end->getY(),this->end->getZ());
 	//printf("G                              %f %f %f\n",(this->getCenterOfMassPosition()).getX(),(this->getCenterOfMassPosition()).getY(),(this->getCenterOfMassPosition()).getZ());
+	if(((!this->ActionEnCours[0]))&&(this->ActionEnCours[2])){
 		Thread(this,RobotTetra::marcherRobot);
 	} else {
 		printf(" Il y a une action local en cours, ce mouvement necessitant un certain temps,\nle programe attendra une totale libertee de mouvement\nMise en attendte de la commande ...\n");
 		// ecrasement de la valeur precedante
-		this->endFuture = NULL;
+		//this->endFuture = NULL;
 		this->endFuture = (btVector3*)&ending;
+		this->ActionEnCours[3]=true;
 		
 	}
 }
@@ -345,75 +344,72 @@ bool RobotTetra::IsNotInArea(const btVector3 &G,const btVector3 &end2){
 void RobotTetra::nanoRobot(){
 	//printf("Nainification du robot\n");
 	PhysicPiston* pistonTMP;
-	bool permission;
-
 	// Tous les pistons a la taille minimale
 	btScalar tailleTmp;
-	permission = gestionAction();
+	gestionAction();
 	for(int i=0;i<6;i++)
 	{
 		//if(this->Arcs[i]!=NULL)
 		//{
 			pistonTMP = (PhysicPiston*) this->Arcs[i];
 			tailleTmp = pistonTMP->getTailleMin()- pistonTMP->getLength();
-			if(tailleTmp< 0)tailleTmp= -tailleTmp;
+			if(tailleTmp< 0) tailleTmp = -tailleTmp;
 			if(tailleTmp> btScalar(0.1))
 			{
-				if(permission){
-					printf("Parametrage d une action courante %d \n",i);
-					this->action[i]=NULL;
+				if(!(this->ActionEnCours[0])){
+					//printf("Parametrage d une action courante %d \n",i);
+				//	this->action[i]=NULL;
 					this->action[i] = new ActionPiston(pistonTMP,pistonTMP->getTailleMin());
+					this->ActionEnCours[0]=true;
 					//CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)actionThread,action[i], 0, &threadID);
 					
 				} else {
-					this->actionFuture[i] = NULL;
+				//	this->actionFuture[i] = NULL;
 					this->actionFuture[i] = new ActionPiston(pistonTMP,pistonTMP->getTailleMin());
-					printf("Parametrage d une action future %d \n",i);
+					this->ActionEnCours[1]=true;
+					//printf("Parametrage d une action future %d \n",i);
 				}
 			
 			}
 		//}
 	}
-	if(permission){
-		Thread(this,RobotTetra::lanceThreadPiston);
-	}
+	Thread(this,RobotTetra::lanceThreadPiston);
 }
 
 void RobotTetra::maxiRobot(){
 	// printf("Maximisation du robot\n");
 	// Tous les pistons a la taille maximale
 	PhysicPiston* pistonTMP;
-	bool permission;
+	// Tous les pistons a la taille minimale
 	btScalar tailleTmp;
-	permission = gestionAction();
-
+	gestionAction();
 	for(int i=0;i<6;i++)
 	{
 		//if(this->Arcs[i]!=NULL)
-		//{ 	printf(" arc %d \n",i);
+		//{
 			pistonTMP = (PhysicPiston*) this->Arcs[i];
 			tailleTmp = pistonTMP->getTailleMin()- pistonTMP->getLength();
-			if(tailleTmp< 0)tailleTmp= -tailleTmp;
+			if(tailleTmp< 0) tailleTmp = -tailleTmp;
 			if(tailleTmp> btScalar(0.1))
-			{ 
-				if(permission){
-					printf("Parametrage d une action courante %d \n",i);
-					this->action[i]=NULL;
+			{
+				if(!(this->ActionEnCours[0])){
+					//printf("Parametrage d une action courante %d \n",i);
+				//	this->action[i]=NULL;
 					this->action[i] = new ActionPiston(pistonTMP,pistonTMP->getTailleMax());
+					this->ActionEnCours[0]=true;
 					//CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)actionThread,action[i], 0, &threadID);
 					
 				} else {
-					this->actionFuture[i] = NULL;
+				//	this->actionFuture[i] = NULL;
 					this->actionFuture[i] = new ActionPiston(pistonTMP,pistonTMP->getTailleMax());
-					printf("Parametrage d une action future %d \n",i);
+					this->ActionEnCours[1]=true;
+					//printf("Parametrage d une action future %d \n",i);
 				}
 			
 			}
 		//}
 	}
-	if(permission){
-		Thread(this,RobotTetra::lanceThreadPiston);
-	}
+	Thread(this,RobotTetra::lanceThreadPiston);
 }
 
 
@@ -433,31 +429,33 @@ void* RobotTetra::marcherRobot(void *demo)
 	// De base on definit le pt d'arrivee
 	btVector3 end = btVector3(btScalar(30.),btScalar(5.),btScalar(0.));
 	btVector3 coor =  btVector3(btScalar(30.),btScalar(5.),btScalar(0.));
-	//printf("end initialisation %f %f %f\n",end.getX(),end.getY(),end.getZ());
+	printf("end initialisation %f %f %f\n",end.getX(),end.getY(),end.getZ());
 	// On va deplacer le robot
 	// On choisi un point d'arrive du robot sur le cercle de centre ( G : center of masse et de rayon R = 5.)
 	// MODIF JAZZ : 31 / 05 /09 : 23h45
 	if(robot->bodyCube != NULL){
 	//printf("Test 1 : btVector3 end = robot->bodyCube->getCenterOfMassPosition();\n");
 		 end = robot->bodyCube->getCenterOfMassPosition();
-		//printf("end de la cible ( bullet ) %f %f %f\n",end.getX(),end.getY(),end.getZ());
+		printf("end de la cible ( bullet ) %f %f %f\n",end.getX(),end.getY(),end.getZ());
 	}
 	else{
-		if(robot->end != NULL){
-		//	printf("Test 1Bis: btVector3 end = robot->end;\n");
+		if((robot->ActionEnCours[2])&&(robot->end != NULL)){
+			printf("Test 1Bis: btVector3 end = robot->end;\n");
 			 end = *robot->end;
 		}
 		else{
-			//printf("Definition d'un nouveau point d'arrivee ( 30,5,0 )\n");
+			printf("Definition d'un nouveau point d'arrivee ( 30,5,0 )\n");
 			 end = btVector3(btScalar(30.),btScalar(5.),btScalar(0.));
-			//printf("end creation d un nouveau end %f %f %f\n",end.getX(),end.getY(),end.getZ());
+			printf("end creation d un nouveau end %f %f %f\n",end.getX(),end.getY(),end.getZ());
 		}
 	}
 	coor = end;
-	//printf("Test 2 : end.setY(btScalar(robot->getCenterOfMassPosition().getY()));\n");
+	printf("Test 2 : end.setY(btScalar(robot->getCenterOfMassPosition().getY()));\n");
 	end.setY(btScalar(robot->getCenterOfMassPosition().getY()));
 	printf("coor %f %f %f\n",coor.getX(),coor.getY(),coor.getZ());
+	if(robot->ActionEnCours[3]){
 	printf("end future                     %f %f %f\n",(robot->endFuture)->getX(),(robot->endFuture)->getY(),(robot->endFuture)->getZ());
+	}
 
 	// Pour faire simple, on va creer la matrice de liaison des noeuds (matrice d'identificateurs)
 	//printf("Test 3 : Suite \n");
@@ -489,12 +487,13 @@ void* RobotTetra::marcherRobot(void *demo)
 
 	for(int i=0;i<6;i++){
 	//printf(" Test 4 : if(robot->action[i]==NULL)\n");
-		if(robot->action[i]==NULL){
-			robot->action[i] = NULL;
-		}
+		//if(robot->action[i]==NULL){
+		//	robot->action[i] = NULL;
+		//}
 		//printf("Test 5 : robot->action[i] = new ActionPiston(robot->Arcs[i],robot->Arcs[i]->getTailleMax()/2); \n");
 			pistonTMP = (PhysicPiston*)robot->Arcs[i];
-			robot->action[i] = new ActionPiston(pistonTMP,pistonTMP->getTailleMax()/2);
+			robot->action[i] = new ActionPiston(pistonTMP,(btScalar) (pistonTMP->getTailleMax()/2));
+			robot->ActionEnCours[0]=true;
 
 	}
 	//printf("Test 6 : while(robot->IsNotInArea(robot->getCenterOfMassPosition(),end)) \n");
@@ -506,11 +505,13 @@ void* RobotTetra::marcherRobot(void *demo)
 			pistonTMP = (PhysicPiston*) robot->Arcs[i];
 			robot->action[i]->setPiston(pistonTMP);
 			robot->action[i]->setTailleVoulue(pistonTMP->getTailleMin());
+			
 			Thread((void*)robot->action[i],actionThread);
 		}
 		// On attends 8 secondes que l'initialisation ce termine
 		// MODIF JAZZ : 31 / 05 /09 : 23h50 : 10 => 3
 		sleep(8);
+		robot->ActionEnCours[0]=false;
 		NHaut = 0;
 		// On cherche le noeud NHaut le plus haut.
 		for(i=1;i<4;i++)
@@ -569,6 +570,7 @@ void* RobotTetra::marcherRobot(void *demo)
 		pistonTMP = (PhysicPiston*) robot->Arcs[PBas];
 		robot->action[PBas]->setPiston(pistonTMP);
 		robot->action[PBas]->setTailleVoulue(btScalar(8.));
+		
 		Thread((void*)robot->action[PBas],actionThread);
 
 		// On debloque les pistons liant le noeuds NHaut (P1 et P2)
@@ -586,6 +588,7 @@ void* RobotTetra::marcherRobot(void *demo)
 		pistonTMP = (PhysicPiston*) robot->Arcs[PHaut];
 		robot->action[PHaut]->setPiston(pistonTMP);
 		robot->action[PHaut]->setTailleVoulue(pistonTMP->getTailleMax());
+		
 		Thread((void*)robot->action[PHaut],actionThread);
 		// On attends 12 secondes
 		// MODIF JAZZ : 31 / 05 /09 : 23h55 12 => 4
@@ -599,8 +602,10 @@ void* RobotTetra::marcherRobot(void *demo)
 
 	// MODIF JAZZ : 31 / 05 /09 : 23h54
 	end.setY(btScalar(robot->getCenterOfMassPosition().getY()));
-	//printf("end 2ieme reajustement des coordonnee ( pour Y ) %f %f %f\n",end.getX(),end.getY(),end.getZ());
+	printf("end 2ieme reajustement des coordonnee ( pour Y ) %f %f %f\n",end.getX(),end.getY(),end.getZ());
+	
 	}// Fin WHILE
+	
 	// La marche du robot est termin�e.
 	// Mettre le robot � l'etat final (pistons au minimum de leur taille)
 	for(i=0;i<6;i++)
@@ -608,6 +613,7 @@ void* RobotTetra::marcherRobot(void *demo)
 		pistonTMP = (PhysicPiston*) robot->Arcs[i];
 		robot->action[i]->setPiston(pistonTMP);
 		robot->action[i]->setTailleVoulue(pistonTMP->getTailleMin());
+	
 		Thread((void*)robot->action[i],actionThread);
 	}
 	// Attendre que les pistons soient arretes
@@ -615,10 +621,13 @@ void* RobotTetra::marcherRobot(void *demo)
 	
 	// attente de la fin des threads en cours
 	sleep(8);
-	for(int qd=0;qd<6;qd++){
-	robot->action[qd]=NULL;
-	}
-	if (robot->endFuture != NULL){
+	//for(int qd=0;qd<6;qd++){
+	//robot->action[qd]=NULL;
+	//}
+	robot->ActionEnCours[0]=false;
+	robot->ActionEnCours[1]=false;
+	robot->ActionEnCours[2]=false;
+	if ((robot->ActionEnCours[3])&&(robot->endFuture != NULL)){
 	printf("coor d'origine du point de fin %f %f %f\n",coor.getX(),coor.getY(),coor.getZ());
 	printf("end future                     %f %f %f\n",(robot->endFuture)->getX(),(robot->endFuture)->getY(),(robot->endFuture)->getZ());
 	printf("G                              %f %f %f\n",(robot->getCenterOfMassPosition()).getX(),(robot->getCenterOfMassPosition()).getY(),(robot->getCenterOfMassPosition()).getZ());
@@ -627,11 +636,13 @@ void* RobotTetra::marcherRobot(void *demo)
 	}
 	robot->end = NULL;
 	printf("Arret du robot!\n");
-	if(robot->end == NULL){
-		if(robot->endFuture != NULL )
+	if(!(robot->ActionEnCours[2])){
+		if((robot->ActionEnCours[3])&&(robot->endFuture != NULL))
 		{
+			robot->ActionEnCours[2]=false;
+			robot->ActionEnCours[3]=false;
 			robot->StartThread(coor);
-			robot->endFuture = NULL;
+			
 		}
 	}
 	return NULL;
@@ -685,6 +696,7 @@ RobotTetra::RobotTetra(btDynamicsWorld* world,Ogre::SceneManager * scene,const b
 	for(int k=0;k<6;k++){
 		this->action[k]=NULL;
 		this->actionFuture[k]=NULL;
+		if(k<4) this->ActionEnCours[k]=false;
 	}
 	this->bodyCube = NULL;
 	this->end = NULL;
@@ -735,10 +747,12 @@ RobotTetra::RobotTetra(btDynamicsWorld* world,const btVector3& posInit)
 	for(int k=0;k<6;k++){
 		this->action[k]=NULL;
 		this->actionFuture[k]=NULL;
+		if(k<4) this->ActionEnCours[k]=false;
 	}
 	this->bodyCube = NULL;
 	this->end = NULL;
 	this->endFuture = NULL;
+	
 }
 
 
