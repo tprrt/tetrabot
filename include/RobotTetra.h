@@ -22,6 +22,8 @@ protected:
 
 	ActionPiston*	action[6];
 	ActionPiston*	actionFuture[6];
+	// Action ; actionFuture ; end ; endFuture
+	bool		ActionEnCours[4];
 
 public:	
 	btRigidBody* bodyCube;
@@ -61,9 +63,7 @@ public:
 	
 	//JAZZ MODIF : 7 JUIN 2009 : 12H37
 	// Permet de verifier s'il y a des actions prevues et de les commencer s'il n'y a pas de d'action en cours
-	// True : on remplit le tableau Action
-	// False : on remplit le tableau ActionFuture
-	bool gestionAction(void);
+	void gestionAction(void);
 };
 
 #endif /* ROBOT_TETRA */
